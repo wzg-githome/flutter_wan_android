@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_wan_android/ui/login/login_model.dart';
 import 'package:get/get.dart';
 
 class LoginPge extends StatefulWidget {
@@ -55,9 +56,7 @@ class _LoginPgeState extends State<LoginPge> {
                   flex: 1,
                 ),
                 GestureDetector(
-                  onTap: (){
-
-                  },
+                  onTap: () {},
                   child: const Padding(
                     padding: EdgeInsets.all(10),
                     child: Text(
@@ -98,6 +97,8 @@ class _LoginPgeState extends State<LoginPge> {
       text = "账号至少三位并且密码至少6位";
     }
     SmartDialog.showToast(text);
-    if (onSuccessed) Get.toNamed("mainPage");
+    if (onSuccessed) {
+      LoginModel.login(_nameCon.text, _pwdCon.text);
+    }
   }
 }

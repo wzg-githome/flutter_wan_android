@@ -1,16 +1,21 @@
 buildscript {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         mavenCentral()
     }
 
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.0'
+//        classpath 'com.android.tools.build:gradle:7.0.2'
     }
 }
 
 allprojects {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
         google()
         mavenCentral()
     }
