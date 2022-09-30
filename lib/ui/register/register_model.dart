@@ -1,23 +1,24 @@
-import 'package:flutter_wan_android/newwork/dio_utils.dart';
-import 'package:flutter_wan_android/newwork/wan_android_api.dart';
-import 'package:flutter_wan_android/ui/login/login_entity.dart';
-import 'package:flutter_wan_android/utils/ace_log.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_wan_android/network/dio_utils.dart';
+import 'package:flutter_wan_android/network/wan_android_api.dart';
+import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/ui/register/register_entity.dart';
 import 'package:get/get.dart';
 
 class RegisterModel {
-  ///login
+  ///register
   static void register(String name, String pwd, String pwd2) {
     var map = <String, String>{};
-    map["name"] = name;
+    map["username"] = name;
     map["password"] = pwd;
-    map["password"] = pwd2;
+    map["repassword"] = pwd2;
 
-    DioUtils.instance.post<LoginEntity>(WanAndroidApi.register, map,
+    DioUtils.getInstance().post<RegisterEntity>(WanAndroidApi.register, map,
         onSuccess: (data) {
-      AceLog.e(msg: "onSuccess: ${data.toString()}");
-      Get.toNamed("mainPage");
+      SmartDialog.showToast("注册成功，前往登录");
+      Get.offNamed(PageList.loginPage);
     }, onFile: (err) {
-      AceLog.e(msg: "onFile: ${err.toString()}");
+      SmartDialog.showToast("${err.errMsg}");
     });
   }
 }

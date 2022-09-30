@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/ui/register/register_model.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -33,7 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("注册"),
+        title: Text("registerTitle".tr),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -55,10 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             const SizedBox(height: 30),
             MaterialButton(
-              onPressed: () {
-                RegisterModel.register(
-                    _nameCon.text, _pwdCon1.text, _pwdCon2.text);
-              },
+              onPressed: () => checkNameAndPwd(),
               child: const Text(
                 "注册",
                 style: TextStyle(color: Colors.blue, fontSize: 16),
@@ -68,5 +67,26 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+
+  void checkNameAndPwd() {
+    if (_nameCon.text.length < 3) {
+      SmartDialog.showToast("账号至少3位");
+      return;
+    }
+    if (_pwdCon1.text.length < 6) {
+      SmartDialog.showToast("密码至少6位");
+      return;
+    }
+    if (_pwdCon2.text.length < 6) {
+      SmartDialog.showToast("密码至少6位");
+      return;
+    }
+    if (_pwdCon1.text != _pwdCon2.text) {
+      SmartDialog.showToast("密码1和密码2必须相同");
+      return;
+    }
+    RegisterModel.register(_nameCon.text, _pwdCon1.text, _pwdCon2.text);
   }
 }

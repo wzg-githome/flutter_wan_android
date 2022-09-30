@@ -1,5 +1,5 @@
 import 'package:flutter_wan_android/custom/custom_app_bar.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/custom/common_class.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -13,8 +13,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const CustomAppBar(
-          centerTitle: "主界面",
+        title: CustomAppBar(
+          centerTitle: "mainTitle".tr,
         ),
       ),
       body: Container(),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_wan_android/page_list.dart';
 import 'package:flutter_wan_android/ui/login/login_model.dart';
+import 'package:flutter_wan_android/utils/ace_log.dart';
 import 'package:get/get.dart';
+
+import 'login_controller.dart';
 
 class LoginPge extends StatefulWidget {
   const LoginPge({Key? key}) : super(key: key);
@@ -13,6 +17,8 @@ class LoginPge extends StatefulWidget {
 class _LoginPgeState extends State<LoginPge> {
   late TextEditingController _nameCon;
   late TextEditingController _pwdCon;
+
+  final _loginCon = Get.put(LoginController());
 
   @override
   void initState() {
@@ -32,7 +38,7 @@ class _LoginPgeState extends State<LoginPge> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("登录"),
+        title: Text("loginTitle".tr),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -56,7 +62,9 @@ class _LoginPgeState extends State<LoginPge> {
                   flex: 1,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(PageList.registerPage);
+                  },
                   child: const Padding(
                     padding: EdgeInsets.all(10),
                     child: Text(
@@ -87,17 +95,18 @@ class _LoginPgeState extends State<LoginPge> {
   }
 
   void checkNamePed() {
-    String text;
-    bool onSuccessed;
-    if (_nameCon.text.length > 3 && _pwdCon.text.length > 6) {
-      text = "注册或登录成功";
-      onSuccessed = true;
+    if (_loginCon.click2Number()) return;
+
+    bool onSuccess;
+    AceLog.d("name: ${_nameCon.text.length} \tpwd: ${_pwdCon.text.length}");
+    if (_nameCon.text.length >= 3 && _pwdCon.text.length >= 6) {
+      onSuccess = true;
     } else {
-      onSuccessed = false;
-      text = "账号至少三位并且密码至少6位";
+      onSuccess = false;
+      SmartDialog.showToast("账号至少三位并且密码至少6位");
     }
-    SmartDialog.showToast(text);
-    if (onSuccessed) {
+
+    if (onSuccess) {
       LoginModel.login(_nameCon.text, _pwdCon.text);
     }
   }

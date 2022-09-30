@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-///
+///自定义appBar
 class CustomAppBar extends StatefulWidget {
   final String centerTitle;
   final String? rightText;
@@ -17,25 +17,28 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: widget.showLeft != null && widget.showLeft == true
-              ? Image.asset("images/icon_back")
-              : Container(),
-          flex: 1,
-        ),
-        Expanded(
-          child: Text(widget.centerTitle),
-          flex: 1,
-        ),
-        Expanded(
-          child: widget.rightText == null || widget.rightText == "null"
-              ? Container()
-              : Text("$widget.rightText"),
-          flex: 1,
-        ),
-      ],
+    return SizedBox(
+      height: 48,
+      child: Row(
+        children: [
+          Expanded(
+            child: widget.showLeft != null && widget.showLeft == true
+                ? Image.asset("asset/images/icon_back.png")
+                : Container(),
+            flex: 1,
+          ),
+          Expanded(
+            child: Text(widget.centerTitle),
+            flex: 1,
+          ),
+          Expanded(
+            child: widget.rightText == null || widget.rightText == "null"
+                ? Container()
+                : Text("$widget.rightText"),
+            flex: 1,
+          ),
+        ],
+      ),
     );
   }
 }

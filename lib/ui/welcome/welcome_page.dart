@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_wan_android/page_list.dart';
 import 'package:get/get.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -12,7 +13,7 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   Timer? _timer;
-  int timeIndex = 5;
+  int timeIndex = 2;
   int timeMin = 0;
 
   @override
@@ -55,7 +56,7 @@ class _WelcomePageState extends State<WelcomePage> {
             _timer?.cancel();
             _timer = null;
           }
-          Get.offNamed("loginPage");
+          Get.offNamed(PageList.loginPage);
         }
       });
 

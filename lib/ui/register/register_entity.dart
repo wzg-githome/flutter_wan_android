@@ -1,9 +1,9 @@
 import 'package:flutter_wan_android/generated/json/base/json_field.dart';
-import 'package:flutter_wan_android/generated/json/login_entity.g.dart';
+import 'package:flutter_wan_android/generated/json/register_entity.g.dart';
 import 'dart:convert';
 
 @JsonSerializable()
-class LoginEntity {
+class RegisterEntity {
 
 	bool? admin;
 	List<dynamic>? chapterTops;
@@ -19,11 +19,11 @@ class LoginEntity {
 	int? type;
 	String? username;
   
-  LoginEntity();
+  RegisterEntity();
 
- /* factory LoginEntity.*/ static fromJson(Map<String, dynamic> json) => $LoginEntityFromJson(json);
+  /*factory RegisterEntity.*/static fromJson(Map<String, dynamic> json) => $RegisterEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => $LoginEntityToJson(this);
+  Map<String, dynamic> toJson() => $RegisterEntityToJson(this);
 
   @override
   String toString() {

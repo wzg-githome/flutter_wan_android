@@ -1,19 +1,19 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_wan_android/newwork/base_entity.dart';
-import 'package:flutter_wan_android/newwork/constant.dart';
-import 'package:flutter_wan_android/newwork/network_callback.dart';
-import 'package:flutter_wan_android/newwork/network_process_factroy.dart';
+import 'package:flutter_wan_android/network/entity/base_entity.dart';
+import 'package:flutter_wan_android/network/constant.dart';
+import 'package:flutter_wan_android/network/network_process_factroy.dart';
+import 'package:flutter_wan_android/utils/ace_log.dart';
 
-import 'entity_factory.dart';
-import 'http_err.dart';
+import 'entity/entity_factory.dart';
+import 'entity/http_error.dart';
 
 ///dio封装
 class DioUtils {
   Dio? _dio;
-  static DioUtils instance = DioUtils._internal();
 
-  final int _timeout = 30;
+  static DioUtils getInstance() => DioUtils._internal();
+
+  final int _timeout = 30000;
 
   DioUtils._internal() {
     if (_dio == null) {
@@ -21,6 +21,7 @@ class DioUtils {
           baseUrl: Constant.baseUrl,
           connectTimeout: _timeout,
           receiveTimeout: _timeout,
+          sendTimeout: _timeout,
           responseType: ResponseType.json,
           contentType: Headers.jsonContentType);
       _dio = Dio(options);
@@ -56,6 +57,7 @@ class DioUtils {
       NetworkProcessFactory.handlerException(e);
     } finally {
       // callback?.onFinish();
+
     }
 
     return response;
@@ -63,49 +65,55 @@ class DioUtils {
 
   post<T>(String url, Map<String, String>? map,
       {required Function(T?) onSuccess,
-      required Function(HttpErr err) onFile}) async {
+      required Function(HttpError err) onFile}) async {
+    HttpError err = HttpError();
     try {
       Response<dynamic>? response =
           await _request(url: url, method: "POST", params: map);
-      HttpErr err = HttpErr();
-      if (response != null) {
+      if (response != null && response.statusCode == 200) {
         BaseEntity entity = BaseEntity.fromJson(response.data);
-        if (entity.code == "0") {
+        if (entity.errorCode == 0) {
           T? data = EntityFactory.generateOBJ<T>(entity.data);
           onSuccess(data);
         } else {
-          err.code = entity.code;
-          err.msg = entity.message;
+          err.errCode = entity.errorCode;
+          err.errMsg = entity.errorMsg;
+          //log
+          AceLog.e(msg: "onFile: ${err.toString()}");
           onFile(err);
         }
       }
     } catch (e) {
-      HttpErr err = HttpErr();
       err.e = e;
+      //log
+      AceLog.e(msg: "onFile: ${err.toString()}");
       onFile(err);
     }
   }
 
   get<T>(String url, Map<String, String> map, Function(T?) onSuccess,
-      Function(HttpErr err) onFile) async {
+      Function(HttpError err) onFile) async {
+    HttpError err = HttpError();
     try {
       Response<dynamic>? response = await _request(
           url: url, method: "GET", params: map /*, callback: null*/);
-      HttpErr err = HttpErr();
-      if (response != null) {
+      if (response != null && response.statusCode == 200) {
         BaseEntity entity = BaseEntity.fromJson(response.data);
-        if (entity.code == "0") {
+        if (entity.errorCode == 0) {
           T? data = EntityFactory.generateOBJ<T>(entity.data);
           onSuccess(data);
         } else {
-          err.code = entity.code;
-          err.msg = entity.message;
+          err.errCode = entity.errorCode;
+          err.errMsg = entity.errorMsg;
+          //log
+          AceLog.e(msg: "onFile: ${err.toString()}");
           onFile(err);
         }
       }
     } catch (e) {
-      HttpErr err = HttpErr();
       err.e = e;
+      //log
+      AceLog.e(msg: "onFile: ${err.toString()}");
       onFile(err);
     }
   }
