@@ -32,14 +32,18 @@ class DioUtils {
     }
   }
 
-  Future<Response<T>?> _request<T>(
+  Future<Response<dynamic>?> _request<T>(
       {required String url,
       dynamic params,
       required String method,
+      required bool isList,
       // NetworkCallback? callback,
       ProgressCallback? onSendProgress,
       ProgressCallback? onReceiveProgress}) async {
     // callback?.onStart();
+    ///err
+    HttpError err = HttpError();
+
     late Response<T>? response;
     try {
       if (method == "GET") {
@@ -53,6 +57,16 @@ class DioUtils {
       } else {
         throw Exception("没有实现$method！！！！");
       }
+      if (response != null && response.statusCode == 200) {
+        BaseEntity entity = BaseEntity.fromJson(response.data);
+        if (entity.errorCode == 0) {
+          if (isList) {
+            var generateOBJ = EntityFactory.generateOBJList<T>(entity.data);
+          } else {
+            var generateOBJ = EntityFactory.generateOBJ<T>(entity.data);
+          }
+        }
+      } else {}
     } catch (e) {
       NetworkProcessFactory.handlerException(e);
     } finally {
@@ -91,8 +105,9 @@ class DioUtils {
     }
   }
 
-  get<T>(String url, Map<String, String> map, Function(T?) onSuccess,
-      Function(HttpError err) onFile) async {
+  get<T>(String url, Map<String, String>? map,
+      {required Function(T?) onSuccess,
+      required Function(HttpError err) onFile}) async {
     HttpError err = HttpError();
     try {
       Response<dynamic>? response = await _request(

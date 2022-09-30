@@ -4,4 +4,7 @@ class WanAndroidApi {
 
   ///注册
   static var register = "user/register";
+
+  ///banner
+  static var bannerList = "banner/json";
 }
