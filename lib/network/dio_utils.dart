@@ -14,6 +14,8 @@ class DioUtils {
   static DioUtils getInstance() => DioUtils._internal();
 
   final int _timeout = 30000;
+  final String _post = "POST";
+  final String _get = "GET";
 
   DioUtils._internal() {
     if (_dio == null) {
@@ -32,15 +34,14 @@ class DioUtils {
     }
   }
 
-  Future<Response<dynamic>?> _request<T>(
+  _request<T>(
       {required String url,
       dynamic params,
       required String method,
       required bool isList,
-      // NetworkCallback? callback,
+      required Function(HttpError err) onFiled,
       ProgressCallback? onSendProgress,
       ProgressCallback? onReceiveProgress}) async {
-    // callback?.onStart();
     ///err
     HttpError err = HttpError();
 
@@ -57,79 +58,162 @@ class DioUtils {
       } else {
         throw Exception("没有实现$method！！！！");
       }
+
+      ///
       if (response != null && response.statusCode == 200) {
         BaseEntity entity = BaseEntity.fromJson(response.data);
         if (entity.errorCode == 0) {
           if (isList) {
-            var generateOBJ = EntityFactory.generateOBJList<T>(entity.data);
+            ///list<Bean>
+            return EntityFactory.generateOBJList<T>(entity.data);
           } else {
-            var generateOBJ = EntityFactory.generateOBJ<T>(entity.data);
+            ///bean
+            return EntityFactory.generateOBJ<T>(entity.data);
           }
+        } else {
+          ///err
+          err.errCode = entity.errorCode;
+          err.errMsg = entity.errorMsg;
+
+          ///log
+          AceLog.e(msg: "_request*onFile(1): ${err.toString()}");
+          onFiled(err);
         }
-      } else {}
+      } else {
+        ///err
+        err.errCode = response?.statusCode;
+        err.errMsg = "statusCode 不是200，注意分析异常信息";
+
+        ///log
+        AceLog.e(msg: "_request*onFile(2): ${err.toString()}");
+        onFiled(err);
+      }
     } catch (e) {
+      err.e = e;
+
+      ///log
+      AceLog.e(msg: "_request*onFile(3): ${err.toString()}");
+      onFiled(err);
+
+      ///handler err
       NetworkProcessFactory.handlerException(e);
-    } finally {
-      // callback?.onFinish();
-
-    }
-
-    return response;
+    } finally {}
+    return null;
   }
 
   post<T>(String url, Map<String, String>? map,
       {required Function(T?) onSuccess,
       required Function(HttpError err) onFile}) async {
-    HttpError err = HttpError();
     try {
-      Response<dynamic>? response =
-          await _request(url: url, method: "POST", params: map);
-      if (response != null && response.statusCode == 200) {
-        BaseEntity entity = BaseEntity.fromJson(response.data);
-        if (entity.errorCode == 0) {
-          T? data = EntityFactory.generateOBJ<T>(entity.data);
-          onSuccess(data);
-        } else {
-          err.errCode = entity.errorCode;
-          err.errMsg = entity.errorMsg;
-          //log
-          AceLog.e(msg: "onFile: ${err.toString()}");
-          onFile(err);
-        }
-      }
+      T? data = await _request<T>(
+          url: url, method: _post, params: map, isList: false, onFiled: onFile);
+      onSuccess(data);
     } catch (e) {
-      err.e = e;
-      //log
-      AceLog.e(msg: "onFile: ${err.toString()}");
-      onFile(err);
+      HttpError error = HttpError();
+      error.e = e;
+
+      ///log
+      AceLog.e(msg: "post*onFiled: ${error.toString()}");
+      onFile(error);
     }
+
+    // HttpError err = HttpError();
+    // try {
+    //   Response<dynamic>? response =
+    //       await _request(url: url, method: "POST", params: map);
+    //   if (response != null && response.statusCode == 200) {
+    //     BaseEntity entity = BaseEntity.fromJson(response.data);
+    //     if (entity.errorCode == 0) {
+    //       T? data = EntityFactory.generateOBJ<T>(entity.data);
+    //       onSuccess(data);
+    //     } else {
+    //       err.errCode = entity.errorCode;
+    //       err.errMsg = entity.errorMsg;
+    //       //log
+    //       AceLog.e(msg: "onFile: ${err.toString()}");
+    //       onFile(err);
+    //     }
+    //   }
+    // } catch (e) {
+    //   err.e = e;
+    //   //log
+    //   AceLog.e(msg: "onFile: ${err.toString()}");
+    //   onFile(err);
+    // }
   }
 
   get<T>(String url, Map<String, String>? map,
       {required Function(T?) onSuccess,
       required Function(HttpError err) onFile}) async {
-    HttpError err = HttpError();
     try {
-      Response<dynamic>? response = await _request(
-          url: url, method: "GET", params: map /*, callback: null*/);
-      if (response != null && response.statusCode == 200) {
-        BaseEntity entity = BaseEntity.fromJson(response.data);
-        if (entity.errorCode == 0) {
-          T? data = EntityFactory.generateOBJ<T>(entity.data);
-          onSuccess(data);
-        } else {
-          err.errCode = entity.errorCode;
-          err.errMsg = entity.errorMsg;
-          //log
-          AceLog.e(msg: "onFile: ${err.toString()}");
-          onFile(err);
-        }
-      }
+      T? data = await _request<T>(
+          url: url, method: _get, params: map, isList: false, onFiled: onFile);
+      onSuccess(data);
     } catch (e) {
-      err.e = e;
-      //log
-      AceLog.e(msg: "onFile: ${err.toString()}");
-      onFile(err);
+      HttpError error = HttpError();
+      error.e = e;
+
+      ///log
+      AceLog.e(msg: "get*onFiled: ${error.toString()}");
+      onFile(error);
+    }
+
+    // HttpError err = HttpError();
+    // try {
+    //   Response<dynamic>? response = await _request(
+    //       url: url, method: "GET", params: map /*, callback: null*/);
+    //   if (response != null && response.statusCode == 200) {
+    //     BaseEntity entity = BaseEntity.fromJson(response.data);
+    //     if (entity.errorCode == 0) {
+    //       T? data = EntityFactory.generateOBJ<T>(entity.data);
+    //       onSuccess(data);
+    //     } else {
+    //       err.errCode = entity.errorCode;
+    //       err.errMsg = entity.errorMsg;
+    //       //log
+    //       AceLog.e(msg: "onFile: ${err.toString()}");
+    //       onFile(err);
+    //     }
+    //   }
+    // } catch (e) {
+    //   err.e = e;
+    //   //log
+    //   AceLog.e(msg: "onFile: ${err.toString()}");
+    //   onFile(err);
+    // }
+  }
+
+  postList<T>(String url, Map<String, String>? map,
+      {required Function(List<T?>?) onSuccess,
+      required Function(HttpError err) onFile}) async {
+    try {
+      List<T?>? data = await _request<T>(
+          url: url, method: _post, params: map, isList: true, onFiled: onFile);
+      onSuccess(data);
+    } catch (e) {
+      HttpError error = HttpError();
+      error.e = e;
+
+      ///log
+      AceLog.e(msg: "postList*onFiled: ${error.toString()}");
+      onFile(error);
+    }
+  }
+
+  getList<T>(String url, Map<String, String>? map,
+      {required Function(List<T?>?) onSuccess,
+      required Function(HttpError err) onFile}) async {
+    try {
+      List<T?>? data = await _request<T>(
+          url: url, method: _get, params: map, isList: true, onFiled: onFile);
+      onSuccess(data);
+    } catch (e) {
+      HttpError error = HttpError();
+      error.e = e;
+
+      ///log
+      AceLog.e(msg: "getList*onFiled: ${error.toString()}");
+      onFile(error);
     }
   }
 }
