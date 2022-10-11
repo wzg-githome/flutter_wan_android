@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart' show debugPrint;
 import 'package:flutter_wan_android/network/entity/http_error.dart';
 import 'package:flutter_wan_android/ui/login/login_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
 import 'package:flutter_wan_android/ui/register/register_entity.dart';
 
@@ -16,6 +17,8 @@ class JsonConvert {
 	static final Map<String, JsonConvertFunction> _convertFuncMap = {
 		(HttpError).toString(): HttpError.fromJson,
 		(LoginEntity).toString(): LoginEntity.fromJson,
+		(ArticleEntity).toString(): ArticleEntity.fromJson,
+		(ArticleEntityDatas).toString(): ArticleEntityDatas.fromJson,
 		(BannerEntity).toString(): BannerEntity.fromJson,
 		(RegisterEntity).toString(): RegisterEntity.fromJson,
 	};
@@ -101,6 +104,12 @@ class JsonConvert {
 		}
 		if(<LoginEntity>[] is M){
 			return data.map<LoginEntity>((Map<String, dynamic> e) => LoginEntity.fromJson(e)).toList() as M;
+		}
+		if(<ArticleEntity>[] is M){
+			return data.map<ArticleEntity>((Map<String, dynamic> e) => ArticleEntity.fromJson(e)).toList() as M;
+		}
+		if(<ArticleEntityDatas>[] is M){
+			return data.map<ArticleEntityDatas>((Map<String, dynamic> e) => ArticleEntityDatas.fromJson(e)).toList() as M;
 		}
 		if(<BannerEntity>[] is M){
 			return data.map<BannerEntity>((Map<String, dynamic> e) => BannerEntity.fromJson(e)).toList() as M;

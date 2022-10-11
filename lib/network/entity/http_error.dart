@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter_wan_android/generated/json/base/json_field.dart';
 import 'package:flutter_wan_android/generated/json/http_error.g.dart';

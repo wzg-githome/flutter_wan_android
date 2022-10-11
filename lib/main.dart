@@ -4,7 +4,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sp_util/sp_util.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:common_utils/common_utils.dart';
 
+import 'config_center.dart';
 import 'l10n/messages.dart';
 
 void main() {
@@ -33,29 +36,35 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: routes,
-      title: 'flutter WanAndroid',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      navigatorObservers: [FlutterSmartDialog.observer],
-      builder: FlutterSmartDialog.init(),
-      //默认语言
-      locale: Get.deviceLocale,
-      translations: Messages(),
-      fallbackLocale: const Locale('zh', 'CH'),
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('zh', 'CH'),
-        Locale('en', 'US'),
-      ],
-    );
+    return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        splitScreenMode: false,
+        minTextAdapt: true,
+        builder: (context, child) => GetMaterialApp(
+              debugShowCheckedModeBanner: ConfigCenter.isDebug,
+              routes: routes,
+              title: 'flutter WanAndroid',
+              theme: ThemeData(primarySwatch: Colors.blue),
+              navigatorObservers: [FlutterSmartDialog.observer],
+              builder: FlutterSmartDialog.init(),
+              //默认语言
+              locale: Get.deviceLocale,
+              translations: Messages(),
+              fallbackLocale: const Locale('zh', 'CH'),
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              supportedLocales: const [
+                Locale('zh', 'CH'),
+                Locale('en', 'US'),
+              ],
+            ));
   }
 
   void initSp() async {
     await SpUtil.getInstance();
+    LogUtil.init(
+        isDebug: ConfigCenter.isDebug, maxLen: ConfigCenter.logMaxLength);
   }
 }

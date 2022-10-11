@@ -1,6 +1,7 @@
 import 'package:flutter_wan_android/custom/custom_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_page.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
 
 class MainPage extends StatefulWidget {
@@ -34,9 +35,7 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: CustomAppBar(
-          centerTitle: "mainTitle".tr,
-        ),
+        title: CustomAppBar(centerTitle: "mainTitle".tr),
       ),
       body: PageView(
         controller: _pageCon,
@@ -50,7 +49,7 @@ class _MainPageState extends State<MainPage> {
           HomePage(),
           Text("data2"),
           Text("data3"),
-          Text("data4"),
+          UserPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

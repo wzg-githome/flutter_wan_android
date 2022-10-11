@@ -19,7 +19,7 @@ class LoginModel {
         onSuccess: (data) {
       SpUtil.putBool(SPConstant.loginStatus, true);
       SpUtil.putString(SPConstant.userName, data?.nickname ?? name);
-      Get.toNamed(PageList.mainPage);
+      Get.offNamed(PageList.mainPage);
     }, onFile: (err) {
       SmartDialog.showToast("${err.errMsg}");
     });

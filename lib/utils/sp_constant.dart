@@ -4,4 +4,7 @@ class SPConstant {
 
   ///userName
   static var userName = "user_name";
+
+  ///bannerList
+  static var bannerList = "banner_list";
 }
