@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
+import 'package:flutter_wan_android/custom/message_dialog_view.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wan_android/utils/sp_constant.dart';
@@ -27,12 +29,23 @@ class _UserPageState extends State<UserPage> {
           _builderItem("收藏", "❥(^_-)"),
           _builderItem("其他", "other"),
           _builderItem("清除缓存", "10M"),
-          _builderItem("退出登录", null, onTap: () {
-            UserModel.logout();
-          }),
+          _builderItem("退出登录", null, onTap: () => _logout()),
         ],
       ),
     );
+  }
+
+  void _logout() {
+    String _logoutDialog = "_logoutDialog";
+    SmartDialog.show(
+        widget: MessageDialogView(
+      tag: _logoutDialog,
+      context: "确认退出吗？",
+      onTap: () {
+        SmartDialog.dismiss(tag: _logoutDialog);
+        UserModel.logout();
+      },
+    ));
   }
 
   Widget _builderHeader() {
