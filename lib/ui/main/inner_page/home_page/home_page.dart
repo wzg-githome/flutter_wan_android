@@ -7,6 +7,7 @@ import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
 import 'package:flutter_wan_android/ui/main/util/home_utils.dart';
+import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -14,6 +15,7 @@ import 'package:html_unescape/html_unescape.dart';
 import 'entity/article_entity.dart';
 import 'entity/banner_entity.dart';
 
+///homePage
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -48,12 +50,11 @@ class _HomePageState extends State<HomePage> {
       setState(() {});
     }
     HomeModel.getBannerList((data) {
-      setState(() {
-        if (ObjectUtil.isNotEmpty(data)) {
-          _bannerList = data;
-          HomeUtils.saveBannerList(_bannerList);
-        }
-      });
+      if (ObjectUtil.isNotEmpty(data) && data != _bannerList) {
+        _bannerList = data;
+        HomeUtils.saveBannerList(_bannerList);
+        setState(() {});
+      }
     });
 
     ///feed List
@@ -90,6 +91,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10),
       color: Colors.grey[300],
       child: EasyRefresh(
         enableControlFinishRefresh: true,
@@ -123,8 +125,7 @@ class _HomePageState extends State<HomePage> {
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Container(
-        padding: EdgeInsets.all(5.h),
-        height: 200.h,
+        padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
         child: ObjectUtil.isEmpty(_bannerList)
             ? const Center(
                 child: Text("loading..."),
@@ -150,40 +151,22 @@ class _HomePageState extends State<HomePage> {
                 loop: true,
                 control: const SwiperControl(
                   color: Colors.blue,
-                  padding: EdgeInsets.only(
-                    left: 15,
-                    right: 10,
-                  ),
+                  padding: EdgeInsets.only(left: 15, right: 10),
                 ),
                 itemCount: _bannerList!.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                      margin: const EdgeInsets.only(
-                        left: 10,
-                        right: 10,
-                        top: 5,
-                        bottom: 5,
+                  return CachedNetworkImage(
+                    imageUrl: _bannerList![index]!.imagePath!,
+                    placeholder: (context, url) =>
+                        ImageUtils.buildPlaceholder(8),
+                    imageBuilder: (context, imagePro) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image:
+                            DecorationImage(image: imagePro, fit: BoxFit.fill),
                       ),
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.fill,
-                        imageUrl: _bannerList![index]!.imagePath!,
-                        placeholder: (context, url) {
-                          return Container(
-                            color: Colors.grey[200],
-                            padding: const EdgeInsets.only(left: 10),
-                            alignment: Alignment.centerLeft,
-                            child: const Text(
-                              "loading...",
-                              style: TextStyle(
-                                color: Colors.black38,
-                              ),
-                            ),
-                          );
-                        },
-                      ));
+                    ),
+                  );
                 },
               ),
       ),
@@ -222,7 +205,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildItem(_articleEntity) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+      margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
       decoration: BoxDecoration(
         color: Colors.grey[200],

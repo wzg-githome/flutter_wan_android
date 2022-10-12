@@ -14,8 +14,9 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   Timer? _timer;
-  int timeIndex = 2;
-  int timeMin = 0;
+  int _timeIndex = 2;
+  final int _timeMin = 0;
+  final int _milliseconds = 500;
 
   @override
   void initState() {
@@ -38,11 +39,12 @@ class _WelcomePageState extends State<WelcomePage> {
       color: Colors.white,
       child: Center(
         child: Text(
-          "this is welcome page\n$timeIndex",
+          "this is welcome page\n$_timeIndex",
           textAlign: TextAlign.center,
           style: const TextStyle(
             color: Colors.blue,
-            fontSize: 16,
+            fontSize: 30,
+            fontWeight: FontWeight.bold
           ),
         ),
       ),
@@ -50,10 +52,11 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   void startTimer() {
-    _timer ??= Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+    _timer ??=
+        Timer.periodic( Duration(milliseconds: _milliseconds), (timer) {
       setState(() {
-        timeIndex--;
-        if (timeMin == timeIndex) {
+        _timeIndex--;
+        if (_timeMin == _timeIndex) {
           if (_timer != null && _timer!.isActive) {
             _timer?.cancel();
             _timer = null;

@@ -46,14 +46,20 @@ class _LoginPgeState extends State<LoginPge> {
           children: [
             TextField(
               controller: _nameCon,
-              decoration: const InputDecoration(hintText: "账号"),
+              decoration: InputDecoration(
+                hintText: "账号",
+                helperStyle: TextStyle(color: Colors.grey[700]),
+              ),
             ),
             const SizedBox(
               height: 20,
             ),
             TextField(
               controller: _pwdCon,
-              decoration: const InputDecoration(hintText: "密码"),
+              decoration: InputDecoration(
+                hintText: "密码",
+                helperStyle: TextStyle(color: Colors.grey[700]),
+              ),
             ),
             Row(
               children: [
