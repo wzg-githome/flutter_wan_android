@@ -1,3 +1,4 @@
+///玩android的APi
 class WanAndroidApi {
   ///登录
   static var login = "user/login";
