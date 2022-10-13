@@ -7,12 +7,18 @@ class WanAndroidApi {
   static var register = "user/register";
 
   ///logout
-  static var logout="user/logout/json";
+  static var logout = "user/logout/json";
 
   ///banner
   static var bannerList = "banner/json";
 
   ///获取feed文章列表
   ///num 页数
-  static var articleList="article/list/{num}/json";
+  static var articleList = "article/list/{num}/json";
+
+  ///项目分类
+  static var projectTree = "project/tree/json";
+
+  ///项目类别数据
+  static var projectList = "project/list/{page}/json";
 }

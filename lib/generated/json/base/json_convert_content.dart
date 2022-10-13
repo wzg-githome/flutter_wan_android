@@ -8,6 +8,8 @@ import 'package:flutter_wan_android/network/entity/http_error.dart';
 import 'package:flutter_wan_android/ui/login/login_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/project_page/entity/project_list_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/project_page/entity/project_tree_entity.dart';
 import 'package:flutter_wan_android/ui/register/register_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
@@ -20,6 +22,10 @@ class JsonConvert {
 		(ArticleEntity).toString(): ArticleEntity.fromJson,
 		(ArticleEntityDatas).toString(): ArticleEntityDatas.fromJson,
 		(BannerEntity).toString(): BannerEntity.fromJson,
+		(ProjectListEntity).toString(): ProjectListEntity.fromJson,
+		(ProjectListEntityDatas).toString(): ProjectListEntityDatas.fromJson,
+		(ProjectListEntityDatasTags).toString(): ProjectListEntityDatasTags.fromJson,
+		(ProjectTreeEntity).toString(): ProjectTreeEntity.fromJson,
 		(RegisterEntity).toString(): RegisterEntity.fromJson,
 	};
 
@@ -113,6 +119,18 @@ class JsonConvert {
 		}
 		if(<BannerEntity>[] is M){
 			return data.map<BannerEntity>((Map<String, dynamic> e) => BannerEntity.fromJson(e)).toList() as M;
+		}
+		if(<ProjectListEntity>[] is M){
+			return data.map<ProjectListEntity>((Map<String, dynamic> e) => ProjectListEntity.fromJson(e)).toList() as M;
+		}
+		if(<ProjectListEntityDatas>[] is M){
+			return data.map<ProjectListEntityDatas>((Map<String, dynamic> e) => ProjectListEntityDatas.fromJson(e)).toList() as M;
+		}
+		if(<ProjectListEntityDatasTags>[] is M){
+			return data.map<ProjectListEntityDatasTags>((Map<String, dynamic> e) => ProjectListEntityDatasTags.fromJson(e)).toList() as M;
+		}
+		if(<ProjectTreeEntity>[] is M){
+			return data.map<ProjectTreeEntity>((Map<String, dynamic> e) => ProjectTreeEntity.fromJson(e)).toList() as M;
 		}
 		if(<RegisterEntity>[] is M){
 			return data.map<RegisterEntity>((Map<String, dynamic> e) => RegisterEntity.fromJson(e)).toList() as M;

@@ -1,66 +1,91 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
 ///MessageDialogView
 class MessageDialogView extends StatelessWidget {
-  const MessageDialogView({Key? key, this.tag, this.context, this.onTap})
+  const MessageDialogView(
+      {Key? key,
+      this.smartDialogTag,
+      this.title,
+      this.leftText,
+      this.rightText,
+      required this.content,
+      this.onClick})
       : super(key: key);
 
-  final String? tag;
-  final String? context;
-  final GestureTapCallback? onTap;
+  ///设置tag自动关闭对话框，无需在外面关闭
+  final String? smartDialogTag;
+  final String? title;
+  final String? leftText;
+  final String? rightText;
+  final String? content;
+  final Function(bool)? onClick;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 230,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       margin: const EdgeInsets.only(left: 50, right: 50),
+      padding: const EdgeInsets.only(bottom: 10, top: 10, right: 20, left: 20),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-              child: Container(
-            margin: const EdgeInsets.only(top: 12),
-            child: const Text(
-              "温馨提示",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18),
-            ),
-          )),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(left: 30, right: 30, top: 5),
-              width: double.infinity,
-              child: Text(
-                "$context",
-                style: const TextStyle(color: Colors.black, fontSize: 14),
-              ),
-            ),
-            flex: 2,
+          Text(
+            title ?? "温馨提示",
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 18.sp),
           ),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(left: 20, right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    onTap: onTap,
-                    child: Container(
-                      padding: const EdgeInsets.only(
-                          top: 5, bottom: 15, left: 8, right: 8),
-                      child: const Text(
-                        "确定",
-                        style: TextStyle(color: Colors.blue, fontSize: 14),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(top: 10),
+            child: Text(
+              "$content",
+              style: TextStyle(color: Colors.black, fontSize: 14.sp),
             ),
-            flex: 1,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    if (smartDialogTag != null) {
+                      await SmartDialog.dismiss(tag: smartDialogTag);
+                    }
+
+                    if (onClick != null) onClick!(false);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 8, bottom: 8, left: 8, right: 8),
+                    child: Text(
+                      leftText ?? "取消",
+                      style: TextStyle(color: Colors.grey, fontSize: 14.sp),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    if (smartDialogTag != null) {
+                      await SmartDialog.dismiss(tag: smartDialogTag);
+                    }
+                    if (onClick != null) onClick!(true);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8),
+                    child: Text(
+                      rightText ?? "确定",
+                      style: TextStyle(color: Colors.blue, fontSize: 14.sp),
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),

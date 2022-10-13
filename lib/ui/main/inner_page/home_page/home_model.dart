@@ -9,7 +9,6 @@ class HomeModel {
   static void getBannerList(Function(List<BannerEntity?>?) onSuccess) async {
     await DioUtils.getInstance().getList<BannerEntity>(
       WanAndroidApi.bannerList,
-      null,
       onSuccess: onSuccess,
       onFile: (err) {
         SmartDialog.showToast("${err.errMsg}");
@@ -27,7 +26,6 @@ class HomeModel {
     urlMap["num"] = page;
     await DioUtils.getInstance().get<ArticleEntity>(
       WanAndroidApi.articleList,
-      null,
       appendUrlMap: urlMap,
       onSuccess: onSuccess,
       onFile: (err) {

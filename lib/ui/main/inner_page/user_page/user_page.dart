@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/custom/message_dialog_view.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_model.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wan_android/utils/sp_constant.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:sp_util/sp_util.dart';
 
 ///用户
@@ -26,26 +24,25 @@ class _UserPageState extends State<UserPage> {
       child: ListView(
         children: [
           _builderHeader(),
-          _builderItem("收藏", "❥(^_-)"),
-          _builderItem("其他", "other"),
-          _builderItem("清除缓存", "10M"),
-          _builderItem("退出登录", null, onTap: () => _logout()),
+          _builderItem("收藏", "❥(^_-)", onTap: () {}),
+          _builderItem("其他", "other", onTap: () {}),
+          _builderItem("清除缓存", "10M", onTap: () {}),
+          _builderItem("退出登录", "", onTap: () => _logout()),
         ],
       ),
     );
   }
 
   void _logout() {
-    String _logoutDialog = "_logoutDialog";
     SmartDialog.show(
+        tag: "logout_dialog",
         widget: MessageDialogView(
-      tag: _logoutDialog,
-      context: "确认退出吗？",
-      onTap: () {
-        SmartDialog.dismiss(tag: _logoutDialog);
-        UserModel.logout();
-      },
-    ));
+          smartDialogTag: "logout_dialog",
+          content: "确认退出吗？dfdskfdjsfkdhsjffhdsjfhdjsfdhjsfhdjsfhdjsfhjs",
+          onClick: (isOk) {
+            if (isOk) UserModel.logout();
+          },
+        ));
   }
 
   Widget _builderHeader() {
@@ -96,7 +93,7 @@ class _UserPageState extends State<UserPage> {
 
           ///name
           Text(
-            "个性签名：我就写个性签名，气死你=》${SpUtil.getString(SPConstant.userName)}",
+            "个性签名: 我就写个性签名，气死你=》${SpUtil.getString(SPConstant.userName)},你若安好，便是晴天",
             style: TextStyle(color: Colors.black, fontSize: 16.sp),
           )
         ],
@@ -112,11 +109,13 @@ class _UserPageState extends State<UserPage> {
     );
   }
 
-  Widget _builderItem(String? leftText, String? rightText, {Function? onTap}) {
+  Widget _builderItem(String? leftText, String? rightText,
+      {GestureTapCallback? onTap}) {
     return InkWell(
-      onTap: () {
-        onTap?.call();
-      },
+      splashColor: Colors.red,
+      // hoverColor: Colors.red,
+      // focusColor: Colors.red,
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(top: 10),

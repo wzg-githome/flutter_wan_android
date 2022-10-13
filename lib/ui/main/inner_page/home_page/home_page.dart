@@ -5,6 +5,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
+import 'package:flutter_wan_android/custom/will_po_scope_view.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
 import 'package:flutter_wan_android/ui/main/util/home_utils.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
             _scrollCon.finishRefresh(success: true, noMore: false);
           } else {
             _articleList?.datas?.addAll(data!.datas!);
-            _scrollCon.finishLoad(success: true);
+            _scrollCon.finishLoad(success: true,noMore: false);
           }
         }
       });
@@ -90,7 +91,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return WillPoScopeView(
+        child: Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
       color: Colors.grey[300],
       child: EasyRefresh(
@@ -117,7 +119,7 @@ class _HomePageState extends State<HomePage> {
               }
             }),
       ),
-    );
+    ));
   }
 
   ///banner list
@@ -199,11 +201,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             )
-          : buildItem(_articleEntity),
+          : _buildItem(_articleEntity),
     );
   }
 
-  Widget buildItem(_articleEntity) {
+  Widget _buildItem(_articleEntity) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),

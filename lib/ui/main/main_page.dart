@@ -1,6 +1,8 @@
+import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/custom_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_page.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
 
@@ -34,9 +36,7 @@ class _MainPageState extends State<MainPage> {
     var _defaultColor = Colors.grey;
 
     return Scaffold(
-      appBar: AppBar(
-        title: CustomAppBar(centerTitle: "mainTitle".tr),
-      ),
+      appBar: getAceAppBar("mainTitle".tr),
       body: PageView(
         controller: _pageCon,
         onPageChanged: (index) {
@@ -47,7 +47,7 @@ class _MainPageState extends State<MainPage> {
         // physics: const NeverScrollableScrollPhysics(),
         children: const [
           HomePage(),
-          Text("data2"),
+          ProjectPage(),
           Text("data3"),
           UserPage(),
         ],
@@ -77,7 +77,7 @@ class _MainPageState extends State<MainPage> {
                 Icons.home,
                 color: _defaultIndex == 1 ? _checkedColor : _defaultColor,
               ),
-              label: "android"),
+              label: "项目"),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,

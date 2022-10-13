@@ -11,7 +11,7 @@ flutter_native_splash:
   # color 和 background_image 不能同时设置，只有一个会被使用。
 #  color: "#42a5f5"
   #background_image
-  background_image: "asset/images/backgroud.png"
+  background_image: "asset/images/app_splash_bg.png"
 
   # 以下是可选的参数。去掉注释前面的 #可使参数起作用。
 
@@ -46,7 +46,7 @@ flutter_native_splash:
   # https://developer.android.com/reference/android/view/Gravity): bottom 、 center 、
   # center_horizontal 、 center_vertical 、 clip_horizontal 、 clip_vertical 、
   # end 、 fill 、 fill_horizontal 、 fill_vertical 、 left 、 right 、 start 或 top 。
-  #android_gravity: center
+  android_gravity: fill
   #
   # ios_content_mode 可以是以下 iOS UIView.ContentMode 其中之一 (查看
   # https://developer.apple.com/documentation/uikit/uiview/contentmode): scaleToFill 、
@@ -62,7 +62,7 @@ flutter_native_splash:
   #       要显示通知栏，在 Flutter 应用中添加以下代码：
   #       WidgetsFlutterBinding.ensureInitialized();
   #       SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom, SystemUiOverlay.top]);
-  #fullscreen: true
+  fullscreen: true
 
   # 如果改变了 info.plist 的名字，可以使用 info_plist_files 指定对应的文件名。
   # 只需移除下面三行前面的 # 字符，不要移除任何空格：

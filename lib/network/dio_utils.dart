@@ -127,20 +127,26 @@ class DioUtils {
     } catch (e) {
       HttpError error = HttpError();
       error.errMsg = e.toString();
+
       ///log
       AceLog.e(msg: "post*onFiled: url:$url\n ${error.toString()}");
       onFile(error);
     }
   }
 
-  get<T>(String url, Map<String, String>? map,
-      {Map<String, dynamic>? appendUrlMap,
+  get<T>(String url,
+      {Map<String, dynamic>? paramsMap,
+      Map<String, dynamic>? appendUrlMap,
       required Function(T?) onSuccess,
       required Function(HttpError err) onFile}) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       T? data = await _request<T>(
-          url: url, method: _get, params: map, isList: false, onFiled: onFile);
+          url: url,
+          method: _get,
+          params: paramsMap,
+          isList: false,
+          onFiled: onFile);
       onSuccess(data);
     } catch (e) {
       HttpError error = HttpError();
@@ -171,14 +177,19 @@ class DioUtils {
     }
   }
 
-  getList<T>(String url, Map<String, String>? map,
-      {Map<String, dynamic>? appendUrlMap,
+  getList<T>(String url,
+      {Map<String, dynamic>? paramsMap,
+      Map<String, dynamic>? appendUrlMap,
       required Function(List<T?>?) onSuccess,
       required Function(HttpError err) onFile}) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       List<T?>? data = await _request<T>(
-          url: url, method: _get, params: map, isList: true, onFiled: onFile);
+          url: url,
+          method: _get,
+          params: paramsMap,
+          isList: true,
+          onFiled: onFile);
       onSuccess(data);
     } catch (e) {
       HttpError error = HttpError();
