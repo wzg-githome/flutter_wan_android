@@ -5,6 +5,7 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
+import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_mode.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:get/get.dart';
@@ -128,9 +129,10 @@ class _ProjectListPageState extends State<ProjectListPage> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[200]),
+                color: Colors. grey[200] ),
             child: Row(
               children: [
+
                 CachedNetworkImage(
                   imageUrl: "${curItem.envelopePic}",
                   placeholder: (context, url) {
@@ -138,8 +140,8 @@ class _ProjectListPageState extends State<ProjectListPage> {
                   },
                   imageBuilder: (context, imagePro) {
                     return Container(
-                      width: 100,
-                      height: 250,
+                      width: 90,
+                      height: 135,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           image: DecorationImage(
@@ -149,9 +151,10 @@ class _ProjectListPageState extends State<ProjectListPage> {
                     );
                   },
                 ),
-                Expanded(
+
+                 Expanded(
                     child: Container(
-                  color: Colors.blue,
+                  height: 135,
                   margin: const EdgeInsets.only(left: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -163,35 +166,68 @@ class _ProjectListPageState extends State<ProjectListPage> {
                             width: 20,
                             height: 20,
                           ),
-                          Text(
-                            "${curItem.title}",
-                            maxLines: 1,
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.ellipsis,
-                          )
+                          Expanded(
+                              child: Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Text(
+                              "${curItem.title}",
+                              maxLines: 1,
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 12.sp, color: Colors.black),
+                            ),
+                          ))
                         ],
                       ),
-                     Container(
-                       padding: const EdgeInsets.only(top: 10,bottom: 10),
-                       child:  Text(
+                     Expanded(child:  Container(
+                       // color: Colors.white,
+                       padding: const EdgeInsets.only(top: 10, bottom: 10),
+                       child: Text(
                          "${curItem.desc}",
                          maxLines: 4,
                          textAlign: TextAlign.start,
                          overflow: TextOverflow.ellipsis,
+                         style:
+                         TextStyle(fontSize: 12.sp, color: Colors.black),
                        ),
-                     ),
+                     )),
                       Row(
                         children: [
-                          Text("${curItem.niceDate}"),
-                          Text("${curItem.author}"),
-                          GestureDetector(
-                            onTap: () {
-                              // ${curItem.apkLink}
-                            },
-                            child: const Text(
-                              "下载",
-                              style: TextStyle(color: Colors.red),
+                          Expanded(
+                            child: Text("${curItem.niceDate}",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                    color: Colors.blue[300],
+                                    fontSize: 10.sp)),
+                            flex: 1,
+                          ),
+                          Expanded(
+                            child: Text(
+                              "${curItem.author}",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 12.sp),
                             ),
+                            flex: 1,
+                          ),
+                          Expanded(
+                            child: GestureDetector(
+                              onTap: () {
+                                // ${curItem.apkLink}
+                              },
+                              child: Container(
+                                // color: Colors.black,
+                                padding: const EdgeInsets.only(right: 10,top: 5,bottom: 5),
+                                child: Text(
+                                  "下载",
+                                  style: TextStyle(
+                                      color: Colors.red, fontSize: 12.sp),
+                                  textAlign: TextAlign.end,
+                                ),
+                              ),
+                            ),
+                            flex: 1,
                           ),
                         ],
                       ),
