@@ -8,6 +8,8 @@ import 'package:flutter_wan_android/network/entity/http_error.dart';
 import 'package:flutter_wan_android/ui/login/login_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/entity/k_h_detail_list_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/entity/k_h_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/entity/project_list_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/entity/project_tree_entity.dart';
 import 'package:flutter_wan_android/ui/register/register_entity.dart';
@@ -22,6 +24,10 @@ class JsonConvert {
 		(ArticleEntity).toString(): ArticleEntity.fromJson,
 		(ArticleEntityDatas).toString(): ArticleEntityDatas.fromJson,
 		(BannerEntity).toString(): BannerEntity.fromJson,
+		(KHDetailListEntity).toString(): KHDetailListEntity.fromJson,
+		(KHDetailListEntityDatas).toString(): KHDetailListEntityDatas.fromJson,
+		(KHEntity).toString(): KHEntity.fromJson,
+		(KHEntityChildren).toString(): KHEntityChildren.fromJson,
 		(ProjectListEntity).toString(): ProjectListEntity.fromJson,
 		(ProjectListEntityDatas).toString(): ProjectListEntityDatas.fromJson,
 		(ProjectListEntityDatasTags).toString(): ProjectListEntityDatasTags.fromJson,
@@ -119,6 +125,18 @@ class JsonConvert {
 		}
 		if(<BannerEntity>[] is M){
 			return data.map<BannerEntity>((Map<String, dynamic> e) => BannerEntity.fromJson(e)).toList() as M;
+		}
+		if(<KHDetailListEntity>[] is M){
+			return data.map<KHDetailListEntity>((Map<String, dynamic> e) => KHDetailListEntity.fromJson(e)).toList() as M;
+		}
+		if(<KHDetailListEntityDatas>[] is M){
+			return data.map<KHDetailListEntityDatas>((Map<String, dynamic> e) => KHDetailListEntityDatas.fromJson(e)).toList() as M;
+		}
+		if(<KHEntity>[] is M){
+			return data.map<KHEntity>((Map<String, dynamic> e) => KHEntity.fromJson(e)).toList() as M;
+		}
+		if(<KHEntityChildren>[] is M){
+			return data.map<KHEntityChildren>((Map<String, dynamic> e) => KHEntityChildren.fromJson(e)).toList() as M;
 		}
 		if(<ProjectListEntity>[] is M){
 			return data.map<ProjectListEntity>((Map<String, dynamic> e) => ProjectListEntity.fromJson(e)).toList() as M;

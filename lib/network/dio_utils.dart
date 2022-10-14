@@ -12,6 +12,7 @@ import 'entity/http_error.dart';
 import 'other/coustom_log_interceptor.dart';
 
 ///dio封装
+///1.支持动态url
 class DioUtils {
   static DioUtils getInstance() => DioUtils._internal();
 

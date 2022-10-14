@@ -21,9 +21,11 @@ class _ProjectPageState extends State<ProjectPage> {
   void initState() {
     ProjectModel.getProjectTreeJson((List<ProjectTreeEntity?>? data) {
       if (ObjectUtil.isNotEmpty(data)) {
-        setState(() {
-          _projectTreeList = data;
-        });
+       if(mounted){
+         setState(() {
+           _projectTreeList = data;
+         });
+       }
       }
     });
     super.initState();

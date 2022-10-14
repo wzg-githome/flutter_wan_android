@@ -6,6 +6,8 @@ import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_page
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_page.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
 
+import 'inner_page/knowledge_hierarchy_page/knowledgn_hierarchy_page.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -40,15 +42,17 @@ class _MainPageState extends State<MainPage> {
       body: PageView(
         controller: _pageCon,
         onPageChanged: (index) {
-          setState(() {
-            _defaultIndex = index;
-          });
+          if (mounted) {
+            setState(() {
+              _defaultIndex = index;
+            });
+          }
         },
         // physics: const NeverScrollableScrollPhysics(),
         children: const [
           HomePage(),
           ProjectPage(),
-          Text("data3"),
+          KnowledgeHierarchyPage(),
           UserPage(),
         ],
       ),
@@ -59,10 +63,12 @@ class _MainPageState extends State<MainPage> {
           if (_defaultIndex != index) {
             _pageCon.jumpToPage(index);
           }
-          setState(() {
-            _defaultIndex = index;
-            AceLog.d("_defaultIndex: $_defaultIndex");
-          });
+          if (mounted) {
+            setState(() {
+              _defaultIndex = index;
+              AceLog.d("_defaultIndex: $_defaultIndex");
+            });
+          }
         },
         items: [
           BottomNavigationBarItem(
@@ -83,7 +89,7 @@ class _MainPageState extends State<MainPage> {
                 Icons.home,
                 color: _defaultIndex == 2 ? _checkedColor : _defaultColor,
               ),
-              label: "flutter"),
+              label: "知识体系"),
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,

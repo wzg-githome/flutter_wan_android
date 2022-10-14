@@ -21,4 +21,10 @@ class WanAndroidApi {
 
   ///项目类别数据
   static var projectList = "project/list/{page}/json";
+
+  ///知识体系数据
+  static var treeList = "tree/json";
+
+  ///知识体系feed文章数据
+  static var articleListPageDetail = "article/list/{page}/json";
 }

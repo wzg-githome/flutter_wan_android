@@ -1,4 +1,5 @@
 import 'package:flutter_wan_android/ui/login/login_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/k_h_detail_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_list_page.dart';
 import 'package:flutter_wan_android/ui/main/main_page.dart';
 import 'package:flutter_wan_android/ui/register/register_page.dart';
@@ -11,6 +12,7 @@ Map<String, WidgetBuilder> routes = {
   PageList.mainPage: (context) => const MainPage(),
   PageList.registerPage: (context) => const RegisterPage(),
   PageList.projectListPage: (context) => const ProjectListPage(),
+  PageList.KHDetailPage: (context) => const KHDetailPage(),
 };
 
 class PageList {
@@ -19,4 +21,5 @@ class PageList {
   static var mainPage = "mainPage";
   static var registerPage = "registerPage";
   static var projectListPage = "projectListPage";
+  static var KHDetailPage = "KHDetailPage";
 }

@@ -47,14 +47,14 @@ class _HomePageState extends State<HomePage> {
 
   void _initData() {
     _bannerList = HomeUtils.getBannerList();
-    if (ObjectUtil.isNotEmpty(_bannerList)) {
+    if (ObjectUtil.isNotEmpty(_bannerList) && mounted) {
       setState(() {});
     }
     HomeModel.getBannerList((data) {
       if (ObjectUtil.isNotEmpty(data) && data != _bannerList) {
         _bannerList = data;
         HomeUtils.saveBannerList(_bannerList);
-        setState(() {});
+        if (mounted) setState(() {});
       }
     });
 
@@ -69,23 +69,33 @@ class _HomePageState extends State<HomePage> {
       curPage++;
     }
     HomeModel.getArticleList(curPage, (ArticleEntity? data) {
-      setState(() {
-        if (!ObjectUtil.isEmpty(data)) {
-          if (isRefresh) {
-            _articleList = data;
-            _scrollCon.finishRefresh(success: true, noMore: false);
-          } else {
-            _articleList?.datas?.addAll(data!.datas!);
-            _scrollCon.finishLoad(success: true,noMore: false);
+      if (mounted) {
+        setState(() {
+          if (ObjectUtil.isNotEmpty(data)) {
+            if (isRefresh) {
+              _articleList = data;
+              _scrollCon.finishRefresh(success: true, noMore: false);
+            } else {
+              if (ObjectUtil.isNotEmpty(data!.datas)) {
+                _articleList?.datas?.addAll(data.datas!);
+                _scrollCon.finishLoad(success: true, noMore: false);
+              } else {
+                curPage--;
+                _scrollCon.finishRefresh(success: true, noMore: true);
+                SmartDialog.showToast("a~,没有更多内容了");
+              }
+            }
           }
-        }
-      });
+        });
+      }
     }, (errMsg) {
       SmartDialog.showToast("a~,没有更多内容了");
-      setState(() {
-        curPage--;
-        _scrollCon.finishRefresh(success: true, noMore: true);
-      });
+      if (mounted) {
+        setState(() {
+          curPage--;
+          _scrollCon.finishRefresh(success: true, noMore: true);
+        });
+      }
     });
   }
 
