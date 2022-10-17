@@ -7,7 +7,6 @@ import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/custom/will_po_scope_view.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
-import 'package:flutter_wan_android/ui/main/util/home_utils.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,14 +45,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _initData() {
-    _bannerList = HomeUtils.getBannerList();
+    _bannerList = HomeModel.getCacheBannerList();
     if (ObjectUtil.isNotEmpty(_bannerList) && mounted) {
       setState(() {});
     }
     HomeModel.getBannerList((data) {
       if (ObjectUtil.isNotEmpty(data) && data != _bannerList) {
         _bannerList = data;
-        HomeUtils.saveBannerList(_bannerList);
+        HomeModel.saveBannerList(_bannerList);
         if (mounted) setState(() {});
       }
     });

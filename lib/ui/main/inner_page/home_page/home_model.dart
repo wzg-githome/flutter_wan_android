@@ -1,19 +1,26 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/network/dio_utils.dart';
-import 'package:flutter_wan_android/network/wan_android_api.dart';
+import 'package:flutter_wan_android/core/wan_android_api.dart';
+import 'package:flutter_wan_android/ui/base/base_model.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
 
-class HomeModel {
+class HomeModel extends BaseModel {
+  ///获取缓存的bannerList
+  static List<BannerEntity?>? getCacheBannerList() {
+    return BaseModel.dataManager.getCacheBannerList();
+  }
+
+  ///保存bannerList
+  static void saveBannerList(List<BannerEntity?>? bannerList) {
+    BaseModel.dataManager.putBannerList(bannerList);
+  }
+
   ///banner
   static void getBannerList(Function(List<BannerEntity?>?) onSuccess) async {
-    await DioUtils.getInstance().getList<BannerEntity>(
-      WanAndroidApi.bannerList,
-      onSuccess: onSuccess,
-      onFile: (err) {
-        SmartDialog.showToast("${err.errMsg}");
-      },
-    );
+    await BaseModel.dataManager.getBannerList<BannerEntity>(onSuccess, (err) {
+      SmartDialog.showToast("${err.errMsg}");
+    });
   }
 
   ///
@@ -22,15 +29,8 @@ class HomeModel {
     Function(ArticleEntity?) onSuccess,
     Function(String?) onFailed,
   ) async {
-    var urlMap = <String, dynamic>{};
-    urlMap["num"] = page;
-    await DioUtils.getInstance().get<ArticleEntity>(
-      WanAndroidApi.articleList,
-      appendUrlMap: urlMap,
-      onSuccess: onSuccess,
-      onFile: (err) {
-        onFailed(err.errMsg);
-      },
-    );
+    await BaseModel.dataManager.getArticleList<ArticleEntity>(page, onSuccess, (err){
+      onFailed(err.errMsg);
+    });
   }
 }

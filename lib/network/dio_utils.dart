@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_wan_android/core/net/abs_net_manager.dart';
 import 'package:flutter_wan_android/network/constant.dart';
 import 'package:flutter_wan_android/network/entity/base_entity.dart';
 import 'package:flutter_wan_android/network/network_process_factroy.dart';
@@ -61,7 +62,8 @@ class DioUtils {
       if (method == _get) {
         response = await _dio?.get(url, queryParameters: params);
       } else if (method == _post) {
-        FormData data = FormData.fromMap(params);
+        /*FormData?*/
+        var data = params == null ? null : FormData.fromMap(params);
         response = await _dio?.post(url,
             data: data,
             onSendProgress: onSendProgress,
@@ -73,14 +75,18 @@ class DioUtils {
       ///
       if (response != null && response.statusCode == 200) {
         BaseEntity entity = BaseEntity.fromJson(response.data);
-        if (entity.errorCode == 0 && entity.data != null) {
+        if (entity.errorCode == 0 /* && entity.data != null*/) {
           ///beanList
           if (isList) {
-            return EntityFactory.generateOBJList<T>(entity.data);
+            return (entity.data != null)
+                ? EntityFactory.generateOBJList<T>(entity.data)
+                : null;
           }
 
           ///bean
-          return EntityFactory.generateOBJ<T>(entity.data);
+          return (entity.data != null)
+              ? EntityFactory.generateOBJ<T>(entity.data)
+              : null;
         } else {
           ///err
           err.errCode = entity.errorCode;
@@ -116,10 +122,13 @@ class DioUtils {
     return null;
   }
 
-  post<T>(String url, Map<String, String>? map,
-      {Map<String, dynamic>? appendUrlMap,
+  post<T>(String url, Map<String, dynamic>? map, Function(T?) onSuccess,
+      Function(HttpError err) onFile,
+      {Map<String, dynamic>?
+          appendUrlMap /*,
       required Function(T?) onSuccess,
-      required Function(HttpError err) onFile}) async {
+      required Function(HttpError err) onFile*/
+      }) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       T? data = await _request<T>(
@@ -135,11 +144,20 @@ class DioUtils {
     }
   }
 
-  get<T>(String url,
+  // ///实验性
+  // postTest<T>(String url, Map<String, dynamic>? map, Function(T?) onSuccess,
+  //     Function(HttpError err) onFile,
+  //     {Map<String, dynamic>? appendUrlMap}) async {
+  //   post<T>(url, map, onSuccess: onSuccess, onFile: onFile);
+  // }
+
+  get<T>(String url, Function(T?) onSuccess, Function(HttpError err) onFile,
       {Map<String, dynamic>? paramsMap,
-      Map<String, dynamic>? appendUrlMap,
+      Map<String, dynamic>?
+          appendUrlMap /*,
       required Function(T?) onSuccess,
-      required Function(HttpError err) onFile}) async {
+      required Function(HttpError err) onFile*/
+      }) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       T? data = await _request<T>(
@@ -159,10 +177,13 @@ class DioUtils {
     }
   }
 
-  postList<T>(String url, Map<String, String>? map,
-      {Map<String, dynamic>? appendUrlMap,
+  postList<T>(String url, Map<String, dynamic>? map,
+      Function(List<T?>?) onSuccess, Function(HttpError err) onFile,
+      {Map<String, dynamic>?
+          appendUrlMap /*,
       required Function(List<T?>?) onSuccess,
-      required Function(HttpError err) onFile}) async {
+      required Function(HttpError err) onFile*/
+      }) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       List<T?>? data = await _request<T>(
@@ -178,11 +199,14 @@ class DioUtils {
     }
   }
 
-  getList<T>(String url,
+  getList<T>(
+      String url, Function(List<T?>?) onSuccess, Function(HttpError err) onFile,
       {Map<String, dynamic>? paramsMap,
-      Map<String, dynamic>? appendUrlMap,
+      Map<String, dynamic>?
+          appendUrlMap /*,
       required Function(List<T?>?) onSuccess,
-      required Function(HttpError err) onFile}) async {
+      required Function(HttpError err) onFile*/
+      }) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       List<T?>? data = await _request<T>(

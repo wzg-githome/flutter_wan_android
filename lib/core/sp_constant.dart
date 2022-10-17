@@ -3,7 +3,7 @@ class SPConstant {
   static var loginStatus = "login_status";
 
   ///userName
-  static var userName = "user_name";
+  static var loginName = "login_name";
 
   ///bannerList
   static var bannerList = "banner_list";

@@ -27,4 +27,7 @@ class WanAndroidApi {
 
   ///知识体系feed文章数据
   static var articleListPageDetail = "article/list/{page}/json";
+
+  ///收藏
+  static var lgCollect = "lg/collect/{id}/json";
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
+import 'package:flutter_wan_android/custom/common_class.dart';
+import 'package:flutter_wan_android/ui/base/base_model.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/kh_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +22,7 @@ class KHDetailPage extends StatefulWidget {
 
 class _KHDetailPageState extends State<KHDetailPage> {
   ///二级数据实体
-  KHEntityChildren? _KHEntityChildren;
+  KHEntityChildren? _mKHEntityChildren;
   KHDetailListEntity? _detailListEntity;
   int _curPage = 1;
   late EasyRefreshController _refreshCon;
@@ -28,8 +30,8 @@ class _KHDetailPageState extends State<KHDetailPage> {
   @override
   void initState() {
     _refreshCon = EasyRefreshController();
-    _KHEntityChildren = Get.arguments;
-    if (ObjectUtil.isNotEmpty(_KHEntityChildren)) {
+    _mKHEntityChildren = Get.arguments;
+    if (ObjectUtil.isNotEmpty(_mKHEntityChildren)) {
       _refreshAndLoadMoreData(true);
     }
     super.initState();
@@ -49,22 +51,24 @@ class _KHDetailPageState extends State<KHDetailPage> {
     }
     KHModel.getArticleListPageDetail(
       _curPage,
-      _KHEntityChildren!.id,
+      _mKHEntityChildren!.id,
       onSuccess: (KHDetailListEntity? data) {
         if (ObjectUtil.isNotEmpty(data) && mounted) {
-          if (isRefresh) {
-            _detailListEntity = data;
-            _refreshCon.finishRefresh(success: true);
-          } else {
-            if (ObjectUtil.isNotEmpty(data!.datas)) {
-              _detailListEntity!.datas!.addAll(data.datas!);
-              _refreshCon.finishLoad(success: true, noMore: false);
+          setState(() {
+            if (isRefresh) {
+              _detailListEntity = data;
+              _refreshCon.finishRefresh(success: true);
             } else {
-              _curPage--;
-              SmartDialog.showToast("~亲，没有更多数据了呢");
-              _refreshCon.finishRefresh(success: true, noMore: true);
+              if (ObjectUtil.isNotEmpty(data!.datas)) {
+                _detailListEntity!.datas!.addAll(data.datas!);
+                _refreshCon.finishLoad(success: true, noMore: false);
+              } else {
+                _curPage--;
+                SmartDialog.showToast("~亲，没有更多数据了呢");
+                _refreshCon.finishRefresh(success: true, noMore: true);
+              }
             }
-          }
+          });
         }
       },
       onFile: (err) {
@@ -82,16 +86,16 @@ class _KHDetailPageState extends State<KHDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAceAppBar("${_KHEntityChildren?.name}"),
+      appBar: getAceAppBar("${_mKHEntityChildren?.name}"),
       body: EasyRefresh(
         controller: _refreshCon,
         enableControlFinishRefresh: true,
         enableControlFinishLoad: true,
         onLoad: () async {
-          _refreshAndLoadMoreData(true);
+          _refreshAndLoadMoreData(false);
         },
         onRefresh: () async {
-          _refreshAndLoadMoreData(false);
+          _refreshAndLoadMoreData(true);
         },
         child: ListView.builder(
             itemCount: (ObjectUtil.isNotEmpty(_detailListEntity))
@@ -121,67 +125,116 @@ class _KHDetailPageState extends State<KHDetailPage> {
     var curItem = ObjectUtil.isNotEmpty(_detailListEntity!.datas)
         ? _detailListEntity!.datas![index]
         : null;
-    return Container(
-      padding: const EdgeInsets.all(10),
-      margin: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
-      color: Colors.grey[200],
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Image.asset(
-                "asset/images/icon_author.png",
-                height: 25,
-                width: 25,
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 5),
-                height: 20,
-                child: Text("${curItem?.author}"),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left: 5),
-                height: 20,
-                child: Text(
-                  "${curItem?.superChapterName}/${curItem?.chapterName}",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 12.sp,
+    return InkWell(
+      onTap: () {
+        _onClickListItem(index);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        decoration: BoxDecoration(
+            color: Colors.grey[200], borderRadius: BorderRadius.circular(8)),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  // color: Colors.blue,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        "asset/images/icon_author.png",
+                        height: 25,
+                        width: 25,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(left: 5),
+                        // height: 20,
+                        child: Text(
+                          "${curItem?.author}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 12.sp),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-              )
-            ],
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10, bottom: 10),
-            child: Text(
-              "${curItem?.title}",
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.start,
-              style: TextStyle(fontSize: 12.sp),
+                Container(
+                  margin: const EdgeInsets.only(left: 5),
+                  height: 20,
+                  child: Text(
+                    "${curItem?.superChapterName}/${curItem?.chapterName}",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                )
+              ],
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("${curItem?.niceDate}"),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  child: const Icon(
-                    Icons.local_activity_sharp,
-                    color: Colors.red,
+            Container(
+              margin: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Text(
+                "${curItem?.title}",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.start,
+                style: TextStyle(fontSize: 12.sp),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("${curItem?.niceDate}"),
+                InkWell(
+                  onTap: () {
+                    _collect(curItem);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        left: 3, right: 3, top: 3, bottom: 3),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Row(
+                      children: [
+                        Text(
+                          "收藏",
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(color: Colors.white, fontSize: 12.sp),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 2),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 12,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
-          )
-        ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  ///item的点击事情
+  void _onClickListItem(index) {}
+
+  ///收藏
+  void _collect(KHDetailListEntityDatas? curItem) async {
+    if (curItem == null) return;
+    KHModel().lgCollect(curItem.id);
   }
 }
