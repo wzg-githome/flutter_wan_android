@@ -12,8 +12,8 @@ import 'package:sp_util/sp_util.dart';
 
 class LoginModel extends BaseModel {
   ///login
-  static void login(String name, String pwd) {
-    BaseModel.dataManager.login<LoginEntity>(name, pwd, (data) {
+  static void login(String name, String pwd) async {
+    await BaseModel.dataManager.login<LoginEntity>(name, pwd, (data) {
       if (data == null) {
         SmartDialog.showToast("errMsg: data==null");
         return;
@@ -24,23 +24,5 @@ class LoginModel extends BaseModel {
     }, (err) {
       SmartDialog.showToast("${err.errMsg}");
     });
-
-    // var map = <String, String>{};
-    // map["username"] = name;
-    // map["password"] = pwd;
-    // DioUtils.getInstance().post<LoginEntity>(WanAndroidApi.login, map,
-    //     onSuccess: (data) {
-    //   if (data == null) {
-    //     SmartDialog.showToast("errMsg: data==null");
-    //     return;
-    //   }
-    //   BaseModel.dataManager.setLoginStatus(true);
-    //   BaseModel.dataManager.setLoginName(data.nickname ?? name);
-    //   // SpUtil.putBool(SPConstant.loginStatus, true);
-    //   // SpUtil.putString(SPConstant.userName, data.nickname ?? name);
-    //   Get.offNamed(PageList.mainPage);
-    // }, onFile: (err) {
-    //   SmartDialog.showToast("${err.errMsg}");
-    // });
   }
 }

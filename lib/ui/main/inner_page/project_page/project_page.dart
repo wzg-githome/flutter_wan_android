@@ -1,7 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/page_list.dart';
-import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_mode.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_model.dart';
 import 'package:get/get.dart';
 
 import 'entity/project_tree_entity.dart';

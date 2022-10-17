@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
-import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_mode.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_model.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:get/get.dart';
 

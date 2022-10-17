@@ -10,13 +10,6 @@ import 'package:sp_util/sp_util.dart';
 class UserModel extends BaseModel {
   ///logout
   static void logout() async {
-    // await DioUtils.getInstance().get(WanAndroidApi.logout, onSuccess: (data) {
-    //   BaseModel.dataManager.setLoginStatus(false);
-    //   Get.offAllNamed(PageList.loginPage);
-    // }, onFile: (err) {
-    //   SmartDialog.showToast("msg: ${err.errMsg}");
-    // });
-
     await BaseModel.dataManager.logout((data) {
       BaseModel.dataManager.setLoginStatus(false);
       Get.offAllNamed(PageList.loginPage);
