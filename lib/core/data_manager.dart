@@ -38,8 +38,8 @@ class DataManager extends AbsNetManager with AbsSPManager {
   }
 
   @override
-  void setLoginStatus(bool isLogin) {
-    _spManager.setLoginStatus(isLogin);
+  Future<void> setLoginStatus(bool isLogin) async {
+    await _spManager.setLoginStatus(isLogin);
   }
 
   @override
@@ -48,8 +48,8 @@ class DataManager extends AbsNetManager with AbsSPManager {
   }
 
   @override
-  Future<void> setLoginName(String name) async{
-   await _spManager.setLoginName(name);
+  Future<void> setLoginName(String name) async {
+    await _spManager.setLoginName(name);
   }
 
   @override
@@ -63,8 +63,8 @@ class DataManager extends AbsNetManager with AbsSPManager {
   }
 
   @override
-  Future<void> putBannerList(List<BannerEntity?>? bannerList)async {
-   await _spManager.putBannerList(bannerList);
+  Future<void> putBannerList(List<BannerEntity?>? bannerList) async {
+    await _spManager.putBannerList(bannerList);
   }
 
   @override
@@ -93,12 +93,13 @@ class DataManager extends AbsNetManager with AbsSPManager {
   }
 
   @override
-  Future<void> getArticleListPageDetail<T>(int? page, int? cid, onSuccess, onFile)async {
-   await _netManager.getArticleListPageDetail<T>(page, cid, onSuccess, onFile);
+  Future<void> getArticleListPageDetail<T>(
+      int? page, int? cid, onSuccess, onFile) async {
+    await _netManager.getArticleListPageDetail<T>(page, cid, onSuccess, onFile);
   }
 
   @override
-  Future<void> getTreeList<T>(onSuccess, onFiled)async {
+  Future<void> getTreeList<T>(onSuccess, onFiled) async {
     await _netManager.getTreeList<T>(onSuccess, onFiled);
   }
 }

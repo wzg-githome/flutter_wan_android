@@ -10,7 +10,7 @@ class SPManager extends AbsSPManager {
   static const _tag = "SPManager";
 
   @override
-  void setLoginStatus(bool isLogin) async {
+  Future<void> setLoginStatus(bool isLogin) async {
     await SpUtil.putBool(SPConstant.loginStatus, isLogin);
   }
 

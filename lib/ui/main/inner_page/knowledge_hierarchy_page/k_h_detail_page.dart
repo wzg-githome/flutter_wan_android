@@ -157,7 +157,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style:
-                              TextStyle(color: Colors.black, fontSize: 12.sp),
+                              TextStyle(color: Colors.black, fontSize: 14.sp),
                         ),
                       )
                     ],
@@ -199,7 +199,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
                     padding: const EdgeInsets.only(
                         left: 3, right: 3, top: 3, bottom: 3),
                     decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.blue[600],
                         borderRadius: BorderRadius.circular(5)),
                     child: Row(
                       children: [
@@ -233,7 +233,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
   void _onClickListItem(index) {}
 
   ///收藏
-  void _collect(KHDetailListEntityDatas? curItem) async {
+  void _collect(KHDetailListEntityDatas? curItem) {
     if (curItem == null) return;
     KHModel().lgCollect(curItem.id);
   }

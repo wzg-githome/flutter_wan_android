@@ -70,8 +70,8 @@ class NetManager extends AbsNetManager {
   Future<void> getArticleListPageDetail<T>(
       int? page, int? cid, onSuccess, onFile) async {
     var queryMap = <String, dynamic>{};
-    var appendUrlMap = <String, dynamic>{};
     queryMap["cid"] = cid;
+    var appendUrlMap = <String, dynamic>{};
     appendUrlMap["page"] = page;
 
     await _dioUtils.get<T>(

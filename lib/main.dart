@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    initSp();
+    _initSp();
     super.initState();
   }
 
@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
             ));
   }
 
-  void initSp() async {
+  void _initSp() async {
     await SpUtil.getInstance();
     LogUtil.init(
         isDebug: ConfigCenter.isDebug, maxLen: ConfigCenter.logMaxLength);

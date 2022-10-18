@@ -103,17 +103,11 @@ class _LoginPgeState extends State<LoginPge> {
   void checkNamePed() {
     if (_loginCon.click2Number()) return;
 
-    bool onSuccess;
     AceLog.d("name: ${_nameCon.text.length} \tpwd: ${_pwdCon.text.length}");
     if (_nameCon.text.length >= 3 && _pwdCon.text.length >= 6) {
-      onSuccess = true;
-    } else {
-      onSuccess = false;
-      SmartDialog.showToast("账号至少三位并且密码至少6位");
-    }
-
-    if (onSuccess) {
       LoginModel.login(_nameCon.text, _pwdCon.text);
+    } else {
+      SmartDialog.showToast("账号至少三位并且密码至少6位");
     }
   }
 }
