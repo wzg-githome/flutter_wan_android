@@ -2,7 +2,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/network/dio_utils.dart';
 import 'package:flutter_wan_android/core/wan_android_api.dart';
 import 'package:flutter_wan_android/page_list.dart';
-import 'package:flutter_wan_android/ui/base/base_model.dart';
+import 'package:flutter_wan_android/ui/common//base_model.dart';
 import 'package:flutter_wan_android/ui/login/login_entity.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
 import 'package:flutter_wan_android/utils/commin_utils.dart';

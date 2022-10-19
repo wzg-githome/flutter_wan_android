@@ -51,6 +51,7 @@ class _KnowledgeHierarchyPageState extends State<KnowledgeHierarchyPage> {
                 if (ObjectUtil.isNotEmpty(_khList) &&
                     ObjectUtil.isNotEmpty(_khList![index]) &&
                     mounted) {
+
                   setState(() {
                     _isExc = _khList![index]!.curCheck;
                     _index = index;

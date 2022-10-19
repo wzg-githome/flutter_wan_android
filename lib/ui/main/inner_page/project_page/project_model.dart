@@ -1,5 +1,5 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:flutter_wan_android/ui/base/base_model.dart';
+import 'package:flutter_wan_android/ui/common/base_model.dart';
 
 import 'entity/project_list_entity.dart';
 import 'entity/project_tree_entity.dart';

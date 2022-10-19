@@ -4,7 +4,9 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
-import 'package:flutter_wan_android/ui/base/base_model.dart';
+import 'package:flutter_wan_android/custom/status_widget.dart';
+import 'package:flutter_wan_android/ui/common/base_model.dart';
+import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/kh_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,11 +26,16 @@ class _KHDetailPageState extends State<KHDetailPage> {
   ///二级数据实体
   KHEntityChildren? _mKHEntityChildren;
   KHDetailListEntity? _detailListEntity;
-  int _curPage = 1;
+  int _curPage = 0;
   late EasyRefreshController _refreshCon;
+
+  ///默认状态
+  // StatusType _statusType = StatusType.loading;
+  // late Controller _controller;
 
   @override
   void initState() {
+    // _controller=Controller();
     _refreshCon = EasyRefreshController();
     _mKHEntityChildren = Get.arguments;
     if (ObjectUtil.isNotEmpty(_mKHEntityChildren)) {
@@ -45,7 +52,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
 
   _refreshAndLoadMoreData(bool isRefresh) {
     if (isRefresh) {
-      _curPage = 1;
+      _curPage = 0;
     } else {
       _curPage++;
     }
@@ -57,6 +64,11 @@ class _KHDetailPageState extends State<KHDetailPage> {
           setState(() {
             if (isRefresh) {
               _detailListEntity = data;
+              // _controller.loading(/*function*/);
+              ///更新状态
+              // _statusType = ObjectUtil.isNotEmpty(_detailListEntity!.datas)
+              //     ? StatusType.content
+              //     : StatusType.empty;
               _refreshCon.finishRefresh(success: true);
             } else {
               if (ObjectUtil.isNotEmpty(data!.datas)) {
@@ -74,6 +86,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
       onFile: (err) {
         if (mounted) {
           setState(() {
+            // _statusType = StatusType.error;
             _curPage--;
             SmartDialog.showToast("${err.errMsg}");
             _refreshCon.finishRefresh(success: true, noMore: false);
@@ -104,7 +117,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
             itemBuilder: (context, index) {
               return ObjectUtil.isEmpty(_detailListEntity)
                   ? Container(
-                      height: 35.h,
+                      height: 50.h,
                       padding: const EdgeInsets.only(left: 10),
                       margin: const EdgeInsets.only(left: 10, top: 10),
                       decoration: BoxDecoration(
@@ -116,6 +129,22 @@ class _KHDetailPageState extends State<KHDetailPage> {
                       ),
                     )
                   : _buildItemView(index);
+              // return StatusWidget(
+              //   controller: _controller,
+              //     // mStatusType: _statusType,
+              //     loadingWidget: Container(
+              //       height: 35.h,
+              //       padding: const EdgeInsets.only(left: 10),
+              //       margin: const EdgeInsets.only(left: 10, top: 10),
+              //       decoration: BoxDecoration(
+              //           color: Colors.grey[200],
+              //           borderRadius: BorderRadius.circular(8)),
+              //       child: const Text(
+              //         "loading...",
+              //         textAlign: TextAlign.center,
+              //       ),
+              //     ),
+              //     content: _buildItemView(index));
             }),
       ),
     );
@@ -127,7 +156,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
         : null;
     return InkWell(
       onTap: () {
-        _onClickListItem(index);
+        _onClickListItem(curItem);
       },
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -230,7 +259,12 @@ class _KHDetailPageState extends State<KHDetailPage> {
   }
 
   ///item的点击事情
-  void _onClickListItem(index) {}
+  void _onClickListItem(KHDetailListEntityDatas? curItem) async {
+    await Get.to(WebPage(
+      url: curItem?.link,
+      title: curItem?.title,
+    ));
+  }
 
   ///收藏
   void _collect(KHDetailListEntityDatas? curItem) {

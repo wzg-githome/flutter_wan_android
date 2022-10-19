@@ -5,12 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 AppBar getAceAppBar(String title,
     {bool isShowAction = false,
     bool isLeading = false,
-    GestureTapCallback? back,
+    GestureTapCallback? onBackClick,
     String rightText = ""}) {
   return AppBar(
     leading: isLeading
         ? GestureDetector(
-            onTap: back,
+            onTap: onBackClick,
             child: Center(
               child: Image.asset(
                 "asset/images/icon_back.png",
