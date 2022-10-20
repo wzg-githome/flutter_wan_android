@@ -83,6 +83,12 @@ class DataManager extends AbsNetManager with AbsSPManager {
   }
 
   @override
+  Future<void> lgUnCollect<T>(
+      int? id, int? originId, onSuccess, onFailed) async {
+    await _netManager.lgUnCollect<T>(id, originId, onSuccess, onFailed);
+  }
+
+  @override
   Future<void> getProjectList<T>(int? cid, int page, onSuccess, onFiled) async {
     await _netManager.getProjectList<T>(cid, page, onSuccess, onFiled);
   }
@@ -101,5 +107,20 @@ class DataManager extends AbsNetManager with AbsSPManager {
   @override
   Future<void> getTreeList<T>(onSuccess, onFiled) async {
     await _netManager.getTreeList<T>(onSuccess, onFiled);
+  }
+
+  @override
+  Future<void> lgCollectList<T>(int page, onSuccess, onFiled) async {
+    await _netManager.lgCollectList<T>(page, onSuccess, onFiled);
+  }
+
+  @override
+  Future<void> lgInStationCollect<T>(int? id, int? originId, onSuccess, onFiled) async{
+    await _netManager.lgInStationCollect(id, originId, onSuccess, onFiled);
+  }
+  @override
+  Future<void> lgInStationUnCollect<T>(
+      int? id, int? originId, onSuccess, onFiled) async {
+    await _netManager.lgInStationUnCollect<T>(id, originId, onSuccess, onFiled);
   }
 }

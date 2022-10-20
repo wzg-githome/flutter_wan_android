@@ -1,4 +1,3 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -46,18 +45,18 @@ class _StatusWidgetState extends State<StatusWidget> {
 
   @override
   void initState() {
-    widget.controller.loading(() {
-      mStatusType = StatusType.loading;
-    });
-    widget.controller.content(() {
-      mStatusType = StatusType.content;
-    });
-    widget.controller.error(() {
-      mStatusType = StatusType.error;
-    });
-    widget.controller.empty(() {
-      mStatusType = StatusType.empty;
-    });
+    // widget.controller.loading(() {
+    //   mStatusType = StatusType.loading;
+    // });
+    // widget.controller.content(() {
+    //   mStatusType = StatusType.content;
+    // });
+    // widget.controller.error(() {
+    //   mStatusType = StatusType.error;
+    // });
+    // widget.controller.empty(() {
+    //   mStatusType = StatusType.empty;
+    // });
     super.initState();
   }
 

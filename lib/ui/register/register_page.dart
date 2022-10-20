@@ -43,17 +43,23 @@ class _RegisterPageState extends State<RegisterPage> {
           children: [
             TextField(
               controller: _nameCon,
-              decoration: const InputDecoration(hintText: "账号"),
+              decoration: InputDecoration(
+                  hintText: "账号",
+                  hintStyle: TextStyle(color: Colors.grey[400])),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: _pwdCon1,
-              decoration: const InputDecoration(hintText: "密码1"),
+              decoration: InputDecoration(
+                  hintText: "密码1",
+                  hintStyle: TextStyle(color: Colors.grey[400])),
             ),
             const SizedBox(height: 10),
             TextField(
               controller: _pwdCon2,
-              decoration: const InputDecoration(hintText: "密码2"),
+              decoration: InputDecoration(
+                  hintText: "密码2",
+                  hintStyle: TextStyle(color: Colors.grey[400])),
             ),
             const SizedBox(height: 30),
             MaterialButton(
@@ -69,22 +75,21 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-
-  void checkNameAndPwd() {
+  void checkNameAndPwd() async {
     if (_nameCon.text.length < 3) {
-      SmartDialog.showToast("账号至少3位");
+      await SmartDialog.showToast("账号至少3位");
       return;
     }
     if (_pwdCon1.text.length < 6) {
-      SmartDialog.showToast("密码至少6位");
+      await SmartDialog.showToast("密码至少6位");
       return;
     }
     if (_pwdCon2.text.length < 6) {
-      SmartDialog.showToast("密码至少6位");
+      await SmartDialog.showToast("密码至少6位");
       return;
     }
     if (_pwdCon1.text != _pwdCon2.text) {
-      SmartDialog.showToast("密码1和密码2必须相同");
+      await SmartDialog.showToast("密码1和密码2必须相同");
       return;
     }
     RegisterModel.register(_nameCon.text, _pwdCon1.text, _pwdCon2.text);

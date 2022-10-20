@@ -1,11 +1,12 @@
-import 'dart:math';
-
 import 'package:common_utils/common_utils.dart';
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_wan_android/core/net/abs_net_manager.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter_wan_android/config_center.dart';
 import 'package:flutter_wan_android/network/constant.dart';
 import 'package:flutter_wan_android/network/entity/base_entity.dart';
 import 'package:flutter_wan_android/network/network_process_factroy.dart';
+import 'package:flutter_wan_android/network/other/cookie_utils.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
 
 import 'entity/entity_factory.dart';
@@ -15,6 +16,10 @@ import 'other/coustom_log_interceptor.dart';
 ///dio封装
 ///1.支持动态url
 class DioUtils {
+  static const _tag = "DioUtils";
+
+  // static var debug=false;
+
   static DioUtils getInstance() => DioUtils._internal();
 
   ///dio instance
@@ -43,7 +48,23 @@ class DioUtils {
         _dio?.interceptors
             .add(CustomLogInterceptor(requestBody: true, responseBody: true));
       }
+      if (ConfigCenter.openCookieManager) {
+        _openCookieManager();
+      }
     }
+  }
+
+  ///将cookie保存在文件中
+  _openCookieManager() async {
+    // var cookieJar = CookieJar();//默认cookie
+
+    FileStorage _storage = FileStorage(await CookieUtils.getCookieFilePath());
+    LogUtil.d("_storage.dir:\t${_storage.dir}", tag: _tag);
+    var _persistCookieJar = PersistCookieJar(storage: _storage); //持久化cookie
+    var loadForRequest =
+        await _persistCookieJar.loadForRequest(Uri.parse(Constant.baseUrl));
+    LogUtil.d("cookie:\t${loadForRequest.toString()}", tag: _tag);
+    _dio?.interceptors.add(CookieManager(_persistCookieJar));
   }
 
   _request<T>(
@@ -62,7 +83,6 @@ class DioUtils {
       if (method == _get) {
         response = await _dio?.get(url, queryParameters: params);
       } else if (method == _post) {
-        /*FormData?*/
         var data = params == null ? null : FormData.fromMap(params);
         response = await _dio?.post(url,
             data: data,
@@ -124,11 +144,7 @@ class DioUtils {
 
   post<T>(String url, Map<String, dynamic>? map, Function(T?) onSuccess,
       Function(HttpError err) onFile,
-      {Map<String, dynamic>?
-          appendUrlMap /*,
-      required Function(T?) onSuccess,
-      required Function(HttpError err) onFile*/
-      }) async {
+      {Map<String, dynamic>? appendUrlMap}) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       T? data = await _request<T>(
@@ -144,20 +160,9 @@ class DioUtils {
     }
   }
 
-  // ///实验性
-  // postTest<T>(String url, Map<String, dynamic>? map, Function(T?) onSuccess,
-  //     Function(HttpError err) onFile,
-  //     {Map<String, dynamic>? appendUrlMap}) async {
-  //   post<T>(url, map, onSuccess: onSuccess, onFile: onFile);
-  // }
-
   get<T>(String url, Function(T?) onSuccess, Function(HttpError err) onFile,
       {Map<String, dynamic>? paramsMap,
-      Map<String, dynamic>?
-          appendUrlMap /*,
-      required Function(T?) onSuccess,
-      required Function(HttpError err) onFile*/
-      }) async {
+      Map<String, dynamic>? appendUrlMap}) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       T? data = await _request<T>(
@@ -179,11 +184,7 @@ class DioUtils {
 
   postList<T>(String url, Map<String, dynamic>? map,
       Function(List<T?>?) onSuccess, Function(HttpError err) onFile,
-      {Map<String, dynamic>?
-          appendUrlMap /*,
-      required Function(List<T?>?) onSuccess,
-      required Function(HttpError err) onFile*/
-      }) async {
+      {Map<String, dynamic>? appendUrlMap}) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       List<T?>? data = await _request<T>(
@@ -202,11 +203,7 @@ class DioUtils {
   getList<T>(
       String url, Function(List<T?>?) onSuccess, Function(HttpError err) onFile,
       {Map<String, dynamic>? paramsMap,
-      Map<String, dynamic>?
-          appendUrlMap /*,
-      required Function(List<T?>?) onSuccess,
-      required Function(HttpError err) onFile*/
-      }) async {
+      Map<String, dynamic>? appendUrlMap}) async {
     try {
       url = parseAppendURl(url, appendUrlMap);
       List<T?>? data = await _request<T>(

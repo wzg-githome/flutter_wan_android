@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
+import 'package:flutter_wan_android/custom/will_po_scope_view.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -30,32 +30,43 @@ class _WebPageState extends State<WebPage> {
       appBar: getAceAppBar(widget.title ?? "webView", onBackClick: () async {
         if (_controller != null) {
           if (await _controller!.canGoBack()) {
-            _controller!.goBack();
+            await _controller!.goBack();
           } else {
             Get.back();
           }
         }
       }),
-      body: WebView(
-        onWebViewCreated: (controller) {
-          _controller = controller;
-          // _controller.
+      body: WillPoScopeView(
+        quitFunction: () async {
+          if (_controller != null) {
+            if (await _controller!.canGoBack()) {
+              await _controller!.goBack();
+              return false;
+            }
+          }
+          // SmartDialog.showToast("退出webView返回上一个节面");
+          return true;
         },
-        initialUrl: widget.url,
-        javascriptMode: JavascriptMode.unrestricted,
-        navigationDelegate: (mNavigationRequest) {
-          ///可以根据url进行拦截
-          return NavigationDecision.navigate;
-        },
-        onPageStarted: (url) async {
-          // await SmartDialog.showToast("$url\n开始加载...");
-        },
-        onPageFinished: (url) async {
-          // await SmartDialog.showToast("$url\n开始完毕!");
-        },
-        // onWebResourceError: (err){
-        //
-        // },
+        child: WebView(
+          onWebViewCreated: (controller) {
+            _controller = controller;
+          },
+          initialUrl: widget.url,
+          javascriptMode: JavascriptMode.unrestricted,
+          navigationDelegate: (mNavigationRequest) {
+            ///可以根据url进行拦截
+            return NavigationDecision.navigate;
+          },
+          onPageStarted: (url) async {
+            // await SmartDialog.showToast("$url\n开始加载...");
+          },
+          onPageFinished: (url) async {
+            // await SmartDialog.showToast("$url\n开始完毕!");
+          },
+          // onWebResourceError: (err){
+          //
+          // },
+        ),
       ),
     );
   }

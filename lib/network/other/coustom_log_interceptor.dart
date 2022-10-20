@@ -1,7 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:common_utils/common_utils.dart';
-import 'package:flutter_wan_android/utils/ace_log.dart';
-import 'package:logger/logger.dart';
+import 'package:dio/dio.dart';
 
 class CustomLogInterceptor extends LogInterceptor {
   ///构造

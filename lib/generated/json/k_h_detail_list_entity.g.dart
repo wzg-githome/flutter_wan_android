@@ -148,7 +148,7 @@ KHDetailListEntityDatas $KHDetailListEntityDatasFromJson(Map<String, dynamic> js
 	if (selfVisible != null) {
 		kHDetailListEntityDatas.selfVisible = selfVisible;
 	}
-	final dynamic? shareDate = jsonConvert.convert<dynamic>(json['shareDate']);
+	final dynamic shareDate = jsonConvert.convert<dynamic>(json['shareDate']);
 	if (shareDate != null) {
 		kHDetailListEntityDatas.shareDate = shareDate;
 	}

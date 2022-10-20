@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/page_list.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_model.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'entity/project_tree_entity.dart';
 
@@ -21,20 +22,14 @@ class _ProjectPageState extends State<ProjectPage> {
   void initState() {
     ProjectModel.getProjectTreeJson((List<ProjectTreeEntity?>? data) {
       if (ObjectUtil.isNotEmpty(data)) {
-       if(mounted){
-         setState(() {
-           _projectTreeList = data;
-         });
-       }
+        if (mounted) {
+          setState(() {
+            _projectTreeList = data;
+          });
+        }
       }
     });
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override
@@ -52,7 +47,7 @@ class _ProjectPageState extends State<ProjectPage> {
     );
   }
 
-  ///
+  ///list item
   Widget _builderItem(index) {
     var _projectTreeEntity = ObjectUtil.isNotEmpty(_projectTreeList)
         ? _projectTreeList![index]
@@ -77,11 +72,14 @@ class _ProjectPageState extends State<ProjectPage> {
         : Container(
             margin: const EdgeInsets.only(top: 10),
             height: 50,
+            alignment: Alignment.centerLeft,
+            padding: const EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8)),
-            child: const Center(
-              child: Text("loading..."),
+            child: Text(
+              "loading...",
+              style: TextStyle(fontSize: 16.sp),
             ),
           );
   }

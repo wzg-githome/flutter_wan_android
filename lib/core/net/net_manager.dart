@@ -52,6 +52,18 @@ class NetManager extends AbsNetManager {
   }
 
   @override
+  Future<void> lgUnCollect<T>(
+      int? id, int? originId, onSuccess, onFailed) async {
+    var appendUrlMap = <String, dynamic>{};
+    appendUrlMap["id"] = id;
+    var queryMap = <String, dynamic>{};
+    queryMap["originId"] = originId;
+    await _dioUtils.post<T>(
+        WanAndroidApi.lgUnCollect, queryMap, onSuccess, onFailed,
+        appendUrlMap: appendUrlMap);
+  }
+
+  @override
   Future<void> getProjectList<T>(int? cid, int page, onSuccess, onFiled) async {
     var queryMap = <String, dynamic>{};
     var appendUrlMap = <String, dynamic>{};
@@ -82,5 +94,33 @@ class NetManager extends AbsNetManager {
   @override
   Future<void> getTreeList<T>(onSuccess, onFiled) async {
     await _dioUtils.getList<T>(WanAndroidApi.treeList, onSuccess, onFiled);
+  }
+
+  @override
+  Future<void> lgCollectList<T>(int page, onSuccess, onFiled) async {
+    var appendUrlMap = <String, dynamic>{};
+    appendUrlMap["page"] = page;
+    await _dioUtils.get<T>(WanAndroidApi.lgCollectList, onSuccess, onFiled,
+        appendUrlMap: appendUrlMap);
+  }
+
+  @override
+  Future<void> lgInStationCollect<T>(
+      int? id, int? originId, onSuccess, onFiled) async {
+    // var appendUrlMap = <String, dynamic>{};
+    // appendUrlMap["id"] = id;
+    // var queryMap = <String, dynamic>{};
+    // queryMap["originId"] = originId;
+    // await _dioUtils.post(WanAndroidApi.lgUnCollectOriginId, map, onSuccess,onFiled);
+  }
+
+  @override
+  Future<void> lgInStationUnCollect<T>(
+      int? id, int? originId, onSuccess, onFiled) async {
+    // var appendUrlMap = <String, dynamic>{};
+    // appendUrlMap["id"] = id;
+    // var queryMap = <String, dynamic>{};
+    // queryMap["originId"] = originId;
+    // await _dioUtils.post(WanAndroidApi.lgUnCollectOriginId, map, onSuccess,onFiled);
   }
 }

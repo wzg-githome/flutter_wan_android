@@ -1,8 +1,12 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_wan_android/network/other/cookie_utils.dart';
 import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:flutter_wan_android/ui/login/login_model.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'login_controller.dart';
@@ -48,7 +52,7 @@ class _LoginPgeState extends State<LoginPge> {
               controller: _nameCon,
               decoration: InputDecoration(
                 hintText: "账号",
-                helperStyle: TextStyle(color: Colors.grey[700]),
+                hintStyle: TextStyle(color: Colors.grey[400]),
               ),
             ),
             const SizedBox(
@@ -58,7 +62,7 @@ class _LoginPgeState extends State<LoginPge> {
               controller: _pwdCon,
               decoration: InputDecoration(
                 hintText: "密码",
-                helperStyle: TextStyle(color: Colors.grey[700]),
+                hintStyle: TextStyle(color: Colors.grey[400]),
               ),
             ),
             Row(
@@ -68,8 +72,8 @@ class _LoginPgeState extends State<LoginPge> {
                   flex: 1,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Get.toNamed(PageList.registerPage);
+                  onTap: () async {
+                    await Get.toNamed(PageList.registerPage);
                   },
                   child: const Padding(
                     padding: EdgeInsets.all(10),
@@ -84,14 +88,32 @@ class _LoginPgeState extends State<LoginPge> {
             const SizedBox(
               height: 20,
             ),
-            MaterialButton(
-              color: Colors.blue,
-              onPressed: () {
-                checkNamePed();
+            GestureDetector(
+              onTap: () {
+                _checkNamePed();
               },
-              child: const Text(
-                "登录",
-                style: TextStyle(color: Colors.white),
+              child: Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.blue, borderRadius: BorderRadius.circular(8)),
+                child: Text(
+                  "登录",
+                  style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                _notLogin();
+              },
+              child: Container(
+                margin: const EdgeInsets.only(top: 30),
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                child: Text(
+                  "不想登录？点我进去",
+                  style: TextStyle(color: Colors.blue, fontSize: 12.sp),
+                ),
               ),
             )
           ],
@@ -100,14 +122,26 @@ class _LoginPgeState extends State<LoginPge> {
     );
   }
 
-  void checkNamePed() {
+  ///账号密码登录
+  void _checkNamePed() async {
     if (_loginCon.click2Number()) return;
 
     AceLog.d("name: ${_nameCon.text.length} \tpwd: ${_pwdCon.text.length}");
     if (_nameCon.text.length >= 3 && _pwdCon.text.length >= 6) {
       LoginModel.login(_nameCon.text, _pwdCon.text);
     } else {
-      SmartDialog.showToast("账号至少三位并且密码至少6位");
+      await SmartDialog.showToast("账号至少三位并且密码至少6位");
     }
+  }
+
+  ///游客登录
+  void _notLogin() async {
+    SmartDialog.showLoading(msg: "游客登陆中...");
+    await BaseModel.dataManager.setLoginStatus(false);
+    await CookieUtils.deleteCookieFile();
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      SmartDialog.dismiss();
+      Get.toNamed(PageList.mainPage);
+    });
   }
 }

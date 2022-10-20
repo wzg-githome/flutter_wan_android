@@ -10,18 +10,29 @@ class KHModel extends BaseModel {
   ///知识体系
   static void getTreeList(
       {required Function(List<KHEntity?>?) onSuccess}) async {
-    await BaseModel.dataManager.getTreeList<KHEntity>(onSuccess,  (err) {
-        SmartDialog.showToast("${err.errMsg}");
-      });
+    await BaseModel.dataManager.getTreeList<KHEntity>(onSuccess, (err) {
+      SmartDialog.showToast("${err.errMsg}");
+    });
   }
 
   ///知识体系feed文章数据
   static void getArticleListPageDetail(int? page, int? cid,
       {required Function(KHDetailListEntity?) onSuccess,
       required Function(HttpError) onFile}) async {
-    await BaseModel.dataManager.getArticleListPageDetail<KHDetailListEntity>(page, cid, onSuccess, onFile);
+    await BaseModel.dataManager.getArticleListPageDetail<KHDetailListEntity>(
+        page, cid, onSuccess, onFile);
   }
 
+  ///收藏
+  static Future<void> lgCollect(int? id, Function onSuccess) async {
+    await BaseModel.dataManager.lgCollect(id, (data) {
+      onSuccess.call();
+    }, (err) {
+      SmartDialog.showToast("${err.errMsg}");
+    });
+  }
 
-
+  static Future<void> lgUnCollectThis(int? id, onSuccess) async {
+    await BaseModel.lgUnCollect(id, onSuccess);
+  }
 }

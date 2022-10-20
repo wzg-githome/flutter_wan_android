@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import 'entity/project_list_entity.dart';
 import 'entity/project_tree_entity.dart';
 
-///
+///项目list节目
 class ProjectListPage extends StatefulWidget {
   const ProjectListPage({Key? key}) : super(key: key);
 
@@ -55,29 +55,42 @@ class _ProjectListPageState extends State<ProjectListPage> {
     }
     await ProjectModel.getProjectList(_cid, _curPage,
         (ProjectListEntity? data) {
-      if (ObjectUtil.isNotEmpty(data) && mounted) {
-        setState(() {
-          if (isRefresh) {
-            _projectList = data;
-            _refreshController.finishRefresh(noMore: false, success: true);
-          } else {
-            if (ObjectUtil.isNotEmpty(data!.datas)) {
-              _projectList!.datas!.addAll(data.datas!);
-              _refreshController.finishLoad(noMore: false, success: true);
+      if (mounted) {
+        if (ObjectUtil.isNotEmpty(data)) {
+          setState(() {
+            if (isRefresh) {
+              _projectList = data;
+              _refreshController.finishRefresh(noMore: false, success: true);
             } else {
-              _curPage--;
-              SmartDialog.showToast("~亲，没有更多数据了呢($_curPage)");
-              _refreshController.finishLoad(noMore: true, success: true);
+              if (ObjectUtil.isNotEmpty(data!.datas)) {
+                _projectList!.datas!.addAll(data.datas!);
+                _refreshController.finishLoad(noMore: false, success: true);
+              } else {
+                _curPage--;
+                SmartDialog.showToast("~亲，没有更多数据了呢($_curPage)");
+                _refreshController.finishLoad(noMore: true, success: true);
+              }
             }
+          });
+        } else {
+          if (isRefresh) {
+            _refreshController.finishLoad(success: false);
+          } else {
+            _curPage--;
+            _refreshController.finishLoad(noMore: false, success: false);
           }
-        });
+        }
       }
     }, () {
       if (mounted) {
         setState(() {
-          _curPage--;
           SmartDialog.showToast("~亲，没有更多数据了呢($_curPage)");
-          _refreshController.finishLoad(noMore: true, success: true);
+          if (isRefresh) {
+            _refreshController.finishLoad(success: false);
+          } else {
+            _curPage--;
+            _refreshController.finishLoad(noMore: false, success: false);
+          }
         });
       }
     });

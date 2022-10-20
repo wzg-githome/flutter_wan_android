@@ -6,8 +6,10 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/custom/will_po_scope_view.dart';
+import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -61,6 +63,7 @@ class _HomePageState extends State<HomePage> {
     _loadMoreAndRefreshArticleList(true);
   }
 
+  /// 加载更多与刷新
   void _loadMoreAndRefreshArticleList(bool isRefresh) async {
     if (isRefresh) {
       curPage = 0;
@@ -100,8 +103,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPoScopeView(
-        child: Container(
+    return Container(
       padding: const EdgeInsets.only(left: 10, right: 10),
       color: Colors.grey[300],
       child: EasyRefresh(
@@ -128,7 +130,7 @@ class _HomePageState extends State<HomePage> {
               }
             }),
       ),
-    ));
+    );
   }
 
   ///banner list
@@ -184,7 +186,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  ///list item
+  ///list item and loading
   Widget builderListItem(index) {
     var _articleEntity = !ObjectUtil.isEmpty(_articleList)
         ? ObjectUtil.isNotEmpty(_articleList!.datas)
@@ -215,51 +217,65 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildItem(_articleEntity) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Column(
-        children: [
-          ListTile(
-            contentPadding: const EdgeInsets.all(0),
-            title: Text(
-              "${_articleEntity?.superChapterName}/${_articleEntity?.chapterName}",
-              style: TextStyle(fontSize: 14.sp),
+    return GestureDetector(
+      onTap: () {
+        _onItemClick(_articleEntity);
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            ListTile(
+              contentPadding: const EdgeInsets.all(0),
+              title: Text(
+                "${_articleEntity?.superChapterName}/${_articleEntity?.chapterName}",
+                style: TextStyle(fontSize: 14.sp),
+              ),
+              subtitle: Text(
+                HtmlUnescape().convert("${_articleEntity?.title}"),
+                style: TextStyle(fontSize: 12.sp),
+              ),
+              trailing: Container(
+                height: 30,
+                width: 30,
+                color: Colors.blue,
+              ),
             ),
-            subtitle: Text(
-              HtmlUnescape().convert("${_articleEntity?.title}"),
-              style: TextStyle(fontSize: 12.sp),
-            ),
-            trailing: Container(
-              height: 30,
-              width: 30,
-              color: Colors.blue,
-            ),
-          ),
-          Row(
-            children: [
-              Expanded(
+            Row(
+              children: [
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("${_articleEntity?.author}"),
+                )),
+                Expanded(
                   child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text("${_articleEntity?.author}"),
-              )),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    "${_articleEntity?.niceDate}",
-                    style: TextStyle(fontSize: 13.sp, color: Colors.blue[600]),
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "${_articleEntity?.niceDate}",
+                      style:
+                          TextStyle(fontSize: 13.sp, color: Colors.blue[600]),
+                    ),
                   ),
                 ),
-              ),
-            ],
-          )
-        ],
+              ],
+            )
+          ],
+        ),
       ),
     );
+  }
+
+  ///item的按钮事件
+  void _onItemClick(ArticleEntityDatas? index) async {
+    await Get.to(WebPage(
+      url: index?.link,
+      title: index?.title,
+    ));
   }
 }

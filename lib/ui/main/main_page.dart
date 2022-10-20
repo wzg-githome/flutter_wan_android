@@ -1,6 +1,6 @@
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
-import 'package:flutter_wan_android/custom/custom_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
+import 'package:flutter_wan_android/custom/will_po_scope_view.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_page.dart';
@@ -20,6 +20,9 @@ class _MainPageState extends State<MainPage> {
 
   int _defaultIndex = 0;
 
+  final _bottomList = ["首页", "项目", "知识体系", "我的"];
+  final _bottomIndexList = [0, 1, 2, 3];
+
   @override
   void initState() {
     _pageCon = PageController(initialPage: 0);
@@ -37,7 +40,8 @@ class _MainPageState extends State<MainPage> {
     var _checkedColor = Colors.blue;
     var _defaultColor = Colors.grey;
 
-    return Scaffold(
+    return WillPoScopeView(
+        child: Scaffold(
       appBar: getAceAppBar("mainTitle".tr),
       body: PageView(
         controller: _pageCon,
@@ -70,34 +74,16 @@ class _MainPageState extends State<MainPage> {
             });
           }
         },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: _defaultIndex == 0 ? _checkedColor : _defaultColor,
-            ),
-            label: "首页",
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: _defaultIndex == 1 ? _checkedColor : _defaultColor,
-              ),
-              label: "项目"),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: _defaultIndex == 2 ? _checkedColor : _defaultColor,
-              ),
-              label: "知识体系"),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: _defaultIndex == 3 ? _checkedColor : _defaultColor,
-              ),
-              label: "我的"),
-        ],
+        items: _bottomIndexList
+            .map((e) => BottomNavigationBarItem(
+                  icon: Icon(
+                    Icons.home,
+                    color: _defaultIndex == e ? _checkedColor : _defaultColor,
+                  ),
+                  label: _bottomList[e],
+                ))
+            .toList(),
       ),
-    );
+    ));
   }
 }

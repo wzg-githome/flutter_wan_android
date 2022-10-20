@@ -112,7 +112,7 @@ class _KnowledgeHierarchyPageState extends State<KnowledgeHierarchyPage> {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.toNamed(PageList.KHDetailPage,
+                    Get.toNamed(PageList.kHDetailPage,
                         arguments: _kHEntityChildren?[index]);
                   },
                   child: Container(

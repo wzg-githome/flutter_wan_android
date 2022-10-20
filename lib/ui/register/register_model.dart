@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 class RegisterModel extends BaseModel {
   ///register
   static void register(String name, String pwd, String pwd2) async {
-    await BaseModel.dataManager.register(name, pwd, pwd2, (data) {
-      SmartDialog.showToast("注册成功，前往登录");
-      Get.offNamed(PageList.loginPage);
-    }, (err) {
-      SmartDialog.showToast("${err.errMsg}");
+    await BaseModel.dataManager.register(name, pwd, pwd2, (data)  {
+       SmartDialog.showToast("注册成功，前往登录");
+       Get.offNamed(PageList.loginPage);
+    }, (err) async {
+      await SmartDialog.showToast("${err.errMsg}");
     });
   }
 }

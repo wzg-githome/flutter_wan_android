@@ -12,6 +12,7 @@ import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/entity/k_h_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/entity/project_list_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/entity/project_tree_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/user_page/lg_collect_page/lg_collect_entity.dart';
 import 'package:flutter_wan_android/ui/register/register_entity.dart';
 
 JsonConvert jsonConvert = JsonConvert();
@@ -32,6 +33,8 @@ class JsonConvert {
 		(ProjectListEntityDatas).toString(): ProjectListEntityDatas.fromJson,
 		(ProjectListEntityDatasTags).toString(): ProjectListEntityDatasTags.fromJson,
 		(ProjectTreeEntity).toString(): ProjectTreeEntity.fromJson,
+		(LgCollectEntity).toString(): LgCollectEntity.fromJson,
+		(LgCollectEntityDatas).toString(): LgCollectEntityDatas.fromJson,
 		(RegisterEntity).toString(): RegisterEntity.fromJson,
 	};
 
@@ -149,6 +152,12 @@ class JsonConvert {
 		}
 		if(<ProjectTreeEntity>[] is M){
 			return data.map<ProjectTreeEntity>((Map<String, dynamic> e) => ProjectTreeEntity.fromJson(e)).toList() as M;
+		}
+		if(<LgCollectEntity>[] is M){
+			return data.map<LgCollectEntity>((Map<String, dynamic> e) => LgCollectEntity.fromJson(e)).toList() as M;
+		}
+		if(<LgCollectEntityDatas>[] is M){
+			return data.map<LgCollectEntityDatas>((Map<String, dynamic> e) => LgCollectEntityDatas.fromJson(e)).toList() as M;
 		}
 		if(<RegisterEntity>[] is M){
 			return data.map<RegisterEntity>((Map<String, dynamic> e) => RegisterEntity.fromJson(e)).toList() as M;

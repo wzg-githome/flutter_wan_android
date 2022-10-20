@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/page_list.dart';
 import 'package:flutter_wan_android/utils/commin_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -39,22 +40,18 @@ class _WelcomePageState extends State<WelcomePage> {
       color: Colors.white,
       child: Center(
         child: Text(
-          "this is welcome page\n$_timeIndex",
+          "Let‘s go... $_timeIndex",
           textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.blue,
-            fontSize: 30,
-            fontWeight: FontWeight.bold
-          ),
+          style: TextStyle(
+              color: Colors.blue, fontSize: 30.sp, fontWeight: FontWeight.bold),
         ),
       ),
     );
   }
 
   void startTimer() {
-    _timer ??=
-        Timer.periodic( Duration(milliseconds: _milliseconds), (timer) {
-      setState(() {
+    _timer ??= Timer.periodic(Duration(milliseconds: _milliseconds), (timer) {
+      setState(()  {
         _timeIndex--;
         if (_timeMin == _timeIndex) {
           if (_timer != null && _timer!.isActive) {
@@ -62,10 +59,10 @@ class _WelcomePageState extends State<WelcomePage> {
             _timer = null;
           }
           if (CommonUtils.isLogin()) {
-            Get.offNamed(PageList.mainPage);
+             Get.offNamed(PageList.mainPage);
             return;
           }
-          Get.offNamed(PageList.loginPage);
+           Get.offNamed(PageList.loginPage);
         }
       });
     });

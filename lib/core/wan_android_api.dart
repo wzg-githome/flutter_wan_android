@@ -28,6 +28,18 @@ class WanAndroidApi {
   ///知识体系feed文章数据
   static var articleListPageDetail = "article/list/{page}/json";
 
-  ///收藏
+  ///收藏站内文章列表
   static var lgCollect = "lg/collect/{id}/json";
+
+  ///取消站内文章收藏列表
+  static var lgUnCollect = "lg/uncollect/{id}/json";
+
+  ///post 收藏站外文章
+  static var lgInStationCollect = "lg/collect/add/json";
+
+  ///取消收藏页面站内文章
+  static var lgInStationUnCollect = "lg/uncollect_originId/{id}/json";
+
+  ///我的收藏列表
+  static var lgCollectList = "lg/collect/list/{page}/json";
 }

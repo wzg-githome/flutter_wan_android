@@ -13,6 +13,8 @@ abstract class AbsNetManager {
 
   Future<void> lgCollect<T>(int? id, onSuccess, onFailed);
 
+  Future<void> lgUnCollect<T>(int? id, int? originId, onSuccess, onFailed);
+
   Future<void> getProjectTreeJson<T>(onSuccess, onFailed);
 
   Future<void> getProjectList<T>(int? cid, int page, onSuccess, onFiled);
@@ -21,4 +23,12 @@ abstract class AbsNetManager {
 
   Future<void> getArticleListPageDetail<T>(
       int? page, int? cid, onSuccess, onFile);
+
+  Future<void> lgCollectList<T>(int page, onSuccess, onFiled);
+
+  Future<void> lgInStationCollect<T>(
+      int? id, int? originId, onSuccess, onFiled);
+
+  Future<void> lgInStationUnCollect<T>(
+      int? id, int? originId, onSuccess, onFiled);
 }
