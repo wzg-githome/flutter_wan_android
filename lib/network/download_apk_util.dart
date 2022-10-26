@@ -7,7 +7,7 @@ import 'package:flutter_wan_android/config_center.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:r_upgrade/r_upgrade.dart';
 
-///
+///下载与安装apk
 class DownloadApkUtil {
   static const _tag = "downloadFile";
 
