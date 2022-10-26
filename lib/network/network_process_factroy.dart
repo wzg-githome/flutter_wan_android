@@ -9,7 +9,11 @@ class NetworkProcessFactory {
     _saveException2File(e);
   }
 
-  static void _saveException2File(e) {}
+  static void _saveException2File(e) {
+
+
+
+  }
 
   static void _loggerException(e) {
     AceLog.e(msg: "_loggerException:\n" + e.toString());

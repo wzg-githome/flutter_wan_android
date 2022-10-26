@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
+import 'package:flutter_wan_android/network/download_util.dart';
+import 'package:flutter_wan_android/ui/common/big_image_page.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_model.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
@@ -135,13 +137,16 @@ class _ProjectListPageState extends State<ProjectListPage> {
     return curItem == null
         ? Container(
             margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+            padding: const EdgeInsets.only(left: 10),
             height: 100,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: Colors.grey,
+              color: Colors.grey[200],
             ),
-            child: const Center(
-              child: Text("loading..."),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "loading...",
+              style: TextStyle(fontSize: 14.sp),
             ),
           )
         : GestureDetector(
@@ -158,24 +163,29 @@ class _ProjectListPageState extends State<ProjectListPage> {
               child: IntrinsicHeight(
                 child: Row(
                   children: [
-                    CachedNetworkImage(
-                      imageUrl: "${curItem.envelopePic}",
-                      placeholder: (context, url) {
-                        return ImageUtils.buildPlaceholder(8,
-                            width: 90, height: 135);
+                    GestureDetector(
+                      onTap: () {
+                        _onClickImage(curItem.envelopePic);
                       },
-                      imageBuilder: (context, imagePro) {
-                        return Container(
-                          width: 90,
-                          height: 135,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: imagePro,
-                              )),
-                        );
-                      },
+                      child: CachedNetworkImage(
+                        imageUrl: "${curItem.envelopePic}",
+                        placeholder: (context, url) {
+                          return ImageUtils.buildPlaceholder(8,
+                              width: 90, height: 135);
+                        },
+                        imageBuilder: (context, imagePro) {
+                          return Container(
+                            width: 90,
+                            height: 135,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: imagePro,
+                                )),
+                          );
+                        },
+                      ),
                     ),
                     Expanded(
                         child: Container(
@@ -242,17 +252,30 @@ class _ProjectListPageState extends State<ProjectListPage> {
                                     flex: 1,
                                   ),
                                   Expanded(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // ${curItem.apkLink}
-                                      },
-                                      child: Text(
-                                        "下载",
-                                        style: TextStyle(
-                                            color: Colors.red, fontSize: 12.sp),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
+                                    child: ObjectUtil.isNotEmpty(
+                                            curItem.apkLink)
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              _onClickDownload(curItem.apkLink);
+                                            },
+                                            child: Container(
+                                              padding: const EdgeInsets.all(5),
+                                              child: Text(
+                                                "下载",
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 12.sp),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
+                                          )
+                                        : Text(
+                                            "无",
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 12.sp),
+                                            textAlign: TextAlign.center,
+                                          ),
                                     flex: 1,
                                   )
                                 ],
@@ -275,5 +298,18 @@ class _ProjectListPageState extends State<ProjectListPage> {
       url: curItem?.link,
       title: curItem?.title,
     ));
+  }
+
+  ///点击图片的事件
+  void _onClickImage(url) async {
+    await Get.to(BigImagePage(imageUrl: url));
+  }
+
+  ///点击下载按钮
+  void _onClickDownload(url) {
+    //https://mco-image.walmartmobile.cn/image/apk/SAMS_STORE_OFS_V2.33.2_PRODUCT_10-25_07-53_82c73e2.apk
+    DownloadApkUtil.downloadAndInstallFile(ObjectUtil.isNotEmpty(url)
+        ? url
+        : "https://mco-image.walmartmobile.cn/image/apk/SAMS_STORE_OFS_V2.33.2_PRODUCT_10-25_07-53_82c73e2.apk");
   }
 }

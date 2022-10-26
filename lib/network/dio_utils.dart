@@ -25,8 +25,8 @@ class DioUtils {
   ///dio instance
   Dio? _dio;
 
-  ///time out
-  final int _timeout = 30000;
+  ///time out 5秒
+  final int _timeout = 1000 * 1000 * 5;
 
   ///post
   final String _post = "POST";

@@ -128,12 +128,14 @@ class _KHDetailPageState extends State<KHDetailPage> {
                       height: 50.h,
                       padding: const EdgeInsets.only(left: 10),
                       margin: const EdgeInsets.only(left: 10, top: 10),
+                      alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                           color: Colors.grey[200],
                           borderRadius: BorderRadius.circular(8)),
-                      child: const Text(
-                        "loading...",
-                        textAlign: TextAlign.center,
+                      child:  Text(
+                        "loading...",style: TextStyle(
+                        fontSize: 14.sp
+                      ),
                       ),
                     )
                   : _buildItemView(index);
