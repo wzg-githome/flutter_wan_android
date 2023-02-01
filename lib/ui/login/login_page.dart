@@ -1,12 +1,11 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/network/other/cookie_utils.dart';
 import 'package:flutter_wan_android/page_list.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:flutter_wan_android/ui/login/login_model.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'login_controller.dart';
@@ -41,11 +40,9 @@ class _LoginPgeState extends State<LoginPge> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("loginTitle".tr),
-      ),
+      appBar: AppBar(title: Text("loginTitle".tr)),
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
         child: ListView(
           children: [
             TextField(
@@ -55,9 +52,7 @@ class _LoginPgeState extends State<LoginPge> {
                 hintStyle: TextStyle(color: Colors.grey[400]),
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20.h),
             TextField(
               controller: _pwdCon,
               decoration: InputDecoration(
@@ -67,36 +62,30 @@ class _LoginPgeState extends State<LoginPge> {
             ),
             Row(
               children: [
-                Expanded(
-                  child: Container(),
-                  flex: 1,
-                ),
+                Expanded(child: Container()),
                 GestureDetector(
                   onTap: () async {
                     await Get.toNamed(PageList.registerPage);
                   },
-                  child: const Padding(
-                    padding: EdgeInsets.all(10),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.r),
                     child: Text(
                       "注册",
-                      style: TextStyle(color: Colors.blue, fontSize: 12),
+                      style: TextStyle(color: Colors.blue, fontSize: 12.sp),
                     ),
                   ),
                 )
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20.h),
             GestureDetector(
-              onTap: () {
-                _checkNamePed();
-              },
+              onTap: () => _checkNamePed(),
               child: Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: Colors.blue, borderRadius: BorderRadius.circular(8)),
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(8.r)),
                 child: Text(
                   "登录",
                   style: TextStyle(fontSize: 16.sp, color: Colors.white),
@@ -104,12 +93,10 @@ class _LoginPgeState extends State<LoginPge> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                _notLogin();
-              },
+              onTap: () => _notLogin(),
               child: Container(
-                margin: const EdgeInsets.only(top: 30),
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                margin: EdgeInsets.only(top: 20.h),
+                padding: EdgeInsets.symmetric(vertical: 10.h),
                 child: Text(
                   "不想登录？点我进去",
                   style: TextStyle(color: Colors.blue, fontSize: 12.sp),

@@ -22,7 +22,7 @@ class _UserPageState extends State<UserPage> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey[300],
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.all(10.r),
       child: ListView(
         children: [
           _builderHeader(),
@@ -30,7 +30,8 @@ class _UserPageState extends State<UserPage> {
             await Get.toNamed(PageList.lgCollectPage);
           }),
           _builderItem("其他", "other", onTap: () => _toast()),
-          _builderItem("介绍与声明", "read", onTap: () => Get.to(const SynopsisPage())),
+          _builderItem("介绍与声明", "read",
+              onTap: () => Get.to(const SynopsisPage())),
           _builderItem("清除缓存", "10M", onTap: () => _toast()),
           _builderItem("退出登录", "", onTap: () => _logout()),
         ],
@@ -57,8 +58,8 @@ class _UserPageState extends State<UserPage> {
   Widget _builderHeader() {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey[200], borderRadius: BorderRadius.circular(10)),
-      padding: const EdgeInsets.all(10),
+          color: Colors.grey[200], borderRadius: BorderRadius.circular(10.r)),
+      padding: EdgeInsets.all(10.r),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -66,30 +67,30 @@ class _UserPageState extends State<UserPage> {
           Row(
             children: [
               GestureDetector(
-                onTap: (){
-                  Get.to(BigImagePage(imageUrl: "asset/images/app_splash_bg.jpg"));
+                onTap: () {
+                  Get.to(
+                      BigImagePage(imageUrl: "asset/images/app_splash_bg.jpg"));
                 },
                 child: Container(
-                  height: 100,
-                  width: 100,
-                  margin: const EdgeInsets.only(bottom: 10),
+                  height: 100.h,
+                  width: 100.w,
+                  margin: EdgeInsets.only(bottom: 10.h),
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(100 / 2),
+                      borderRadius: BorderRadius.circular(50.r),
                       image: const DecorationImage(
                           image: AssetImage("asset/images/app_splash_bg.jpg"))),
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(left: 10),
+                margin: EdgeInsets.only(left: 10.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildHeaderItem("name", UserModel.getLoginName(),
-                        const EdgeInsets.only(top: 10)),
-                    _buildHeaderItem(
-                        "sex", "未知", const EdgeInsets.only(top: 10)),
-                    _buildHeaderItem("物种", "未知", const EdgeInsets.only(top: 10))
+                        EdgeInsets.only(top: 10.h)),
+                    _buildHeaderItem("sex", "未知", EdgeInsets.only(top: 10.h)),
+                    _buildHeaderItem("物种", "未知", EdgeInsets.only(top: 10.h))
                   ],
                 ),
               )
@@ -118,10 +119,10 @@ class _UserPageState extends State<UserPage> {
       splashColor: Colors.red,
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.only(top: 10),
+        padding: EdgeInsets.all(10.r),
+        margin: EdgeInsets.only(top: 10.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
           color: Colors.grey[50],
         ),
         child: Row(
@@ -150,7 +151,7 @@ class _UserPageState extends State<UserPage> {
           Text("$title: ",
               style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
           Padding(
-            padding: const EdgeInsets.only(left: 4),
+            padding: EdgeInsets.only(left: 4.w),
             child: Text("$value",
                 style: TextStyle(color: Colors.black, fontSize: 14.sp)),
           )

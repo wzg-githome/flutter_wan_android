@@ -68,8 +68,8 @@ class _BigImagePageState extends State<BigImagePage> {
                 child: InkWell(
                   onTap: () => Get.back(),
                   child: Container(
-                    height: 30,
-                    width: 30,
+                    height: 30.h,
+                    width: 30.w,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.grey[400],

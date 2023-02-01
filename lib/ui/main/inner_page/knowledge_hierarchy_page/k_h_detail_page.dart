@@ -126,16 +126,15 @@ class _KHDetailPageState extends State<KHDetailPage> {
               return ObjectUtil.isEmpty(_detailListEntity)
                   ? Container(
                       height: 50.h,
-                      padding: const EdgeInsets.only(left: 10),
-                      margin: const EdgeInsets.only(left: 10, top: 10),
+                      padding: EdgeInsets.only(left: 10.w),
+                      margin: EdgeInsets.only(left: 10.w, top: 10.h),
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(
                           color: Colors.grey[200],
-                          borderRadius: BorderRadius.circular(8)),
-                      child:  Text(
-                        "loading...",style: TextStyle(
-                        fontSize: 14.sp
-                      ),
+                          borderRadius: BorderRadius.circular(8.r)),
+                      child: Text(
+                        "loading...",
+                        style: TextStyle(fontSize: 14.sp),
                       ),
                     )
                   : _buildItemView(index);
@@ -153,10 +152,10 @@ class _KHDetailPageState extends State<KHDetailPage> {
         _onClickListItem(curItem);
       },
       child: Container(
-        padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        padding: EdgeInsets.all(10.r),
+        margin: EdgeInsets.only(top: 10.h, left: 10.w, right: 10.w),
         decoration: BoxDecoration(
-            color: Colors.grey[200], borderRadius: BorderRadius.circular(8)),
+            color: Colors.grey[200], borderRadius: BorderRadius.circular(8.r)),
         child: Column(
           children: [
             Row(
@@ -167,12 +166,11 @@ class _KHDetailPageState extends State<KHDetailPage> {
                   children: [
                     Image.asset(
                       "asset/images/icon_author.png",
-                      height: 25,
-                      width: 25,
+                      height: 25.h,
+                      width: 25.w,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(left: 5),
-                      // height: 20,
+                      margin: EdgeInsets.only(left: 5.w),
                       child: Text(
                         "${curItem?.author}",
                         maxLines: 1,
@@ -183,8 +181,8 @@ class _KHDetailPageState extends State<KHDetailPage> {
                   ],
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  height: 20,
+                  margin: EdgeInsets.only(left: 5.w),
+                  height: 20.h,
                   child: Text(
                     "${curItem?.superChapterName}/${curItem?.chapterName}",
                     maxLines: 1,
@@ -197,7 +195,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10),
+              margin: EdgeInsets.only(top: 10.h, bottom: 10.h),
               child: Text(
                 "${curItem?.title}",
                 maxLines: 2,
@@ -215,13 +213,12 @@ class _KHDetailPageState extends State<KHDetailPage> {
                     _collect(curItem, index);
                   },
                   child: Container(
-                    padding: const EdgeInsets.only(
-                        left: 3, right: 3, top: 3, bottom: 3),
+                    padding: EdgeInsets.all(3.r),
                     decoration: BoxDecoration(
                         color: _checkCurItemCollect(curItem)
                             ? Colors.grey
                             : Colors.blue[600],
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5.r)),
                     child: Row(
                       children: [
                         Text(
@@ -232,12 +229,12 @@ class _KHDetailPageState extends State<KHDetailPage> {
                         ),
                         _checkCurItemCollect(curItem)
                             ? Container()
-                            : const Padding(
-                                padding: EdgeInsets.only(left: 2),
+                            : Padding(
+                                padding: EdgeInsets.only(left: 2.w),
                                 child: Icon(
                                   Icons.add,
                                   color: Colors.white,
-                                  size: 12,
+                                  size: 12.sp,
                                 ),
                               )
                       ],

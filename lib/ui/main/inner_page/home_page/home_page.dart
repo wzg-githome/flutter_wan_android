@@ -2,17 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
-import 'package:flutter_wan_android/custom/will_po_scope_view.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:html_unescape/html_unescape.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'entity/article_entity.dart';
 import 'entity/banner_entity.dart';
@@ -104,7 +103,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: EdgeInsets.only(left: 10.w, right: 10.w),
       color: Colors.grey[300],
       child: EasyRefresh(
         enableControlFinishRefresh: true,
@@ -162,19 +161,19 @@ class _HomePageState extends State<HomePage> {
                 scale: 0.95,
                 autoplay: true,
                 loop: true,
-                control: const SwiperControl(
+                control: SwiperControl(
                   color: Colors.blue,
-                  padding: EdgeInsets.only(left: 15, right: 10),
+                  padding: EdgeInsets.only(left: 15.w, right: 10.w),
                 ),
                 itemCount: _bannerList!.length,
                 itemBuilder: (context, index) {
                   return CachedNetworkImage(
                     imageUrl: _bannerList![index]!.imagePath!,
                     placeholder: (context, url) =>
-                        ImageUtils.buildPlaceholder(8),
+                        ImageUtils.buildPlaceholder(8.r),
                     imageBuilder: (context, imagePro) => Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         image:
                             DecorationImage(image: imagePro, fit: BoxFit.fill),
                       ),
@@ -198,12 +197,12 @@ class _HomePageState extends State<HomePage> {
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.w))),
       child: ObjectUtil.isEmptyList(_articleList?.datas)
           ? Container(
-              margin: const EdgeInsets.only(bottom: 10),
+              margin: EdgeInsets.only(bottom: 10.h),
               height: 40 * 2,
               color: Colors.grey[200],
-              child: const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Align(
+              child: Padding(
+                padding: EdgeInsets.only(left: 10.w),
+                child: const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "loading...",
@@ -222,11 +221,11 @@ class _HomePageState extends State<HomePage> {
         _onItemClick(_articleEntity);
       },
       child: Container(
-        margin: const EdgeInsets.only(bottom: 10),
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
+        margin: EdgeInsets.only(bottom: 10.h),
+        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
         decoration: BoxDecoration(
           color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
         ),
         child: Column(
           children: [
@@ -241,8 +240,8 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontSize: 12.sp),
               ),
               trailing: Container(
-                height: 30,
-                width: 30,
+                height: 30.h,
+                width: 30.w,
                 color: Colors.blue,
               ),
             ),

@@ -35,7 +35,7 @@ class _ProjectPageState extends State<ProjectPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding:  EdgeInsets.only(left: 10.w, right: 10.w),
       color: Colors.grey[300],
       child: ListView.builder(
           itemCount: ObjectUtil.isNotEmpty(_projectTreeList)
@@ -59,9 +59,9 @@ class _ProjectPageState extends State<ProjectPage> {
                   arguments: _projectTreeEntity);
             },
             child: Container(
-              margin: const EdgeInsets.only(top: 10),
-              padding: const EdgeInsets.all(8),
-              height: 50,
+              margin:  EdgeInsets.only(top: 10.h),
+              padding:  EdgeInsets.all(8.r),
+              height: 50.h,
               decoration: BoxDecoration(
                   color: Colors.grey[100],
                   borderRadius: BorderRadius.circular(8)),
@@ -70,13 +70,13 @@ class _ProjectPageState extends State<ProjectPage> {
             ),
           )
         : Container(
-            margin: const EdgeInsets.only(top: 10),
-            height: 50,
+            margin:  EdgeInsets.only(top: 10.h),
+            height: 50.h,
             alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(left: 10),
+            padding:  EdgeInsets.only(left: 10.w),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8)),
+                borderRadius: BorderRadius.circular(8.r)),
             child: Text(
               "loading...",
               style: TextStyle(fontSize: 16.sp),

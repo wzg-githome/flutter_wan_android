@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/ui/register/register_model.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
@@ -38,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
         title: Text("registerTitle".tr),
       ),
       body: Container(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
         child: ListView(
           children: [
             TextField(
@@ -47,26 +48,26 @@ class _RegisterPageState extends State<RegisterPage> {
                   hintText: "账号",
                   hintStyle: TextStyle(color: Colors.grey[400])),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10.h),
             TextField(
               controller: _pwdCon1,
               decoration: InputDecoration(
                   hintText: "密码1",
                   hintStyle: TextStyle(color: Colors.grey[400])),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10.h),
             TextField(
               controller: _pwdCon2,
               decoration: InputDecoration(
                   hintText: "密码2",
                   hintStyle: TextStyle(color: Colors.grey[400])),
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
             MaterialButton(
               onPressed: () => checkNameAndPwd(),
-              child: const Text(
+              child: Text(
                 "注册",
-                style: TextStyle(color: Colors.blue, fontSize: 16),
+                style: TextStyle(color: Colors.blue, fontSize: 16.sp),
               ),
             )
           ],

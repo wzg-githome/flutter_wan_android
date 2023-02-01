@@ -51,7 +51,6 @@ class _KnowledgeHierarchyPageState extends State<KnowledgeHierarchyPage> {
                 if (ObjectUtil.isNotEmpty(_khList) &&
                     ObjectUtil.isNotEmpty(_khList![index]) &&
                     mounted) {
-
                   setState(() {
                     _isExc = _khList![index]!.curCheck;
                     _index = index;
@@ -118,7 +117,7 @@ class _KnowledgeHierarchyPageState extends State<KnowledgeHierarchyPage> {
                   child: Container(
                     width: ScreenUtil().screenWidth,
                     color: Colors.grey[400],
-                    padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10),
+                    padding: EdgeInsets.only(top: 8.h, bottom: 8.h, left: 10.w),
                     child: Text(
                       "${_kHEntityChildren?[index].name}",
                       style: TextStyle(color: Colors.blue, fontSize: 14.sp),

@@ -121,11 +121,8 @@ class _LgCollectPageState extends State<LgCollectPage> {
                   : Container(
                       height: 50.h,
                       color: Colors.grey[200],
-                      padding: const EdgeInsets.only(left: 10),
-                      // decoration: BoxDecoration(
-                      //     color: Colors.grey[200],
-                      //     borderRadius: BorderRadius.circular(8)),
-                      margin: const EdgeInsets.only(top: 2),
+                      padding: EdgeInsets.only(left: 10.w),
+                      margin: EdgeInsets.only(top: 2.h),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -148,14 +145,12 @@ class _LgCollectPageState extends State<LgCollectPage> {
     // bool _like=curItem==null?false:curItem.c;
 
     return InkWell(
-      onTap: () {
-        _onClickListItem(curItem);
-      },
+      onTap: () => _onClickListItem(curItem),
       child: Container(
-        padding: const EdgeInsets.all(10),
-        margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
+        padding: EdgeInsets.all(10.r),
+        margin: EdgeInsets.only(top: 10.h, left: 10.w, right: 10.w),
         decoration: BoxDecoration(
-            color: Colors.grey[200], borderRadius: BorderRadius.circular(8)),
+            color: Colors.grey[200], borderRadius: BorderRadius.circular(8.r)),
         child: Column(
           children: [
             Row(
@@ -166,11 +161,11 @@ class _LgCollectPageState extends State<LgCollectPage> {
                   children: [
                     Image.asset(
                       "asset/images/icon_author.png",
-                      height: 25,
-                      width: 25,
+                      height: 25.h,
+                      width: 25.w,
                     ),
                     Container(
-                      margin: const EdgeInsets.only(left: 5),
+                      margin: EdgeInsets.only(left: 5.w),
                       // height: 20,
                       child: Text(
                         "${curItem?.author}",
@@ -182,8 +177,8 @@ class _LgCollectPageState extends State<LgCollectPage> {
                   ],
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  height: 20,
+                  margin: EdgeInsets.only(left: 5.w),
+                  height: 20.h,
                   child: Text(
                     "${curItem?.chapterName}",
                     maxLines: 1,
@@ -196,7 +191,7 @@ class _LgCollectPageState extends State<LgCollectPage> {
               ],
             ),
             Container(
-              margin: const EdgeInsets.only(top: 10, bottom: 10),
+              margin: EdgeInsets.only(top: 10.h, bottom: 10.h),
               child: Text(
                 "${curItem?.title}",
                 maxLines: 2,
@@ -210,15 +205,13 @@ class _LgCollectPageState extends State<LgCollectPage> {
               children: [
                 Text("${curItem?.niceDate}"),
                 InkWell(
-                  onTap: () {
-                    _cancelCollect(curItem);
-                  },
+                  onTap: () => _cancelCollect(curItem),
                   child: Container(
-                    padding: const EdgeInsets.only(
-                        left: 3, right: 3, top: 5, bottom: 5),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 5.h),
                     decoration: BoxDecoration(
                         color: Colors.red[600],
-                        borderRadius: BorderRadius.circular(5)),
+                        borderRadius: BorderRadius.circular(5.r)),
                     child: Row(
                       children: [
                         Text(
@@ -227,12 +220,12 @@ class _LgCollectPageState extends State<LgCollectPage> {
                           style:
                               TextStyle(color: Colors.white, fontSize: 12.sp),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 2),
+                        Padding(
+                          padding: EdgeInsets.only(left: 2.w),
                           child: Icon(
                             Icons.close,
                             color: Colors.white,
-                            size: 12,
+                            size: 12.sp,
                           ),
                         )
                       ],

@@ -136,11 +136,11 @@ class _ProjectListPageState extends State<ProjectListPage> {
         : null;
     return curItem == null
         ? Container(
-            margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            padding: const EdgeInsets.only(left: 10),
+            margin: EdgeInsets.only(top: 10.h, left: 10.w, right: 10.w),
+            padding: EdgeInsets.only(left: 10.w),
             height: 100,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               color: Colors.grey[200],
             ),
             alignment: Alignment.centerLeft,
@@ -155,10 +155,10 @@ class _ProjectListPageState extends State<ProjectListPage> {
             },
             child: Container(
               width: ScreenUtil().screenWidth,
-              margin: const EdgeInsets.only(top: 10, left: 10, right: 10),
-              padding: const EdgeInsets.all(10),
+              margin: EdgeInsets.only(top: 10.h, left: 10.w, right: 10.w),
+              padding: EdgeInsets.all(10.r),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(8.r),
                   color: Colors.grey[200]),
               child: IntrinsicHeight(
                 child: Row(
@@ -170,15 +170,15 @@ class _ProjectListPageState extends State<ProjectListPage> {
                       child: CachedNetworkImage(
                         imageUrl: "${curItem.envelopePic}",
                         placeholder: (context, url) {
-                          return ImageUtils.buildPlaceholder(8,
-                              width: 90, height: 135);
+                          return ImageUtils.buildPlaceholder(8.r,
+                              width: 90.w, height: 135.h);
                         },
                         imageBuilder: (context, imagePro) {
                           return Container(
-                            width: 90,
-                            height: 135,
+                            width: 90.w,
+                            height: 135.h,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.r),
                                 image: DecorationImage(
                                   fit: BoxFit.fill,
                                   image: imagePro,
@@ -189,9 +189,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
                     ),
                     Expanded(
                         child: Container(
-                      // height: 135,
-                      //     color: Colors.blue,
-                      margin: const EdgeInsets.only(left: 10),
+                      margin: EdgeInsets.only(left: 10.w),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -199,12 +197,12 @@ class _ProjectListPageState extends State<ProjectListPage> {
                             children: [
                               Image.asset(
                                 "asset/images/icon_author.png",
-                                width: 20,
-                                height: 20,
+                                width: 20.w,
+                                height: 20.h,
                               ),
                               Expanded(
                                   child: Padding(
-                                padding: const EdgeInsets.only(left: 5),
+                                padding: EdgeInsets.only(left: 5.w),
                                 child: Text(
                                   "${curItem.title}",
                                   maxLines: 1,
@@ -219,7 +217,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
                           Expanded(
                               child: Container(
                             // color: Colors.white,
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            padding: EdgeInsets.only(top: 10.h, bottom: 10.h),
                             child: Text(
                               "${curItem.desc}",
                               maxLines: 4,
@@ -232,7 +230,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
                           Row(
                             children: [
                               Container(
-                                margin: const EdgeInsets.only(right: 10),
+                                margin: EdgeInsets.only(right: 10.w),
                                 child: Text("${curItem.niceDate}",
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
@@ -259,7 +257,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
                                               _onClickDownload(curItem.apkLink);
                                             },
                                             child: Container(
-                                              padding: const EdgeInsets.all(5),
+                                              padding: EdgeInsets.all(5.r),
                                               child: Text(
                                                 "下载",
                                                 style: TextStyle(
