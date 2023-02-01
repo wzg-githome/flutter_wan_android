@@ -69,7 +69,7 @@ class _UserPageState extends State<UserPage> {
               GestureDetector(
                 onTap: () {
                   Get.to(
-                      BigImagePage(imageUrl: "asset/images/app_splash_bg.jpg"));
+                     const BigImagePage(imageUrl: "asset/images/app_splash_bg.jpg"));
                 },
                 child: Container(
                   height: 100.h,
@@ -101,7 +101,7 @@ class _UserPageState extends State<UserPage> {
                 text: "个性签名: ",
                 style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
             TextSpan(
-                text: "我就写个性签名，气死你=》${UserModel.getLoginName()},你若安好，便是晴天",
+                text: "${UserModel.getLoginName()},你若安好，便是晴天",
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 14.sp,
