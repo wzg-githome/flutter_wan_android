@@ -27,12 +27,16 @@ class _UserPageState extends State<UserPage> {
           _builderItem("收藏", "❥(^_-)", onTap: () async {
             await Get.toNamed(PageList.lgCollectPage);
           }),
-          _builderItem("其他", "other", onTap: () {}),
-          _builderItem("清除缓存", "10M", onTap: () {}),
+          _builderItem("其他", "other", onTap: () => _toast()),
+          _builderItem("清除缓存", "10M", onTap: () => _toast()),
           _builderItem("退出登录", "", onTap: () => _logout()),
         ],
       ),
     );
+  }
+
+  void _toast() {
+    SmartDialog.showToast("暂未开放!!!");
   }
 
   void _logout() async {
