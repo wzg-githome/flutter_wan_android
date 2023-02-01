@@ -21,60 +21,59 @@ class _BigImagePageState extends State<BigImagePage> {
       color: Colors.grey[400],
       child: Container(
         margin: EdgeInsets.only(
-            left: 15,
-            right: 15,
-            top: ScreenUtil().statusBarHeight + 15,
-            bottom: 15),
+            left: 15.w,
+            right: 15.w,
+            top: ScreenUtil().statusBarHeight + 15.h,
+            bottom: 15.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
           color: Colors.grey[200],
-          // border: Border.all(
-          //   color: Colors.red,
-          //   width: 1.w
-          // )
         ),
         child: Stack(
           children: [
-            CachedNetworkImage(
-              imageUrl: widget.imageUrl,
-              height: ScreenUtil().screenHeight - ScreenUtil().statusBarHeight,
-              width: ScreenUtil().screenWidth,
-              imageBuilder: (context, imagePro) {
-                return Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                        image: imagePro,
-                        fit: BoxFit.fill,
-                      )),
-                );
-              },
-              progressIndicatorBuilder: (context, url, process) {
-                return Center(
-                  child: CircularProgressIndicator(
-                    value: process.progress,
-                    // backgroundColor: Colors.grey,
-                    // semanticsLabel: "hh",
-                    // semanticsValue: "${process.progress}",
-                    // color: Colors.red,
+            isHttp()
+                ? CachedNetworkImage(
+                    imageUrl: widget.imageUrl,
+                    height: ScreenUtil().screenHeight -
+                        ScreenUtil().statusBarHeight,
+                    width: ScreenUtil().screenWidth,
+                    imageBuilder: (context, imagePro) {
+                      return Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.r),
+                            image: DecorationImage(
+                              image: imagePro,
+                              fit: BoxFit.fill,
+                            )),
+                      );
+                    },
+                    progressIndicatorBuilder: (context, url, process) {
+                      return Center(
+                        child:
+                            CircularProgressIndicator(value: process.progress),
+                      );
+                    },
+                  )
+                : Container(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(8.r),
+                        image: DecorationImage(
+                          image: AssetImage(widget.imageUrl),
+                          fit: BoxFit.fill,
+                        )),
                   ),
-                );
-              },
-            ),
             Container(
-                padding: const EdgeInsets.only(top: 10, right: 15),
+                padding: EdgeInsets.only(top: 10.h, right: 15.w),
                 alignment: Alignment.topRight,
                 child: InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
+                  onTap: () => Get.back(),
                   child: Container(
                     height: 30,
                     width: 30,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: Colors.grey[400],
-                        borderRadius: BorderRadius.circular(30 / 2)),
+                        borderRadius: BorderRadius.circular(15.r)),
                     child: const Icon(
                       Icons.close,
                       color: Colors.blue,
@@ -85,5 +84,9 @@ class _BigImagePageState extends State<BigImagePage> {
         ),
       ),
     );
+  }
+
+  bool isHttp() {
+    return widget.imageUrl.startsWith("http");
   }
 }

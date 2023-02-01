@@ -4,6 +4,8 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/custom/message_dialog_view.dart';
 import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/ui/common/big_image_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/user_page/synopsis_page/synopsis_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_model.dart';
 import 'package:get/get.dart';
 
@@ -28,6 +30,7 @@ class _UserPageState extends State<UserPage> {
             await Get.toNamed(PageList.lgCollectPage);
           }),
           _builderItem("其他", "other", onTap: () => _toast()),
+          _builderItem("介绍与声明", "read", onTap: () => Get.to(const SynopsisPage())),
           _builderItem("清除缓存", "10M", onTap: () => _toast()),
           _builderItem("退出登录", "", onTap: () => _logout()),
         ],
@@ -62,15 +65,20 @@ class _UserPageState extends State<UserPage> {
           ///头像
           Row(
             children: [
-              Container(
-                height: 100,
-                width: 100,
-                margin: const EdgeInsets.only(bottom: 10),
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(100 / 2),
-                    image: const DecorationImage(
-                        image: AssetImage("asset/images/photo.png"))),
+              GestureDetector(
+                onTap: (){
+                  Get.to(BigImagePage(imageUrl: "asset/images/app_splash_bg.jpg"));
+                },
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(100 / 2),
+                      image: const DecorationImage(
+                          image: AssetImage("asset/images/app_splash_bg.jpg"))),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.only(left: 10),
