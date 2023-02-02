@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/ui/register/register_model.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
-
+///注册页
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 

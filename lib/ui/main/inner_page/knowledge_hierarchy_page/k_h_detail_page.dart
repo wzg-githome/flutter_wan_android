@@ -209,9 +209,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
               children: [
                 Text("${curItem?.niceDate}"),
                 InkWell(
-                  onTap: () {
-                    _collect(curItem, index);
-                  },
+                  onTap: () => _collect(curItem, index),
                   child: Container(
                     padding: EdgeInsets.all(3.r),
                     decoration: BoxDecoration(

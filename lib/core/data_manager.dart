@@ -5,6 +5,7 @@ import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_e
 
 import 'sp/abs_sp_manager.dart';
 
+///数据管理
 class DataManager extends AbsNetManager with AbsSPManager {
   late NetManager _netManager;
   late SPManager _spManager;
@@ -115,12 +116,13 @@ class DataManager extends AbsNetManager with AbsSPManager {
   }
 
   @override
-  Future<void> lgInStationCollect<T>(int? id, int? originId, onSuccess, onFiled) async{
+  Future<void> lgInStationCollect<T>(
+      int? id, int? originId, onSuccess, onFiled) async {
     await _netManager.lgInStationCollect(id, originId, onSuccess, onFiled);
   }
+
   @override
-  Future<void> lgInStationUnCollect<T>(
-      int? id, int? originId, onSuccess, onFiled) async {
-    await _netManager.lgInStationUnCollect<T>(id, originId, onSuccess, onFiled);
+  Future<void> lgInStationUnCollect<T>(int? id, onSuccess, onFiled) async {
+    await _netManager.lgInStationUnCollect<T>(id, onSuccess, onFiled);
   }
 }

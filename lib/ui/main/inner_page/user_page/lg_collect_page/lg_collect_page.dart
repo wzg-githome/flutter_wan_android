@@ -110,14 +110,17 @@ class _LgCollectPageState extends State<LgCollectPage> {
         },
         controller: _refreshController,
         child: ListView.builder(
-            itemCount: ObjectUtil.isNotEmpty(_lgCollectEntity)
-                ? ObjectUtil.isNotEmpty(_lgCollectEntity!.datas)
-                    ? _lgCollectEntity!.datas!.length
-                    : 10
+            itemCount: ObjectUtil.isNotEmpty(_lgCollectEntity) &&
+                    ObjectUtil.isNotEmpty(_lgCollectEntity!.datas)
+                ? _lgCollectEntity!.datas!.length
                 : 10,
             itemBuilder: (context, index) {
               return ObjectUtil.isNotEmpty(_lgCollectEntity)
-                  ? _buildItemView(index)
+                  ? _buildItemView(index,
+                      onItemClick: () =>
+                          _onClickListItem(_lgCollectEntity?.datas![index]),
+                      onCollectClick: () =>
+                          _cancelCollect(_lgCollectEntity?.datas![index]))
                   : Container(
                       height: 50.h,
                       color: Colors.grey[200],
@@ -126,7 +129,7 @@ class _LgCollectPageState extends State<LgCollectPage> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "loadding",
+                          "loading",
                           style: TextStyle(color: Colors.blue, fontSize: 16.sp),
                         ),
                       ),
@@ -137,15 +140,12 @@ class _LgCollectPageState extends State<LgCollectPage> {
   }
 
   ///item
-  Widget _buildItemView(index) {
+  Widget _buildItemView(index, {onItemClick, onCollectClick}) {
     var curItem = ObjectUtil.isNotEmpty(_lgCollectEntity!.datas)
         ? _lgCollectEntity!.datas![index]
         : null;
-
-    // bool _like=curItem==null?false:curItem.c;
-
     return InkWell(
-      onTap: () => _onClickListItem(curItem),
+      onTap: onItemClick,
       child: Container(
         padding: EdgeInsets.all(10.r),
         margin: EdgeInsets.only(top: 10.h, left: 10.w, right: 10.w),
@@ -205,7 +205,7 @@ class _LgCollectPageState extends State<LgCollectPage> {
               children: [
                 Text("${curItem?.niceDate}"),
                 InkWell(
-                  onTap: () => _cancelCollect(curItem),
+                  onTap: onCollectClick,
                   child: Container(
                     padding:
                         EdgeInsets.symmetric(horizontal: 3.w, vertical: 5.h),
@@ -242,15 +242,17 @@ class _LgCollectPageState extends State<LgCollectPage> {
 
   ///item事件
   _onClickListItem(LgCollectEntityDatas? curItem) async {
-    await Get.to(WebPage(url: curItem?.link, title: curItem?.title));
+    if (curItem == null) return;
+    await Get.to(WebPage(url: curItem.link, title: curItem.title));
   }
 
   ///取消收藏
   _cancelCollect(LgCollectEntityDatas? curItem) async {
-    await _lgCollectModel.cancelLgCollect(curItem?.id, (data) async {
-      ///重新加载数据
-      // await _refreshAndLoadMoreData(true);
-      // _refreshController.callRefresh();
+    if (curItem == null) return;
+    bool _isOrigin = ObjectUtil.isNotEmpty(curItem.origin);
+    LogUtil.d("origin is $_isOrigin");
+    await _lgCollectModel.cancelCollect(
+        _isOrigin, _isOrigin ? curItem.id : curItem.originId, (data) async {
       ///极致的性能，直接remove当前数据
       setState(() {
         _lgCollectEntity?.datas?.remove(curItem);

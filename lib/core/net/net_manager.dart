@@ -116,11 +116,13 @@ class NetManager extends AbsNetManager {
 
   @override
   Future<void> lgInStationUnCollect<T>(
-      int? id, int? originId, onSuccess, onFiled) async {
-    // var appendUrlMap = <String, dynamic>{};
-    // appendUrlMap["id"] = id;
-    // var queryMap = <String, dynamic>{};
-    // queryMap["originId"] = originId;
-    // await _dioUtils.post(WanAndroidApi.lgUnCollectOriginId, map, onSuccess,onFiled);
+      int? id, /* int? originId,*/ onSuccess, onFiled) async {
+    var appendUrlMap = <String, dynamic>{};
+    appendUrlMap["id"] = id;
+    var queryMap = <String, dynamic>{};
+    queryMap["originId"] = -1;
+    await _dioUtils.post(
+        WanAndroidApi.lgInStationUnCollect, null, onSuccess, onFiled,
+        appendUrlMap: appendUrlMap);
   }
 }

@@ -27,8 +27,27 @@ class HomeModel extends BaseModel {
     Function(ArticleEntity?) onSuccess,
     Function(String?) onFailed,
   ) async {
-    await BaseModel.dataManager.getArticleList<ArticleEntity>(page, onSuccess, (err){
+    await BaseModel.dataManager.getArticleList<ArticleEntity>(page, onSuccess,
+        (err) {
       onFailed(err.errMsg);
+    });
+  }
+
+  ///收藏
+  static Future<void> lgCollect(int? id, Function onSuccess) async {
+    await BaseModel.dataManager.lgCollect(id, (data) {
+      onSuccess.call();
+    }, (err) {
+      SmartDialog.showToast("${err.errMsg}");
+    });
+  }
+
+  ///取消收藏
+  static Future<void> cancelCollect(int? id, Function onSuccess) async {
+    await BaseModel.dataManager.lgInStationUnCollect(id, (data) {
+      onSuccess.call();
+    }, (err) {
+      SmartDialog.showToast("${err.errMsg}");
     });
   }
 }

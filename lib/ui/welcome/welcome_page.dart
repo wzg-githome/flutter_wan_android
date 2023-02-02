@@ -5,7 +5,7 @@ import 'package:flutter_wan_android/page_list.dart';
 import 'package:flutter_wan_android/utils/commin_utils.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+///欢迎页
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
 

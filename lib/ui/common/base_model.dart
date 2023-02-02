@@ -1,6 +1,6 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/core/data_manager.dart';
-
+///数据model基类
 class BaseModel {
   static DataManager dataManager = DataManager.instance;
 

@@ -1,3 +1,4 @@
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
 
 import 'lg_collect_entity.dart';
@@ -9,8 +10,14 @@ class LgCollectModel extends BaseModel {
         .lgCollectList<LgCollectEntity>(page, onSuccess, onFiled);
   }
 
-  ///取消站内收藏
-  Future<void> cancelLgCollect(int? id, onSuccess) async {
-    await BaseModel.lgUnCollect(id, onSuccess);
+  ///取消收藏
+  Future<void> cancelCollect(bool isOrigin, int? id, onSuccess) async {
+    if (isOrigin) {
+      await BaseModel.lgUnCollect(id, onSuccess);
+    } else {
+      await BaseModel.dataManager.lgInStationUnCollect(id, onSuccess, (err) {
+        SmartDialog.showToast("${err.errMsg}");
+      });
+    }
   }
 }

@@ -1,3 +1,4 @@
+///sp常量
 class SPConstant {
   ///登录状态
   static var loginStatus = "login_status";

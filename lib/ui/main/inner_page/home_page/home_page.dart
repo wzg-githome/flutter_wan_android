@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
+import 'package:flutter_wan_android/ui/common/horizontal_item_widget.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
@@ -16,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'entity/article_entity.dart';
 import 'entity/banner_entity.dart';
 
-///homePage
+///首页
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -116,16 +117,17 @@ class _HomePageState extends State<HomePage> {
           _loadMoreAndRefreshArticleList(false);
         },
         child: ListView.builder(
-            itemCount: ObjectUtil.isEmpty(_articleList)
-                ? 10
-                : (ObjectUtil.isEmpty(_articleList?.datas)
-                    ? 10
-                    : _articleList?.datas!.length),
+            itemCount: ObjectUtil.isNotEmpty(_articleList) &&
+                    ObjectUtil.isNotEmpty(_articleList?.datas)
+                ? _articleList!.datas!.length + 2
+                : 10,
             itemBuilder: (context, index) {
               if (index == 0) {
-                return builderBanner();
+                return _builderBanner();
+              } else if (index == 1) {
+                return _builderHorizontalListView();
               } else {
-                return builderListItem(index);
+                return _builderListItem(index - 2);
               }
             }),
       ),
@@ -133,15 +135,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   ///banner list
-  Widget builderBanner() {
+  Widget _builderBanner() {
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Container(
-        padding: EdgeInsets.only(top: 5.h, bottom: 5.h),
+        padding: EdgeInsets.only(top: 5.h),
         child: ObjectUtil.isEmpty(_bannerList)
-            ? const Center(
-                child: Text("loading..."),
-              )
+            ? const Center(child: Text("loading..."))
             : Swiper(
                 onTap: (index) async {
                   ///launchUrl
@@ -185,8 +185,28 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget _builderHorizontalListView() {
+    return Container(
+      height: 72.h,
+      margin: EdgeInsets.only(bottom: 10.h, top: 10.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.h),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: const [
+          HorizontalItemWidget(Icons.search, "看大佬"),
+          HorizontalItemWidget(Icons.favorite, "哈哈"),
+          HorizontalItemWidget(Icons.task, "哈哈"),
+          HorizontalItemWidget(Icons.storage, "哈哈"),
+        ],
+      ),
+    );
+  }
+
   ///list item and loading
-  Widget builderListItem(index) {
+  Widget _builderListItem(index) {
     var _articleEntity = !ObjectUtil.isEmpty(_articleList)
         ? ObjectUtil.isNotEmpty(_articleList!.datas)
             ? _articleList!.datas![index]
@@ -198,7 +218,7 @@ class _HomePageState extends State<HomePage> {
       child: ObjectUtil.isEmptyList(_articleList?.datas)
           ? Container(
               margin: EdgeInsets.only(bottom: 10.h),
-              height: 40 * 2,
+              height: 80.h,
               color: Colors.grey[200],
               child: Padding(
                 padding: EdgeInsets.only(left: 10.w),
@@ -211,15 +231,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             )
-          : _buildItem(_articleEntity),
+          : _buildItem(_articleEntity,
+              onItemClick: () => _onItemClick(_articleEntity),
+              onCollectClick: () => _onCollectClick(_articleEntity)),
     );
   }
 
-  Widget _buildItem(_articleEntity) {
+  Widget _buildItem(_articleEntity, {onItemClick, onCollectClick}) {
     return GestureDetector(
-      onTap: () {
-        _onItemClick(_articleEntity);
-      },
+      onTap: onItemClick,
       child: Container(
         margin: EdgeInsets.only(bottom: 10.h),
         padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.w),
@@ -239,10 +259,13 @@ class _HomePageState extends State<HomePage> {
                 HtmlUnescape().convert("${_articleEntity?.title}"),
                 style: TextStyle(fontSize: 12.sp),
               ),
-              trailing: Container(
-                height: 30.h,
-                width: 30.w,
-                color: Colors.blue,
+              trailing: IconButton(
+                onPressed: onCollectClick,
+                icon: Icon(
+                    _articleEntity?.collect
+                        ? Icons.favorite
+                        : Icons.favorite_border,
+                    color: Colors.blue),
               ),
             ),
             Row(
@@ -276,5 +299,28 @@ class _HomePageState extends State<HomePage> {
       url: index?.link,
       title: index?.title,
     ));
+  }
+
+  ///收藏
+  void _onCollectClick(ArticleEntityDatas? index) {
+    if (index == null) return;
+    LogUtil.d("_onCollectClick: $index");
+    if (index.collect ?? true) {
+      HomeModel.cancelCollect(index.id, () {
+        if (mounted) {
+          setState(() {
+            index.collect = false;
+          });
+        }
+      });
+    } else {
+      HomeModel.lgCollect(index.id, () {
+        if (mounted) {
+          setState(() {
+            index.collect = true;
+          });
+        }
+      });
+    }
   }
 }

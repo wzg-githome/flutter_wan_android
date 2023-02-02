@@ -67,19 +67,18 @@ class _UserPageState extends State<UserPage> {
           Row(
             children: [
               GestureDetector(
-                onTap: () {
-                  Get.to(
-                     const BigImagePage(imageUrl: "asset/images/app_splash_bg.jpg"));
-                },
+                onTap: () => Get.to(const BigImagePage(
+                    imageUrl: "asset/images/app_splash_bg.png")),
                 child: Container(
                   height: 100.h,
-                  width: 100.w,
+                  width: 100.h,
                   margin: EdgeInsets.only(bottom: 10.h),
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(50.r),
+                      borderRadius: BorderRadius.circular(50.h),
                       image: const DecorationImage(
-                          image: AssetImage("asset/images/app_splash_bg.jpg"))),
+                          image: AssetImage("asset/images/app_splash_bg.png"),
+                          fit: BoxFit.fill)),
                 ),
               ),
               Container(

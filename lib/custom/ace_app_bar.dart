@@ -27,7 +27,7 @@ AppBar getAceAppBar(String title,
             GestureDetector(
               onTap: () {},
               child: Padding(
-                  padding: const EdgeInsets.all(5), child: Text(rightText)),
+                  padding:  EdgeInsets.all(5.h), child: Text(rightText)),
             )
           ]
         : [],

@@ -11,7 +11,7 @@ flutter_native_splash:
   # color 和 background_image 不能同时设置，只有一个会被使用。
 #  color: "#42a5f5"
   #background_image
-  background_image: "asset/images/app_splash_bg.jpg"
+  background_image: "asset/images/app_splash_bg.png"
 
   # 以下是可选的参数。去掉注释前面的 #可使参数起作用。
 

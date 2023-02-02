@@ -8,6 +8,7 @@ import 'package:flutter_wan_android/utils/ace_log.dart';
 
 import 'inner_page/knowledge_hierarchy_page/knowledgn_hierarchy_page.dart';
 
+///主页框架
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -42,7 +43,8 @@ class _MainPageState extends State<MainPage> {
 
     return WillPoScopeView(
         child: Scaffold(
-      appBar: getAceAppBar("mainTitle".tr),
+      appBar:
+          getAceAppBar("mainTitle".tr),
       body: PageView(
         controller: _pageCon,
         onPageChanged: (index) {

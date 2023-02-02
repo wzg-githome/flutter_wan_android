@@ -30,5 +30,6 @@ abstract class AbsNetManager {
       int? id, int? originId, onSuccess, onFiled);
 
   Future<void> lgInStationUnCollect<T>(
-      int? id, int? originId, onSuccess, onFiled);
+      int? id, /*int? originId,*/ onSuccess, onFiled);
+
 }

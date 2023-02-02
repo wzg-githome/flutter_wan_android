@@ -34,9 +34,7 @@ class SPManager extends AbsSPManager {
   @override
   List<BannerEntity?>? getCacheBannerList() {
     var string = SpUtil.getString(SPConstant.bannerList);
-    if (string == null) {
-      return null;
-    }
+    if (string == null)  return null;
     List<BannerEntity?>? _bannerList = JsonUtil.getObjectList(
         string, (v) => BannerEntity.fromJson(v as Map<String, dynamic>));
     LogUtil.e("getBannerList:\n${_bannerList?.toString()}", tag: _tag);
