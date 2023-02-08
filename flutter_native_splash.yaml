@@ -32,7 +32,7 @@ flutter_native_splash:
   # 如果没有指定，应用会使用上面的参数。如果指定了 image_dark ，必须要指定 color_dark 或 background_image_dark 。
   # color_dark 和 background_image_dark 不能同时设置。
   #color_dark: "#042a49"
-  #background_image_dark: "assets/dark-background.png"
+  #background_image_dark: "assets/dark-background.jpg"
   #image_dark: assets/splash-invert.png
 
   # android 、 ios 和 web 参数可用于不为对应的平台生成闪屏界面。
