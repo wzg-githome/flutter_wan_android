@@ -56,10 +56,10 @@ class _WxArticleSearchWidgetState extends State<WxArticleSearchWidget> {
             },
             child: Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
+              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 15.w),
               margin: EdgeInsets.only(left: 10.w, right: 5.w),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.h),
+                  borderRadius: BorderRadius.circular(40.h),
                   color: Colors.blue),
               child: Text(
                 "搜索",

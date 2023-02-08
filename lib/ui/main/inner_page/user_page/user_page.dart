@@ -122,7 +122,7 @@ class _UserPageState extends State<UserPage> {
         margin: EdgeInsets.only(top: 10.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
-          color: Colors.grey[50],
+          color: Colors.grey[200],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,12 +1,11 @@
-import 'package:flutter_wan_android/page_list.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:get/get.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:logger/logger.dart';
-import 'package:sp_util/sp_util.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:common_utils/common_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_wan_android/page_list.dart';
+import 'package:get/get.dart';
+import 'package:sp_util/sp_util.dart';
 
 import 'config_center.dart';
 import 'l10n/messages.dart';

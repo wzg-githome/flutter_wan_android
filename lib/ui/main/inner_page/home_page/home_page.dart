@@ -205,20 +205,22 @@ class _HomePageState extends State<HomePage> {
   Widget _builderHorizontalListView() {
     return Container(
       height: 72.h,
-      margin: EdgeInsets.only(bottom: 10.h, top: 10.h),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.h),
-      ),
+      margin: EdgeInsets.only(bottom: 8.h, top: 8.h),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           HorizontalItemWidget(Icons.chat, "公众号", onTap: () {
             Get.to(const WxArtoclePage(), arguments: _wxArticleEntity);
           }),
-          HorizontalItemWidget(Icons.favorite, "导航", onTap: () {}),
-          HorizontalItemWidget(Icons.task, "哈哈", onTap: () {}),
-          HorizontalItemWidget(Icons.storage, "哈哈", onTap: () {}),
+          HorizontalItemWidget(Icons.favorite, "导航", onTap: () {
+            SmartDialog.showToast("暂未开发");
+          }),
+          HorizontalItemWidget(Icons.task, "哈哈", onTap: () {
+            SmartDialog.showToast("暂未开发");
+          }),
+          HorizontalItemWidget(Icons.storage, "哈哈", onTap: () {
+            SmartDialog.showToast("暂未开发");
+          }),
         ],
       ),
     );

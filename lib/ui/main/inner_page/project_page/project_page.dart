@@ -63,7 +63,7 @@ class _ProjectPageState extends State<ProjectPage> {
               padding:  EdgeInsets.all(8.r),
               height: 50.h,
               decoration: BoxDecoration(
-                  color: Colors.grey[100],
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(8)),
               alignment: Alignment.centerLeft,
               child: Text("${_projectTreeEntity?.name}"),

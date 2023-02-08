@@ -150,10 +150,13 @@ class _WxArtoclePageState extends State<WxArtoclePage>
           ),
           Expanded(
               flex: 1,
-              child: TabBarView(
-                controller: _tabController,
-                children:
-                    _wxArticleList!.map((e) => _buildListView(e)).toList(),
+              child: Container(
+                color: Colors.grey[300],
+                child: TabBarView(
+                  controller: _tabController,
+                  children:
+                      _wxArticleList!.map((e) => _buildListView(e)).toList(),
+                ),
               ))
         ],
       ),

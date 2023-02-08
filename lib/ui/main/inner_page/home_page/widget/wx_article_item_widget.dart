@@ -36,7 +36,9 @@ class _ListItemViewState extends State<WxArticleItemWidget> {
               children: [
                 Text("${widget.entity?.author}"),
                 Text(
-                    "${widget.entity?.superChapterName}/${widget.entity?.chapterName}")
+                  "${widget.entity?.superChapterName}/${widget.entity?.chapterName}",
+                  style: const TextStyle(color: Colors.blue),
+                )
               ],
             ),
             Container(
@@ -51,7 +53,7 @@ class _ListItemViewState extends State<WxArticleItemWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("${widget.entity?.niceDate}"),
+                Text("${widget.entity?.niceDate}",style:  TextStyle(color: Colors.black54,fontSize: 12.sp),),
                 GestureDetector(
                   onTap: widget.onLikeTap,
                   child: Icon(

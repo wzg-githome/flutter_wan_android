@@ -23,6 +23,12 @@ class _MainPageState extends State<MainPage> {
 
   final _bottomList = ["首页", "项目", "知识体系", "我的"];
   final _bottomIndexList = [0, 1, 2, 3];
+  final _icons = [
+    Icons.home,
+    Icons.backup_rounded,
+    Icons.storage,
+    Icons.account_box_outlined
+  ];
 
   @override
   void initState() {
@@ -43,8 +49,7 @@ class _MainPageState extends State<MainPage> {
 
     return WillPoScopeView(
         child: Scaffold(
-      appBar:
-          getAceAppBar("mainTitle".tr),
+      appBar: getAceAppBar("mainTitle".tr),
       body: PageView(
         controller: _pageCon,
         onPageChanged: (index) {
@@ -79,7 +84,7 @@ class _MainPageState extends State<MainPage> {
         items: _bottomIndexList
             .map((e) => BottomNavigationBarItem(
                   icon: Icon(
-                    Icons.home,
+                    _icons[e],
                     color: _defaultIndex == e ? _checkedColor : _defaultColor,
                   ),
                   label: _bottomList[e],

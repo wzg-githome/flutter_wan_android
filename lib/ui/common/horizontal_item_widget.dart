@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 
 class HorizontalItemWidget extends StatefulWidget {
-  const HorizontalItemWidget(this.icon, this.content, { this.onTap,Key? key})
+  const HorizontalItemWidget(this.icon, this.content, {this.onTap, Key? key})
       : super(key: key);
 
   final String? content;
@@ -19,11 +19,11 @@ class _HorizontalItemWidgetState extends State<HorizontalItemWidget> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        height: 50.h,
-        width: 50.h,
+        height: 60.h,
+        width: 60.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.h),
-          color: Colors.blue[400],
+          color: Colors.grey[200],
         ),
         // alignment: Alignment.center,
         child: Column(
@@ -31,12 +31,13 @@ class _HorizontalItemWidgetState extends State<HorizontalItemWidget> {
           children: [
             Icon(
               widget.icon,
-              color: Colors.white,
-              size: 20.h,
+              color: Colors.blue,
+              size: 28.h,
             ),
+            SizedBox(height: 5.h),
             Text(
               "${widget.content}",
-              style: TextStyle(color: Colors.white, fontSize: 10.sp),
+              style: TextStyle(color: Colors.blue, fontSize: 12.sp),
             )
           ],
         ),
