@@ -3,6 +3,8 @@ import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
 
+import 'entity/wx_article_entity.dart';
+
 class HomeModel extends BaseModel {
   ///获取缓存的bannerList
   static List<BannerEntity?>? getCacheBannerList() {
@@ -47,6 +49,14 @@ class HomeModel extends BaseModel {
     await BaseModel.dataManager.lgInStationUnCollect(id, (data) {
       onSuccess.call();
     }, (err) {
+      SmartDialog.showToast("${err.errMsg}");
+    });
+  }
+
+  ///公众号列表数据
+  static Future<void> getWxChapters(
+      Function(List<WxArticleEntity?>?) onSuccess) async {
+    await BaseModel.dataManager.wxChapters<WxArticleEntity>(onSuccess, (err) {
       SmartDialog.showToast("${err.errMsg}");
     });
   }

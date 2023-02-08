@@ -3,7 +3,7 @@ import 'package:flutter_wan_android/network/entity/http_error.dart';
 
 HttpError $HttpErrorFromJson(Map<String, dynamic> json) {
 	final HttpError httpError = HttpError();
-	final dynamic e = jsonConvert.convert<dynamic>(json['e']);
+	final dynamic? e = jsonConvert.convert<dynamic>(json['e']);
 	if (e != null) {
 		httpError.e = e;
 	}

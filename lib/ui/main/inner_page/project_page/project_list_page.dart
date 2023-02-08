@@ -8,6 +8,7 @@ import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/network/download_apk_util.dart';
 import 'package:flutter_wan_android/ui/common/big_image_page.dart';
+import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_model.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
@@ -106,6 +107,8 @@ class _ProjectListPageState extends State<ProjectListPage> {
         Get.back();
       }),
       body: EasyRefresh(
+        header: getCustomHeader(),
+        footer: getCustomFooter(),
         enableControlFinishLoad: true,
         enableControlFinishRefresh: true,
         controller: _refreshController,

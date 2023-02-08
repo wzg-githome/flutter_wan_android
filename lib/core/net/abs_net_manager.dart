@@ -32,4 +32,10 @@ abstract class AbsNetManager {
   Future<void> lgInStationUnCollect<T>(
       int? id, /*int? originId,*/ onSuccess, onFiled);
 
+  Future<void> wxChapters<T>(onSuccess, onFiled);
+
+  Future<void> wxListFormId<T>(int? id, int page, onSuccess, onFiled);
+
+  Future<void> searchWxFormK<T>(
+      int? id, int page, String k, onSuccess, onFiled);
 }

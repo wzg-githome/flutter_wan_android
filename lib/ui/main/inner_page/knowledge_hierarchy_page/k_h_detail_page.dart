@@ -6,6 +6,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
+import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/kh_model.dart';
 import 'package:get/get.dart';
@@ -109,6 +110,8 @@ class _KHDetailPageState extends State<KHDetailPage> {
     return Scaffold(
       appBar: getAceAppBar("${_mKHEntityChildren?.name}"),
       body: EasyRefresh(
+        header: getCustomHeader(),
+        footer: getCustomFooter(),
         controller: _refreshCon,
         enableControlFinishRefresh: true,
         enableControlFinishLoad: true,

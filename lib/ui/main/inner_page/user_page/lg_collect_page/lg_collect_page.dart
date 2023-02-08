@@ -5,9 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/network/entity/http_error.dart';
+import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/lg_collect_page/lg_collect_model.dart';
 import 'package:get/get.dart';
+import 'package:html_unescape/html_unescape.dart';
 
 import '../user_model.dart';
 import 'lg_collect_entity.dart';
@@ -100,6 +102,8 @@ class _LgCollectPageState extends State<LgCollectPage> {
     return Scaffold(
       appBar: getAceAppBar("收藏"),
       body: EasyRefresh(
+        header: getCustomHeader(),
+        footer: getCustomFooter(),
         enableControlFinishLoad: true,
         enableControlFinishRefresh: true,
         onLoad: () async {
@@ -193,7 +197,7 @@ class _LgCollectPageState extends State<LgCollectPage> {
             Container(
               margin: EdgeInsets.only(top: 10.h, bottom: 10.h),
               child: Text(
-                "${curItem?.title}",
+                HtmlUnescape().convert("${curItem?.title}"),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.start,

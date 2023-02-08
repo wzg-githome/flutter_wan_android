@@ -115,8 +115,7 @@ class NetManager extends AbsNetManager {
   }
 
   @override
-  Future<void> lgInStationUnCollect<T>(
-      int? id, /* int? originId,*/ onSuccess, onFiled) async {
+  Future<void> lgInStationUnCollect<T>(int? id, onSuccess, onFiled) async {
     var appendUrlMap = <String, dynamic>{};
     appendUrlMap["id"] = id;
     var queryMap = <String, dynamic>{};
@@ -124,5 +123,31 @@ class NetManager extends AbsNetManager {
     await _dioUtils.post(
         WanAndroidApi.lgInStationUnCollect, null, onSuccess, onFiled,
         appendUrlMap: appendUrlMap);
+  }
+
+  @override
+  Future<void> wxChapters<T>(onSuccess, onFiled) async {
+    await _dioUtils.getList<T>(WanAndroidApi.wxChapters, onSuccess, onFiled);
+  }
+
+  @override
+  Future<void> wxListFormId<T>(int? id, int page, onSuccess, onFiled) async {
+    var appendUrlMap = <String, dynamic>{};
+    appendUrlMap["id"] = id;
+    appendUrlMap["page"] = page;
+    await _dioUtils.get<T>(WanAndroidApi.wxListFormId, onSuccess, onFiled,
+        appendUrlMap: appendUrlMap);
+  }
+
+  @override
+  Future<void> searchWxFormK<T>(
+      int? id, int page, String k, onSuccess, onFiled) async {
+    var appendUrlMap = <String, dynamic>{};
+    appendUrlMap["id"] = id;
+    appendUrlMap["page"] = page;
+    var queryMap = <String, dynamic>{};
+    queryMap["k"] = k;
+    await _dioUtils.get<T>(WanAndroidApi.searchWxFormK, onSuccess, onFiled,
+        paramsMap: queryMap, appendUrlMap: appendUrlMap);
   }
 }

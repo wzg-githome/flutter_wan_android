@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 
 class HorizontalItemWidget extends StatefulWidget {
-  const HorizontalItemWidget(this.icon, this.content, {Key? key, this.onTap})
+  const HorizontalItemWidget(this.icon, this.content, { this.onTap,Key? key})
       : super(key: key);
 
   final String? content;

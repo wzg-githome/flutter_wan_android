@@ -8,6 +8,8 @@ import 'package:flutter_wan_android/network/entity/http_error.dart';
 import 'package:flutter_wan_android/ui/login/login_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/wx_article_detail_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/wx_article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/entity/k_h_detail_list_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/entity/k_h_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/entity/project_list_entity.dart';
@@ -25,6 +27,10 @@ class JsonConvert {
 		(ArticleEntity).toString(): ArticleEntity.fromJson,
 		(ArticleEntityDatas).toString(): ArticleEntityDatas.fromJson,
 		(BannerEntity).toString(): BannerEntity.fromJson,
+		(WxArticleDetailEntity).toString(): WxArticleDetailEntity.fromJson,
+		(WxArticleDetailEntityDatas).toString(): WxArticleDetailEntityDatas.fromJson,
+		(WxArticleDetailEntityDatasTags).toString(): WxArticleDetailEntityDatasTags.fromJson,
+		(WxArticleEntity).toString(): WxArticleEntity.fromJson,
 		(KHDetailListEntity).toString(): KHDetailListEntity.fromJson,
 		(KHDetailListEntityDatas).toString(): KHDetailListEntityDatas.fromJson,
 		(KHEntity).toString(): KHEntity.fromJson,
@@ -128,6 +134,18 @@ class JsonConvert {
 		}
 		if(<BannerEntity>[] is M){
 			return data.map<BannerEntity>((Map<String, dynamic> e) => BannerEntity.fromJson(e)).toList() as M;
+		}
+		if(<WxArticleDetailEntity>[] is M){
+			return data.map<WxArticleDetailEntity>((Map<String, dynamic> e) => WxArticleDetailEntity.fromJson(e)).toList() as M;
+		}
+		if(<WxArticleDetailEntityDatas>[] is M){
+			return data.map<WxArticleDetailEntityDatas>((Map<String, dynamic> e) => WxArticleDetailEntityDatas.fromJson(e)).toList() as M;
+		}
+		if(<WxArticleDetailEntityDatasTags>[] is M){
+			return data.map<WxArticleDetailEntityDatasTags>((Map<String, dynamic> e) => WxArticleDetailEntityDatasTags.fromJson(e)).toList() as M;
+		}
+		if(<WxArticleEntity>[] is M){
+			return data.map<WxArticleEntity>((Map<String, dynamic> e) => WxArticleEntity.fromJson(e)).toList() as M;
 		}
 		if(<KHDetailListEntity>[] is M){
 			return data.map<KHDetailListEntity>((Map<String, dynamic> e) => KHDetailListEntity.fromJson(e)).toList() as M;

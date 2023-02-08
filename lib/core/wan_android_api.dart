@@ -42,4 +42,13 @@ class WanAndroidApi {
 
   ///我的收藏列表
   static var lgCollectList = "lg/collect/list/{page}/json";
+
+  ///公众号列表数据
+  static var wxChapters = "wxarticle/chapters/json";
+
+  ///获取当前公众号某页的数据
+  static var wxListFormId = "wxarticle/list/{id}/{page}/json";
+
+  ///指定搜索内容，搜索当前公众号的某页的此类数据
+  static var searchWxFormK = "wxarticle/list/{id}/{page}/json";
 }

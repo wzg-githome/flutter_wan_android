@@ -6,9 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
+import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
 import 'package:flutter_wan_android/ui/common/horizontal_item_widget.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/wxarticle_page/wxarticle_page.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:get/get.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -16,6 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'entity/article_entity.dart';
 import 'entity/banner_entity.dart';
+import 'entity/wx_article_entity.dart';
 
 ///首页
 class HomePage extends StatefulWidget {
@@ -30,6 +33,8 @@ class _HomePageState extends State<HomePage> {
   ArticleEntity? _articleList;
   late EasyRefreshController _scrollCon;
 
+  List<WxArticleEntity?>? _wxArticleEntity; //公众号数据
+
   ///当前页
   int curPage = 0;
 
@@ -37,6 +42,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     _scrollCon = EasyRefreshController();
     _initData();
+    _loadWxChapters();
     super.initState();
   }
 
@@ -101,12 +107,23 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  ///加载公众号数据
+  void _loadWxChapters() async {
+    await HomeModel.getWxChapters((data) {
+      setState(() {
+        _wxArticleEntity = data;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(left: 10.w, right: 10.w),
       color: Colors.grey[300],
       child: EasyRefresh(
+        header: getCustomHeader(),
+        footer: getCustomFooter(),
         enableControlFinishRefresh: true,
         enableControlFinishLoad: true,
         controller: _scrollCon,
@@ -195,11 +212,13 @@ class _HomePageState extends State<HomePage> {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: const [
-          HorizontalItemWidget(Icons.search, "看大佬"),
-          HorizontalItemWidget(Icons.favorite, "哈哈"),
-          HorizontalItemWidget(Icons.task, "哈哈"),
-          HorizontalItemWidget(Icons.storage, "哈哈"),
+        children: [
+          HorizontalItemWidget(Icons.chat, "公众号", onTap: () {
+            Get.to(const WxArtoclePage(), arguments: _wxArticleEntity);
+          }),
+          HorizontalItemWidget(Icons.favorite, "导航", onTap: () {}),
+          HorizontalItemWidget(Icons.task, "哈哈", onTap: () {}),
+          HorizontalItemWidget(Icons.storage, "哈哈", onTap: () {}),
         ],
       ),
     );

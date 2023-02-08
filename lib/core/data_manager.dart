@@ -125,4 +125,20 @@ class DataManager extends AbsNetManager with AbsSPManager {
   Future<void> lgInStationUnCollect<T>(int? id, onSuccess, onFiled) async {
     await _netManager.lgInStationUnCollect<T>(id, onSuccess, onFiled);
   }
+
+  @override
+  Future<void> wxChapters<T>(onSuccess, onFiled) async {
+    await _netManager.wxChapters<T>(onSuccess, onFiled);
+  }
+
+  @override
+  Future<void> wxListFormId<T>(int? id, int page, onSuccess, onFiled) async {
+    await _netManager.wxListFormId<T>(id, page, onSuccess, onFiled);
+  }
+
+  @override
+  Future<void> searchWxFormK<T>(
+      int? id, int page, String k, onSuccess, onFiled) async {
+    await _netManager.searchWxFormK<T>(id, page, k, onSuccess, onFiled);
+  }
 }
