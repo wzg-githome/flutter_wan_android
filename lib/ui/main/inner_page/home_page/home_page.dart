@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// 加载更多与刷新
-  void _loadMoreAndRefreshArticleList(bool isRefresh) async {
+  _loadMoreAndRefreshArticleList(bool isRefresh) async {
     if (isRefresh) {
       curPage = 0;
     } else {
@@ -127,12 +127,8 @@ class _HomePageState extends State<HomePage> {
         enableControlFinishRefresh: true,
         enableControlFinishLoad: true,
         controller: _scrollCon,
-        onRefresh: () async {
-          _loadMoreAndRefreshArticleList(true);
-        },
-        onLoad: () async {
-          _loadMoreAndRefreshArticleList(false);
-        },
+        onRefresh: () => _loadMoreAndRefreshArticleList(true),
+        onLoad: () => _loadMoreAndRefreshArticleList(false),
         child: ListView.builder(
             itemCount: ObjectUtil.isNotEmpty(_articleList) &&
                     ObjectUtil.isNotEmpty(_articleList?.datas)
@@ -186,9 +182,8 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   return CachedNetworkImage(
                     imageUrl: _bannerList![index]!.imagePath!,
-                    placeholder: (context, url) =>
-                        ImageUtils.buildPlaceholder(8.r),
-                    imageBuilder: (context, imagePro) => Container(
+                    placeholder: (_, url) => ImageUtils.buildPlaceholder(8.r),
+                    imageBuilder: (_, imagePro) => Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.r),
                         image:
@@ -228,19 +223,21 @@ class _HomePageState extends State<HomePage> {
 
   ///list item and loading
   Widget _builderListItem(index) {
-    var _articleEntity = !ObjectUtil.isEmpty(_articleList)
-        ? ObjectUtil.isNotEmpty(_articleList!.datas)
-            ? _articleList!.datas![index]
-            : null
+    var _articleEntity = !ObjectUtil.isEmpty(_articleList) &&
+            ObjectUtil.isNotEmpty(_articleList!.datas)
+        ? _articleList!.datas![index]
         : null;
     return Container(
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.w))),
       child: ObjectUtil.isEmptyList(_articleList?.datas)
           ? Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.r),
+                color: Colors.grey[200],
+              ),
               margin: EdgeInsets.only(bottom: 10.h),
               height: 80.h,
-              color: Colors.grey[200],
               child: Padding(
                 padding: EdgeInsets.only(left: 10.w),
                 child: const Align(
@@ -252,9 +249,11 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             )
-          : _buildItem(_articleEntity,
-              onItemClick: () => _onItemClick(_articleEntity),
-              onCollectClick: () => _onCollectClick(_articleEntity)),
+          : _buildItem(_articleEntity, onItemClick: () {
+              _onItemClick(_articleEntity);
+            }, onCollectClick: () {
+              _onCollectClick(_articleEntity);
+            }),
     );
   }
 

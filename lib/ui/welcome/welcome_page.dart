@@ -40,10 +40,10 @@ class _WelcomePageState extends State<WelcomePage> {
       color: Colors.white,
       child: Center(
         child: Text(
-          "Let‘s go... $_timeIndex",
+          "Let‘s go,flutter... $_timeIndex",
           textAlign: TextAlign.center,
           style: TextStyle(
-              color: Colors.blue, fontSize: 30.sp, fontWeight: FontWeight.bold),
+              color: Colors.blue, fontSize: 25.sp, fontWeight: FontWeight.bold),
         ),
       ),
     );

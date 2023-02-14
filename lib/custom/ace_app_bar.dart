@@ -16,6 +16,7 @@ AppBar getAceAppBar(String title,
                 "asset/images/icon_back.png",
                 height: 15.h,
                 fit: BoxFit.fitHeight,
+                color: Colors.white,
               ),
             ),
           )

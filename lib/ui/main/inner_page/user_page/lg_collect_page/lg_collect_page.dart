@@ -4,8 +4,10 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
+import 'package:flutter_wan_android/custom/status_widget.dart';
 import 'package:flutter_wan_android/network/entity/http_error.dart';
 import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
+import 'package:flutter_wan_android/ui/common/my_easy_refresh.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/lg_collect_page/lg_collect_model.dart';
 import 'package:get/get.dart';
@@ -27,9 +29,11 @@ class _LgCollectPageState extends State<LgCollectPage> {
   LgCollectEntity? _lgCollectEntity;
   late LgCollectModel _lgCollectModel;
   late EasyRefreshController _refreshController;
+  late StatusType _statusType;
 
   @override
   void initState() {
+    _statusType = StatusType.loading;
     _refreshController = EasyRefreshController();
     _lgCollectModel = LgCollectModel();
     _refreshAndLoadMoreData(true);
@@ -43,7 +47,7 @@ class _LgCollectPageState extends State<LgCollectPage> {
   }
 
   ///加载和刷新数据
-  Future<void> _refreshAndLoadMoreData(bool isRefresh) async {
+  _refreshAndLoadMoreData(bool isRefresh) async {
     if (isRefresh) {
       _curPage = 0;
     } else {
@@ -56,6 +60,7 @@ class _LgCollectPageState extends State<LgCollectPage> {
             if (isRefresh) {
               _lgCollectEntity = data;
               _refreshController.finishRefresh(success: true, noMore: false);
+              _statusType = StatusType.content;
             } else {
               if (ObjectUtil.isNotEmpty(data!.datas)) {
                 _lgCollectEntity!.datas!.addAll(data.datas!);
@@ -101,43 +106,22 @@ class _LgCollectPageState extends State<LgCollectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: getAceAppBar("收藏"),
-      body: EasyRefresh(
-        header: getCustomHeader(),
-        footer: getCustomFooter(),
-        enableControlFinishLoad: true,
-        enableControlFinishRefresh: true,
-        onLoad: () async {
-          await _refreshAndLoadMoreData(false);
-        },
-        onRefresh: () async {
-          await _refreshAndLoadMoreData(true);
-        },
-        controller: _refreshController,
+      body: MyEasyRefresh(
+        easyController: _refreshController,
+        statusType: _statusType,
+        onLoad: () => _refreshAndLoadMoreData(false),
+        onRefresh: () => _refreshAndLoadMoreData(true),
         child: ListView.builder(
             itemCount: ObjectUtil.isNotEmpty(_lgCollectEntity) &&
                     ObjectUtil.isNotEmpty(_lgCollectEntity!.datas)
                 ? _lgCollectEntity!.datas!.length
                 : 10,
             itemBuilder: (context, index) {
-              return ObjectUtil.isNotEmpty(_lgCollectEntity)
-                  ? _buildItemView(index,
-                      onItemClick: () =>
-                          _onClickListItem(_lgCollectEntity?.datas![index]),
-                      onCollectClick: () =>
-                          _cancelCollect(_lgCollectEntity?.datas![index]))
-                  : Container(
-                      height: 50.h,
-                      color: Colors.grey[200],
-                      padding: EdgeInsets.only(left: 10.w),
-                      margin: EdgeInsets.only(top: 2.h),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          "loading",
-                          style: TextStyle(color: Colors.blue, fontSize: 16.sp),
-                        ),
-                      ),
-                    );
+              return _buildItemView(index, onItemClick: () {
+                _onClickListItem(_lgCollectEntity?.datas![index]);
+              }, onCollectClick: () {
+                _cancelCollect(_lgCollectEntity?.datas![index]);
+              });
             }),
       ),
     );

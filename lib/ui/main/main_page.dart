@@ -6,7 +6,7 @@ import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_page
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_page.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
 
-import 'inner_page/knowledge_hierarchy_page/knowledgn_hierarchy_page.dart';
+import 'inner_page/knowledge_hierarchy_page/k_h_page.dart';
 
 ///主页框架
 class MainPage extends StatefulWidget {
@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage> {
         children: const [
           HomePage(),
           ProjectPage(),
-          KnowledgeHierarchyPage(),
+          KHPage(),
           UserPage(),
         ],
       ),

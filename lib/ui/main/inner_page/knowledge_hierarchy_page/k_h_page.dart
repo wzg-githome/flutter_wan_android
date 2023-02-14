@@ -1,6 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_wan_android/custom/status_widget.dart';
 import 'package:flutter_wan_android/page_list.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/kh_model.dart';
 import 'package:get/get.dart';
@@ -8,25 +9,28 @@ import 'package:get/get.dart';
 import 'entity/k_h_entity.dart';
 
 ///知识体系
-class KnowledgeHierarchyPage extends StatefulWidget {
-  const KnowledgeHierarchyPage({Key? key}) : super(key: key);
+class KHPage extends StatefulWidget {
+  const KHPage({Key? key}) : super(key: key);
 
   @override
-  State<KnowledgeHierarchyPage> createState() => _KnowledgeHierarchyPageState();
+  State<KHPage> createState() => _KHPageState();
 }
 
-class _KnowledgeHierarchyPageState extends State<KnowledgeHierarchyPage> {
+class _KHPageState extends State<KHPage> {
   bool _isExc = false;
   int _index = 0;
 
   List<KHEntity?>? _khList;
+  late StatusType _statusType;
 
   @override
   void initState() {
+    _statusType = StatusType.loading;
     KHModel.getTreeList(onSuccess: (List<KHEntity?>? data) {
       if (ObjectUtil.isNotEmpty(data) && mounted) {
         setState(() {
           _khList = data;
+          _statusType = StatusType.content;
         });
       }
     });
@@ -40,48 +44,58 @@ class _KnowledgeHierarchyPageState extends State<KnowledgeHierarchyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey[300],
-      // padding: const EdgeInsets.only(left: 10, right: 10),
-      child: ListView.builder(
-          itemCount: ObjectUtil.isNotEmpty(_khList) ? _khList!.length : 10,
-          itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () {
-                if (ObjectUtil.isNotEmpty(_khList) &&
-                    ObjectUtil.isNotEmpty(_khList![index]) &&
-                    mounted) {
-                  setState(() {
-                    _isExc = _khList![index]!.curCheck;
-                    _index = index;
-                    _isExc = !_isExc;
-                    _khList![index]!.curCheck = _isExc;
-                  });
-                }
-              },
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(
-                    color: Colors.grey[200],
-                    width: ScreenUtil().screenWidth,
-                    padding: const EdgeInsets.all(10),
-                    child: Text(
-                      "${ObjectUtil.isEmpty(_khList) ? "loading..." : (_khList?[index]?.name)}",
-                      style: TextStyle(color: Colors.blue, fontSize: 16.sp),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+    return StatusWidget(
+      statusType: _statusType,
+      content: Container(
+        color: Colors.grey[300],
+        child: ListView.builder(
+            itemCount: ObjectUtil.isNotEmpty(_khList) ? _khList!.length : 0,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () => _onItemClick(index),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Container(
+                      color: Colors.grey[200],
+                      width: ScreenUtil().screenWidth,
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        "${_khList?[index]?.name}",
+                        style: TextStyle(color: Colors.blue, fontSize: 16.sp),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  _buildLine(null),
-                  (_isExc == true && _index == index)
-                      ? _buildSubCategoryView(index)
-                      : Container(),
-                ],
-              ),
-            );
-          }),
+                    _buildLine(null),
+                    (_isExc == true && _index == index)
+                        ? _buildSubCategoryView(index)
+                        : Container(),
+                  ],
+                ),
+              );
+            }),
+      ),
     );
+  }
+
+  ///item的点击事件
+  void _onItemClick(index) {
+    if (ObjectUtil.isNotEmpty(_khList) &&
+        ObjectUtil.isNotEmpty(_khList![index]) &&
+        mounted) {
+      setState(() {
+        _isExc = _khList![index]!.curCheck;
+        _index = index;
+        _isExc = !_isExc;
+        _khList![index]!.curCheck = _isExc;
+      });
+    }
+  }
+
+  ///二级item的点击事件
+  void _onChildItemClick(_kHEntityChildren, index) {
+    Get.toNamed(PageList.kHDetailPage, arguments: _kHEntityChildren?[index]);
   }
 
   ///line
@@ -110,13 +124,10 @@ class _KnowledgeHierarchyPageState extends State<KnowledgeHierarchyPage> {
             return Column(
               children: [
                 InkWell(
-                  onTap: () {
-                    Get.toNamed(PageList.kHDetailPage,
-                        arguments: _kHEntityChildren?[index]);
-                  },
+                  onTap: () => _onChildItemClick(_kHEntityChildren, index),
                   child: Container(
                     width: ScreenUtil().screenWidth,
-                    color: Colors.grey[400],
+                    color: Colors.grey[300],
                     padding: EdgeInsets.only(top: 8.h, bottom: 8.h, left: 10.w),
                     child: Text(
                       "${_kHEntityChildren?[index].name}",
