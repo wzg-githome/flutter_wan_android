@@ -32,8 +32,8 @@ class _LoginPgeState extends State<LoginPge> {
 
   @override
   void dispose() {
-    _nameCon.clear();
-    _pwdCon.clear();
+    _nameCon.dispose();
+    _pwdCon.dispose();
     super.dispose();
   }
 

@@ -18,8 +18,6 @@ import 'other/coustom_log_interceptor.dart';
 class DioUtils {
   static const _tag = "DioUtils";
 
-  // static var debug=false;
-
   static DioUtils getInstance() => DioUtils._internal();
 
   ///dio instance
