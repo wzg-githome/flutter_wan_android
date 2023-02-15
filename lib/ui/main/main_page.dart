@@ -4,61 +4,23 @@ import 'package:flutter_wan_android/custom/will_po_scope_view.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_page.dart';
-import 'package:flutter_wan_android/utils/ace_log.dart';
+import 'package:flutter_wan_android/ui/main/main_controller.dart';
+import 'package:get/get.dart';
 
 import 'inner_page/knowledge_hierarchy_page/k_h_page.dart';
 
 ///主页框架
-class MainPage extends StatefulWidget {
+class MainPage extends GetView<MainController> {
   const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  late PageController _pageCon;
-
-  int _defaultIndex = 0;
-
-  final _bottomList = ["首页", "项目", "知识体系", "我的"];
-  final _bottomIndexList = [0, 1, 2, 3];
-  final _icons = [
-    Icons.home,
-    Icons.backup_rounded,
-    Icons.storage,
-    Icons.account_box_outlined
-  ];
-
-  @override
-  void initState() {
-    _pageCon = PageController(initialPage: 0);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _pageCon.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var _checkedColor = Colors.blue;
-    var _defaultColor = Colors.grey;
-
     return WillPoScopeView(
         child: Scaffold(
       appBar: getAceAppBar("mainTitle".tr),
       body: PageView(
-        controller: _pageCon,
-        onPageChanged: (index) {
-          if (mounted) {
-            setState(() {
-              _defaultIndex = index;
-            });
-          }
-        },
+        controller: controller.pageCon,
+        onPageChanged: controller.onPageChanged,
         // physics: const NeverScrollableScrollPhysics(),
         children: const [
           HomePage(),
@@ -67,30 +29,22 @@ class _MainPageState extends State<MainPage> {
           UserPage(),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _defaultIndex,
-        onTap: (index) {
-          if (_defaultIndex != index) {
-            _pageCon.jumpToPage(index);
-          }
-          if (mounted) {
-            setState(() {
-              _defaultIndex = index;
-              AceLog.d("_defaultIndex: $_defaultIndex");
-            });
-          }
-        },
-        items: _bottomIndexList
-            .map((e) => BottomNavigationBarItem(
-                  icon: Icon(
-                    _icons[e],
-                    color: _defaultIndex == e ? _checkedColor : _defaultColor,
-                  ),
-                  label: _bottomList[e],
-                ))
-            .toList(),
-      ),
+      bottomNavigationBar: Obx(() => BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: controller.defaultIndex.value,
+            onTap: controller.onBottomNavigationBarTap,
+            items: controller.bottomList
+                .map((e) => BottomNavigationBarItem(
+                      icon: Icon(
+                        e["icon"] as IconData,
+                        color: controller.defaultIndex.value == e["index"]
+                            ? controller.checkedColor
+                            : controller.defaultColor,
+                      ),
+                      label: e["name"] as String,
+                    ))
+                .toList(),
+          )),
     ));
   }
 }
