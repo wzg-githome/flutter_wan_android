@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/custom/message_dialog_view.dart';
-import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/common/big_image_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/synopsis_page/synopsis_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_model.dart';
@@ -27,7 +27,7 @@ class _UserPageState extends State<UserPage> {
         children: [
           _builderHeader(),
           _builderItem("收藏", "❥(^_-)", onTap: () async {
-            await Get.toNamed(PageList.lgCollectPage);
+            await Get.toNamed(Routers.lgCollectPage);
           }),
           _builderItem("其他", "other", onTap: () => _toast()),
           _builderItem("介绍与声明", "read",

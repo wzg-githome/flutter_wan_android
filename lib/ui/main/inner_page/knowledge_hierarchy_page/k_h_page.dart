@@ -2,7 +2,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_wan_android/custom/status_widget.dart';
-import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/kh_model.dart';
 import 'package:get/get.dart';
 
@@ -95,7 +95,7 @@ class _KHPageState extends State<KHPage> {
 
   ///二级item的点击事件
   void _onChildItemClick(_kHEntityChildren, index) {
-    Get.toNamed(PageList.kHDetailPage, arguments: _kHEntityChildren?[index]);
+    Get.toNamed(Routers.kHDetailPage, arguments: _kHEntityChildren?[index]);
   }
 
   ///line

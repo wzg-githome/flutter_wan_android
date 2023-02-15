@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/routers.dart';
 import 'package:get/get.dart';
 import 'package:sp_util/sp_util.dart';
 
@@ -28,7 +28,6 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -37,7 +36,9 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         builder: (context, child) => GetMaterialApp(
               debugShowCheckedModeBanner: ConfigCenter.isDebug,
-              routes: routes,
+              routes: Routers.routes,
+              getPages: Routers.getPageList,
+              initialRoute: Routers.welcome,
               title: 'flutter WanAndroid',
               theme: ThemeData(primarySwatch: Colors.blue),
               navigatorObservers: [FlutterSmartDialog.observer],

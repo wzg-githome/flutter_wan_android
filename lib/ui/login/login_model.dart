@@ -1,5 +1,5 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/common//base_model.dart';
 import 'package:flutter_wan_android/ui/login/login_entity.dart';
 import 'package:get/get.dart';
@@ -14,7 +14,7 @@ class LoginModel extends BaseModel {
       }
       await BaseModel.dataManager.setLoginStatus(true);
       await BaseModel.dataManager.setLoginName(data.nickname ?? name);
-      await Get.offNamed(PageList.mainPage);
+      await Get.offNamed(Routers.mainPage);
     }, (err) {
       SmartDialog.showToast("${err.errMsg}");
     });

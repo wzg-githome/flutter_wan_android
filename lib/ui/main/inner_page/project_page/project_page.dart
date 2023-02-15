@@ -1,7 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/custom/status_widget.dart';
-import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,7 +59,7 @@ class _ProjectPageState extends State<ProjectPage> {
         : null;
     return GestureDetector(
       onTap: () {
-        Get.toNamed(PageList.projectListPage, arguments: _projectTreeEntity);
+        Get.toNamed(Routers.projectListPage, arguments: _projectTreeEntity);
       },
       child: Container(
         margin: EdgeInsets.only(top: 10.h),

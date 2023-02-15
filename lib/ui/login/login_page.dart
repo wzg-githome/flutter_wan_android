@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/network/other/cookie_utils.dart';
-import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:flutter_wan_android/ui/login/login_model.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
@@ -65,7 +65,7 @@ class _LoginPgeState extends State<LoginPge> {
                 Expanded(child: Container()),
                 GestureDetector(
                   onTap: () async {
-                    await Get.toNamed(PageList.registerPage);
+                    await Get.toNamed(Routers.registerPage);
                   },
                   child: Padding(
                     padding: EdgeInsets.all(10.r),
@@ -128,7 +128,7 @@ class _LoginPgeState extends State<LoginPge> {
     await CookieUtils.deleteCookieFile();
     Future.delayed(const Duration(milliseconds: 1500), () {
       SmartDialog.dismiss();
-      Get.toNamed(PageList.mainPage);
+      Get.toNamed(Routers.mainPage);
     });
   }
 }

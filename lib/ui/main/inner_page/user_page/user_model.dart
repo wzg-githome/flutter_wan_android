@@ -1,6 +1,6 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/network/other/cookie_utils.dart';
-import 'package:flutter_wan_android/page_list.dart';
+import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +9,7 @@ class UserModel extends BaseModel {
   static void logout() async {
     ///游客登录
     if (!BaseModel.dataManager.getLoginStatus()) {
-      await Get.offAllNamed(PageList.loginPage);
+      await Get.offAllNamed(Routers.loginPage);
       return;
     }
 
@@ -17,7 +17,7 @@ class UserModel extends BaseModel {
       await CookieUtils.deleteCookieFile();
       await BaseModel.dataManager.setLoginStatus(false);
       await BaseModel.dataManager.setLoginName("");
-      await Get.offAllNamed(PageList.loginPage);
+      await Get.offAllNamed(Routers.loginPage);
     }, (err) async {
       await SmartDialog.showToast("msg: ${err.errMsg}");
     });
