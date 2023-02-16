@@ -31,13 +31,13 @@ class MainPage extends GetView<MainController> {
       ),
       bottomNavigationBar: Obx(() => BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            currentIndex: controller.defaultIndex.value,
+            currentIndex: controller.selectIndex,
             onTap: controller.onBottomNavigationBarTap,
             items: controller.bottomList
                 .map((e) => BottomNavigationBarItem(
                       icon: Icon(
                         e["icon"] as IconData,
-                        color: controller.defaultIndex.value == e["index"]
+                        color: controller.selectIndex == e["index"]
                             ? controller.checkedColor
                             : controller.defaultColor,
                       ),

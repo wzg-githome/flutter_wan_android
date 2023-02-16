@@ -8,116 +8,20 @@ import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
 import 'package:flutter_wan_android/ui/common/horizontal_item_widget.dart';
-import 'package:flutter_wan_android/ui/common/web_page.dart';
-import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_model.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/wxarticle_page/wxarticle_page.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:get/get.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'entity/article_entity.dart';
-import 'entity/banner_entity.dart';
-import 'entity/wx_article_entity.dart';
+import 'home_controller.dart';
 
 ///首页
-class HomePage extends StatefulWidget {
+class HomePage extends GetView<HomeController> {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  List<BannerEntity?>? _bannerList;
-  ArticleEntity? _articleList;
-  late EasyRefreshController _scrollCon;
-
-  List<WxArticleEntity?>? _wxArticleEntity; //公众号数据
-
-  ///当前页
-  int curPage = 0;
-
-  @override
-  void initState() {
-    _scrollCon = EasyRefreshController();
-    _initData();
-    _loadWxChapters();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _scrollCon.dispose();
-    super.dispose();
-  }
-
-  void _initData() {
-    _bannerList = HomeModel.getCacheBannerList();
-    if (ObjectUtil.isNotEmpty(_bannerList) && mounted) {
-      setState(() {});
-    }
-    HomeModel.getBannerList((data) {
-      if (ObjectUtil.isNotEmpty(data) && data != _bannerList) {
-        _bannerList = data;
-        HomeModel.saveBannerList(_bannerList);
-        if (mounted) setState(() {});
-      }
-    });
-
-    ///feed List
-    _loadMoreAndRefreshArticleList(true);
-  }
-
-  /// 加载更多与刷新
-  _loadMoreAndRefreshArticleList(bool isRefresh) async {
-    if (isRefresh) {
-      curPage = 0;
-    } else {
-      curPage++;
-    }
-    HomeModel.getArticleList(curPage, (ArticleEntity? data) {
-      if (mounted) {
-        setState(() {
-          if (ObjectUtil.isNotEmpty(data)) {
-            if (isRefresh) {
-              _articleList = data;
-              _scrollCon.finishRefresh(success: true, noMore: false);
-            } else {
-              if (ObjectUtil.isNotEmpty(data!.datas)) {
-                _articleList?.datas?.addAll(data.datas!);
-                _scrollCon.finishLoad(success: true, noMore: false);
-              } else {
-                curPage--;
-                _scrollCon.finishRefresh(success: true, noMore: true);
-                SmartDialog.showToast("a~,没有更多内容了");
-              }
-            }
-          }
-        });
-      }
-    }, (errMsg) {
-      SmartDialog.showToast("a~,没有更多内容了");
-      if (mounted) {
-        setState(() {
-          curPage--;
-          _scrollCon.finishRefresh(success: true, noMore: true);
-        });
-      }
-    });
-  }
-
-  ///加载公众号数据
-  void _loadWxChapters() async {
-    await HomeModel.getWxChapters((data) {
-      setState(() {
-        _wxArticleEntity = data;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(context) {
     return Container(
       padding: EdgeInsets.only(left: 10.w, right: 10.w),
       color: Colors.grey[300],
@@ -126,21 +30,20 @@ class _HomePageState extends State<HomePage> {
         footer: getCustomFooter(),
         enableControlFinishRefresh: true,
         enableControlFinishLoad: true,
-        controller: _scrollCon,
-        onRefresh: () => _loadMoreAndRefreshArticleList(true),
-        onLoad: () => _loadMoreAndRefreshArticleList(false),
+        controller: controller.scrollCon,
+        onRefresh: () => controller.loadMoreAndRefreshArticleList(true),
+        onLoad: () => controller.loadMoreAndRefreshArticleList(false),
         child: ListView.builder(
-            itemCount: ObjectUtil.isNotEmpty(_articleList) &&
-                    ObjectUtil.isNotEmpty(_articleList?.datas)
-                ? _articleList!.datas!.length + 2
-                : 10,
-            itemBuilder: (context, index) {
+            itemCount: ObjectUtil.isNotEmpty(controller.mArticleEntityDatas)
+                ? controller.mArticleEntityDatas!.length + 2
+                : 0 + 2,
+            itemBuilder: (_, index) {
               if (index == 0) {
                 return _builderBanner();
               } else if (index == 1) {
                 return _builderHorizontalListView();
               } else {
-                return _builderListItem(index - 2);
+                return Obx(() => _builderListItem(index - 2));
               }
             }),
       ),
@@ -153,12 +56,12 @@ class _HomePageState extends State<HomePage> {
       aspectRatio: 16 / 9,
       child: Container(
         padding: EdgeInsets.only(top: 5.h),
-        child: ObjectUtil.isEmpty(_bannerList)
+        child: ObjectUtil.isEmpty(controller.bannerList)
             ? const Center(child: Text("loading..."))
             : Swiper(
                 onTap: (index) async {
                   ///launchUrl
-                  var url = _bannerList![index]?.url;
+                  var url = controller.bannerList!.value![index]?.url;
                   if (url == null) return;
                   Uri uri = Uri.parse(url);
                   if (await canLaunchUrl(uri)) {
@@ -178,10 +81,10 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.blue,
                   padding: EdgeInsets.only(left: 15.w, right: 10.w),
                 ),
-                itemCount: _bannerList!.length,
+                itemCount: controller.bannerList!.value!.length,
                 itemBuilder: (context, index) {
                   return CachedNetworkImage(
-                    imageUrl: _bannerList![index]!.imagePath!,
+                    imageUrl: controller.bannerList!.value![index]!.imagePath!,
                     placeholder: (_, url) => ImageUtils.buildPlaceholder(8.r),
                     imageBuilder: (_, imagePro) => Container(
                       decoration: BoxDecoration(
@@ -205,7 +108,8 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           HorizontalItemWidget(Icons.chat, "公众号", onTap: () {
-            Get.to(const WxArtoclePage(), arguments: _wxArticleEntity);
+            Get.to(const WxArtoclePage(),
+                arguments: controller.wxArticleEntity?.value);
           }),
           HorizontalItemWidget(Icons.favorite, "导航", onTap: () {
             SmartDialog.showToast("暂未开发");
@@ -223,14 +127,13 @@ class _HomePageState extends State<HomePage> {
 
   ///list item and loading
   Widget _builderListItem(index) {
-    var _articleEntity = !ObjectUtil.isEmpty(_articleList) &&
-            ObjectUtil.isNotEmpty(_articleList!.datas)
-        ? _articleList!.datas![index]
+    var _articleEntity = ObjectUtil.isNotEmpty(controller.mArticleEntityDatas)
+        ? controller.mArticleEntityDatas![index]
         : null;
     return Container(
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.w))),
-      child: ObjectUtil.isEmptyList(_articleList?.datas)
+      child: ObjectUtil.isEmptyList(controller.mArticleEntityDatas)
           ? Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
@@ -250,9 +153,9 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           : _buildItem(_articleEntity, onItemClick: () {
-              _onItemClick(_articleEntity);
+              controller.onItemClick(_articleEntity);
             }, onCollectClick: () {
-              _onCollectClick(_articleEntity);
+              controller.onCollectClick(_articleEntity);
             }),
     );
   }
@@ -311,36 +214,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-
-  ///item的按钮事件
-  void _onItemClick(ArticleEntityDatas? index) async {
-    await Get.to(WebPage(
-      url: index?.link,
-      title: index?.title,
-    ));
-  }
-
-  ///收藏
-  void _onCollectClick(ArticleEntityDatas? index) {
-    if (index == null) return;
-    LogUtil.d("_onCollectClick: $index");
-    if (index.collect ?? true) {
-      HomeModel.cancelCollect(index.id, () {
-        if (mounted) {
-          setState(() {
-            index.collect = false;
-          });
-        }
-      });
-    } else {
-      HomeModel.lgCollect(index.id, () {
-        if (mounted) {
-          setState(() {
-            index.collect = true;
-          });
-        }
-      });
-    }
   }
 }

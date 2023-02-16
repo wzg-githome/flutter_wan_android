@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/ui/login/login_binding.dart';
 import 'package:flutter_wan_android/ui/login/login_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_binding.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/k_h_detail_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_list_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/lg_collect_page/lg_collect_page.dart';
@@ -16,6 +18,7 @@ class Routers {
   static var welcome = "/";
   static var loginPage = "/loginPage";
   static var mainPage = "/mainPage";
+  static var homePage = "/homePage";
   static var registerPage = "/registerPage";
   static var projectListPage = "/projectListPage";
   static var kHDetailPage = "/KHDetailPage";
@@ -47,6 +50,11 @@ class Routers {
       name: Routers.mainPage,
       page: () => const MainPage(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: Routers.homePage,
+      page: () => const HomePage(),
+      binding: HomeBinding(),
     ),
     // GetPage(
     //   name: Routers.registerPage,

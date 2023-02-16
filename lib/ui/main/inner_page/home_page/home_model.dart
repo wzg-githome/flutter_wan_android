@@ -1,4 +1,5 @@
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:flutter_wan_android/network/entity/base_page_entity.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
@@ -26,10 +27,10 @@ class HomeModel extends BaseModel {
   ///
   static void getArticleList(
     int page,
-    Function(ArticleEntity?) onSuccess,
+    Function(BasePageEntity<ArticleEntityDatas?>?) onSuccess,
     Function(String?) onFailed,
   ) async {
-    await BaseModel.dataManager.getArticleList<ArticleEntity>(page, onSuccess,
+    await BaseModel.dataManager.getArticleList<BasePageEntity<ArticleEntityDatas>>(page, onSuccess,
         (err) {
       onFailed(err.errMsg);
     });
