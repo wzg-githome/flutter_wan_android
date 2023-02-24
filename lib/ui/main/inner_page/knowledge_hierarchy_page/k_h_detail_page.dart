@@ -53,7 +53,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
     super.dispose();
   }
 
-  _refreshAndLoadMoreData(bool isRefresh) {
+  _refreshAndLoadMoreData(bool isRefresh) async {
     if (isRefresh) {
       _curPage = 0;
     } else {
@@ -69,7 +69,10 @@ class _KHDetailPageState extends State<KHDetailPage> {
               if (isRefresh) {
                 _detailListEntity = data;
                 _refreshCon.finishRefresh(success: true);
-                _statusType = StatusType.content;
+                _statusType = ObjectUtil.isNotEmpty(_detailListEntity) &&
+                        ObjectUtil.isNotEmpty(_detailListEntity!.datas)
+                    ? StatusType.content
+                    : StatusType.empty;
               } else {
                 if (ObjectUtil.isNotEmpty(data!.datas)) {
                   _detailListEntity!.datas!.addAll(data.datas!);
@@ -116,6 +119,7 @@ class _KHDetailPageState extends State<KHDetailPage> {
       body: MyEasyRefresh(
         easyController: _refreshCon,
         statusType: _statusType,
+        // onRetryClick: () => _refreshAndLoadMoreData(true),
         onLoad: () => _refreshAndLoadMoreData(false),
         onRefresh: () => _refreshAndLoadMoreData(true),
         child: ListView.builder(

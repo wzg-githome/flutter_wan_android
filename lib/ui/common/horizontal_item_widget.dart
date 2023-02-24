@@ -24,8 +24,8 @@ class _HorizontalItemWidgetState extends State<HorizontalItemWidget> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Container(
-        height: 60.h,
-        width: 60.h,
+        height: 70.h,
+        width: 70.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.h),
           color: Colors.grey[200],

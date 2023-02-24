@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:html_unescape/html_unescape.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../routers.dart';
 import 'home_controller.dart';
 
 ///首页
@@ -22,32 +23,32 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(context) {
-    return Container(
-      padding: EdgeInsets.only(left: 10.w, right: 10.w),
-      color: Colors.grey[300],
-      child: EasyRefresh(
-        header: getCustomHeader(),
-        footer: getCustomFooter(),
-        enableControlFinishRefresh: true,
-        enableControlFinishLoad: true,
-        controller: controller.scrollCon,
-        onRefresh: () => controller.loadMoreAndRefreshArticleList(true),
-        onLoad: () => controller.loadMoreAndRefreshArticleList(false),
-        child: ListView.builder(
-            itemCount: ObjectUtil.isNotEmpty(controller.mArticleEntityDatas)
-                ? controller.mArticleEntityDatas!.length + 2
-                : 0 + 2,
-            itemBuilder: (_, index) {
-              if (index == 0) {
-                return _builderBanner();
-              } else if (index == 1) {
-                return _builderHorizontalListView();
-              } else {
-                return Obx(() => _builderListItem(index - 2));
-              }
-            }),
-      ),
-    );
+    return ObxValue(
+        (data) => Container(
+              padding: EdgeInsets.only(left: 10.w, right: 10.w),
+              color: Colors.grey[300],
+              child: EasyRefresh(
+                header: getCustomHeader(),
+                footer: getCustomFooter(),
+                enableControlFinishRefresh: true,
+                enableControlFinishLoad: true,
+                controller: controller.scrollCon,
+                onRefresh: () => controller.loadMoreAndRefreshArticleList(true),
+                onLoad: () => controller.loadMoreAndRefreshArticleList(false),
+                child: ListView.builder(
+                    itemCount: controller.mArticleEntityDatas.length + 2,
+                    itemBuilder: (_, index) {
+                      if (index == 0) {
+                        return _builderBanner();
+                      } else if (index == 1) {
+                        return _builderHorizontalListView();
+                      } else {
+                        return _builderListItem(index - 2);
+                      }
+                    }),
+              ),
+            ),
+        controller.mArticleEntityDatas);
   }
 
   ///banner list
@@ -107,19 +108,14 @@ class HomePage extends GetView<HomeController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          HorizontalItemWidget(Icons.chat, "公众号", onTap: () {
-            Get.to(const WxArtoclePage(),
-                arguments: controller.wxArticleEntity?.value);
-          }),
-          HorizontalItemWidget(Icons.favorite, "导航", onTap: () {
-            SmartDialog.showToast("暂未开发");
-          }),
-          HorizontalItemWidget(Icons.task, "哈哈", onTap: () {
-            SmartDialog.showToast("暂未开发");
-          }),
-          HorizontalItemWidget(Icons.storage, "哈哈", onTap: () {
-            SmartDialog.showToast("暂未开发");
-          }),
+          HorizontalItemWidget(Icons.chat, "公众号",
+              onTap: () => controller.loadWxChapters()),
+          HorizontalItemWidget(Icons.favorite, "收藏",
+              onTap: () => Get.toNamed(Routers.lgCollectPage)),
+          HorizontalItemWidget(Icons.task, "导航",
+              onTap: () => SmartDialog.showToast("暂未开发")),
+          HorizontalItemWidget(Icons.storage, "哈哈",
+              onTap: () => SmartDialog.showToast("暂未开发")),
         ],
       ),
     );
@@ -127,13 +123,13 @@ class HomePage extends GetView<HomeController> {
 
   ///list item and loading
   Widget _builderListItem(index) {
-    var _articleEntity = ObjectUtil.isNotEmpty(controller.mArticleEntityDatas)
-        ? controller.mArticleEntityDatas![index]
+    var _articleEntity = controller.mArticleEntityDatas.length > 2
+        ? controller.mArticleEntityDatas[index]
         : null;
     return Container(
       decoration:
           BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(8.w))),
-      child: ObjectUtil.isEmptyList(controller.mArticleEntityDatas)
+      child: _articleEntity == null
           ? Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),

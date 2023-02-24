@@ -1,9 +1,10 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:flutter_wan_android/network/entity/base_page_entity.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/wxarticle_page/wxarticle_page.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import 'entity/article_entity.dart';
 import 'entity/banner_entity.dart';
@@ -12,8 +13,9 @@ import 'home_model.dart';
 
 class HomeController extends GetxController {
   Rx<List<BannerEntity?>?>? bannerList; //banner
-  RxList<ArticleEntityDatas?>? mArticleEntityDatas; //首页列表数据
-  Rx<List<WxArticleEntity?>?>? wxArticleEntity; //公众号数据
+  RxList<ArticleEntityDatas?> mArticleEntityDatas =
+      <ArticleEntityDatas>[].obs; //首页列表数据
+  List<WxArticleEntity?>? wxArticleEntity; //公众号数据
 
   late EasyRefreshController scrollCon;
 
@@ -24,7 +26,7 @@ class HomeController extends GetxController {
   void onInit() {
     scrollCon = EasyRefreshController();
     _initData();
-    _loadWxChapters();
+    // _loadWxChapters();
     super.onInit();
   }
 
@@ -54,16 +56,15 @@ class HomeController extends GetxController {
     } else {
       curPage++;
     }
-    HomeModel.getArticleList(curPage,
-        (BasePageEntity<ArticleEntityDatas?>? data) {
-      late bool _hasData =
+    HomeModel.getArticleList(curPage, (ArticleEntity? data) {
+      bool _hasData =
           ObjectUtil.isNotEmpty(data) && ObjectUtil.isNotEmpty(data!.datas);
       if (_hasData) {
-        if (isRefresh) mArticleEntityDatas?.clear();
-        mArticleEntityDatas?.addAll(data!.datas!);
+        if (isRefresh) mArticleEntityDatas.clear();
+        mArticleEntityDatas.addAll(data.datas!);
       } else {
         if (isRefresh) {
-          mArticleEntityDatas?.value = [];
+          mArticleEntityDatas.clear();
         } else {
           curPage--;
           SmartDialog.showToast("a~,没有更多内容了");
@@ -83,9 +84,12 @@ class HomeController extends GetxController {
   }
 
   ///加载公众号数据
-  void _loadWxChapters() async {
+  void loadWxChapters() async {
     await HomeModel.getWxChapters((data) {
-      wxArticleEntity?.value = data;
+      wxArticleEntity = data;
+      if (ObjectUtil.isNotEmpty(wxArticleEntity)) {
+        Get.to(const WxArtoclePage(), arguments: wxArticleEntity);
+      }
     });
   }
 

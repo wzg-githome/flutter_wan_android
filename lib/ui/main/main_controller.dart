@@ -34,7 +34,7 @@ class MainController extends GetxController {
     if (_defaultIndex != index) {
       pageCon.jumpToPage(index);
     }
-    _defaultIndex = index;
+    _defaultIndex.value = index;
     AceLog.d("_defaultIndex: $_defaultIndex");
   }
 

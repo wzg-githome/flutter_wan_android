@@ -21,12 +21,15 @@ class MyEasyRefresh extends StatefulWidget {
   ///状态
   final StatusType statusType;
 
+  final GestureTapCallback? onRetryClick;
+
   const MyEasyRefresh(
       {required this.child,
       required this.easyController,
       required this.statusType,
       this.onLoad,
       this.onRefresh,
+      this.onRetryClick,
       Key? key})
       : super(key: key);
 
@@ -38,6 +41,10 @@ class _MyEasyRefreshState extends State<MyEasyRefresh> {
   @override
   Widget build(BuildContext context) {
     return StatusWidget(
+      onRetryClick: widget.onRetryClick ?? (){
+        widget.onRefresh?.call();
+        // widget.easyController?.callRefresh();
+      },
       statusType: widget.statusType,
       content: EasyRefresh(
         header: getCustomHeader(),
