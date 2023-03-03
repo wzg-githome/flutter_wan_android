@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 ///简介
-class SynopsisPage extends StatefulWidget {
+class  SynopsisPage extends GetView{
   const SynopsisPage({Key? key}) : super(key: key);
 
-  @override
-  State<SynopsisPage> createState() => _SynopsisPageState();
-}
-
-class _SynopsisPageState extends State<SynopsisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,4 +34,6 @@ class _SynopsisPageState extends State<SynopsisPage> {
       ),
     );
   }
+
 }
+

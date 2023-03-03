@@ -8,6 +8,7 @@ import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart'
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/k_h_detail_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/project_page/project_list_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/lg_collect_page/lg_collect_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/user_page/synopsis_page/synopsis_page.dart';
 import 'package:flutter_wan_android/ui/main/main_binding.dart';
 import 'package:flutter_wan_android/ui/main/main_page.dart';
 import 'package:flutter_wan_android/ui/register/register_page.dart';
@@ -27,6 +28,7 @@ class Routers {
   static var lgCollectPage = "/lgCollectPage";
   static var authorPage = "/authorPage";
   static var dHPage = "/DHPage";
+  static var synopsisPage = "/SynopsisPage";
 
   ///路由Map
   static Map<String, WidgetBuilder> routes = {
@@ -63,9 +65,14 @@ class Routers {
     GetPage(
       name: Routers.authorPage,
       page: () => const AuthorPage(),
-    ),  GetPage(
+    ),
+    GetPage(
       name: Routers.dHPage,
       page: () => const DHPage(),
+    ),
+    GetPage(
+      name: Routers.synopsisPage,
+      page: () => const SynopsisPage(),
     ),
     // GetPage(
     //   name: Routers.registerPage,
