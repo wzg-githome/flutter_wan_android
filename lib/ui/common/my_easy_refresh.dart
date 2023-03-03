@@ -41,9 +41,10 @@ class _MyEasyRefreshState extends State<MyEasyRefresh> {
   @override
   Widget build(BuildContext context) {
     return StatusWidget(
-      onRetryClick: widget.onRetryClick ?? (){
-        widget.onRefresh?.call();
-        // widget.easyController?.callRefresh();
+      onRetryClick: () {
+        widget.onRetryClick == null
+            ? widget.onRefresh?.call()
+            : widget.onRetryClick?.call();
       },
       statusType: widget.statusType,
       content: EasyRefresh(

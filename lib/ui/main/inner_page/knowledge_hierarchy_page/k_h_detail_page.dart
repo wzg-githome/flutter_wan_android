@@ -53,6 +53,28 @@ class _KHDetailPageState extends State<KHDetailPage> {
     super.dispose();
   }
 
+  _resetStatusLoading() {
+    setState(() {
+      _statusType = StatusType.loading;
+    });
+  }
+
+  _resetStatusError() {
+    setState(() {
+      _statusType = StatusType.error;
+    });
+  }
+
+  ///刷新状态
+  _resetStatus() {
+    setState(() {
+      _statusType = ObjectUtil.isNotEmpty(_detailListEntity) &&
+              ObjectUtil.isNotEmpty(_detailListEntity!.datas)
+          ? StatusType.content
+          : StatusType.empty;
+    });
+  }
+
   _refreshAndLoadMoreData(bool isRefresh) async {
     if (isRefresh) {
       _curPage = 0;
@@ -69,14 +91,12 @@ class _KHDetailPageState extends State<KHDetailPage> {
               if (isRefresh) {
                 _detailListEntity = data;
                 _refreshCon.finishRefresh(success: true);
-                _statusType = ObjectUtil.isNotEmpty(_detailListEntity) &&
-                        ObjectUtil.isNotEmpty(_detailListEntity!.datas)
-                    ? StatusType.content
-                    : StatusType.empty;
+                _resetStatus();
               } else {
                 if (ObjectUtil.isNotEmpty(data!.datas)) {
                   _detailListEntity!.datas!.addAll(data.datas!);
                   _refreshCon.finishLoad(success: true, noMore: false);
+                  _resetStatus();
                 } else {
                   _curPage--;
                   SmartDialog.showToast("~亲，没有更多数据了呢");
@@ -120,6 +140,10 @@ class _KHDetailPageState extends State<KHDetailPage> {
         easyController: _refreshCon,
         statusType: _statusType,
         // onRetryClick: () => _refreshAndLoadMoreData(true),
+        onRetryClick: () {
+          _resetStatusLoading();
+          _refreshAndLoadMoreData(true);
+        },
         onLoad: () => _refreshAndLoadMoreData(false),
         onRefresh: () => _refreshAndLoadMoreData(true),
         child: ListView.builder(
