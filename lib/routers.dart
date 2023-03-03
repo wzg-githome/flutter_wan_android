@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/ui/login/login_binding.dart';
 import 'package:flutter_wan_android/ui/login/login_page.dart';
 import 'package:flutter_wan_android/ui/main/author/author_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/dh_page/dh_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_binding.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/knowledge_hierarchy_page/k_h_detail_page.dart';
@@ -25,6 +26,7 @@ class Routers {
   static var kHDetailPage = "/KHDetailPage";
   static var lgCollectPage = "/lgCollectPage";
   static var authorPage = "/authorPage";
+  static var dHPage = "/DHPage";
 
   ///路由Map
   static Map<String, WidgetBuilder> routes = {
@@ -61,6 +63,9 @@ class Routers {
     GetPage(
       name: Routers.authorPage,
       page: () => const AuthorPage(),
+    ),  GetPage(
+      name: Routers.dHPage,
+      page: () => const DHPage(),
     ),
     // GetPage(
     //   name: Routers.registerPage,

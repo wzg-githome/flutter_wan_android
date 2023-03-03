@@ -113,7 +113,7 @@ class HomePage extends GetView<HomeController> {
           HorizontalItemWidget(Icons.favorite, "收藏",
               onTap: () => Get.toNamed(Routers.lgCollectPage)),
           HorizontalItemWidget(Icons.task, "导航",
-              onTap: () => SmartDialog.showToast("暂未开发")),
+              onTap: () => Get.toNamed(Routers.dHPage)),
           HorizontalItemWidget(Icons.storage, "作者介绍",
               onTap: () => Get.toNamed(Routers.authorPage)),
         ],
