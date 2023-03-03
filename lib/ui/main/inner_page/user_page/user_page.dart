@@ -86,10 +86,10 @@ class _UserPageState extends State<UserPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildHeaderItem("name", UserModel.getLoginName(),
+                    _buildHeaderItem("", UserModel.getLoginName(),
                         EdgeInsets.only(top: 10.h)),
-                    _buildHeaderItem("sex", "未知", EdgeInsets.only(top: 10.h)),
-                    _buildHeaderItem("物种", "未知", EdgeInsets.only(top: 10.h))
+                    _buildHeaderItem("", "未知", EdgeInsets.only(top: 10.h)),
+                    _buildHeaderItem("", "未知", EdgeInsets.only(top: 10.h))
                   ],
                 ),
               )
@@ -100,9 +100,9 @@ class _UserPageState extends State<UserPage> {
                 text: "个性签名: ",
                 style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
             TextSpan(
-                text: "${UserModel.getLoginName()},你若安好，便是晴天",
+                text: "玩android的flutter版本",
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.blue,
                   fontSize: 14.sp,
                 ))
           ])),
@@ -147,12 +147,12 @@ class _UserPageState extends State<UserPage> {
       padding: padding,
       child: Row(
         children: [
-          Text("$title: ",
-              style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
+          // Text("$title ",
+          //     style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
           Padding(
-            padding: EdgeInsets.only(left: 4.w),
+            padding: EdgeInsets.only(left: 10.w),
             child: Text("$value",
-                style: TextStyle(color: Colors.black, fontSize: 14.sp)),
+                style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
           )
         ],
       ),

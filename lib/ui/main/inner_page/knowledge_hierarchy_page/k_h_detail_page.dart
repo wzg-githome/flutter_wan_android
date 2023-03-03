@@ -67,12 +67,10 @@ class _KHDetailPageState extends State<KHDetailPage> {
 
   ///刷新状态
   _resetStatus() {
-    setState(() {
-      _statusType = ObjectUtil.isNotEmpty(_detailListEntity) &&
-              ObjectUtil.isNotEmpty(_detailListEntity!.datas)
-          ? StatusType.content
-          : StatusType.empty;
-    });
+    _statusType = ObjectUtil.isNotEmpty(_detailListEntity) &&
+            ObjectUtil.isNotEmpty(_detailListEntity!.datas)
+        ? StatusType.content
+        : StatusType.empty;
   }
 
   _refreshAndLoadMoreData(bool isRefresh) async {

@@ -25,4 +25,14 @@ A new Flutter project.
 2.使用getx完成loginPage的改造  
 3.使用getx完成MainPage的改造  
 
+# v2.0.0.3
+1.添加知识体系的失败重试  
+2.优化MyEasyRefresh的封装   
+
+# v2.0.0.4
+1.添加项目详情列表的失败重试  
+
+# v2.0.0.5
+1.添加作者介绍页 
+
 

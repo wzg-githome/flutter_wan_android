@@ -49,6 +49,11 @@ class _ProjectListPageState extends State<ProjectListPage> {
     _refreshController.dispose();
     super.dispose();
   }
+  _resetStatusLoading() {
+    setState(() {
+      _statusType = StatusType.loading;
+    });
+  }
 
   ///刷新与加载数据
   _refreshAndroidLoadMore(bool isRefresh) async {
@@ -109,6 +114,10 @@ class _ProjectListPageState extends State<ProjectListPage> {
       body: MyEasyRefresh(
         easyController: _refreshController,
         statusType: _statusType,
+        onRetryClick: (){
+          _resetStatusLoading();
+          _refreshAndroidLoadMore(true);
+        },
         onLoad: () => _refreshAndroidLoadMore(false),
         onRefresh: () => _refreshAndroidLoadMore(true),
         child: ListView.builder(
