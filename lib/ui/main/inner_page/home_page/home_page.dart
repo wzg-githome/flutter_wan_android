@@ -3,12 +3,10 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
 import 'package:flutter_wan_android/ui/common/horizontal_item_widget.dart';
-import 'package:flutter_wan_android/ui/main/inner_page/home_page/wxarticle_page/wxarticle_page.dart';
 import 'package:flutter_wan_android/utils/image_utils.dart';
 import 'package:get/get.dart';
 import 'package:html_unescape/html_unescape.dart';
@@ -62,7 +60,7 @@ class HomePage extends GetView<HomeController> {
             : Swiper(
                 onTap: (index) async {
                   ///launchUrl
-                  var url = controller.bannerList!.value![index]?.url;
+                  var url = controller.bannerList[index]?.url;
                   if (url == null) return;
                   Uri uri = Uri.parse(url);
                   if (await canLaunchUrl(uri)) {
@@ -82,10 +80,10 @@ class HomePage extends GetView<HomeController> {
                   color: Colors.blue,
                   padding: EdgeInsets.only(left: 15.w, right: 10.w),
                 ),
-                itemCount: controller.bannerList!.value!.length,
+                itemCount: controller.bannerList.length,
                 itemBuilder: (context, index) {
                   return CachedNetworkImage(
-                    imageUrl: controller.bannerList!.value![index]!.imagePath!,
+                    imageUrl: controller.bannerList[index]!.imagePath!,
                     placeholder: (_, url) => ImageUtils.buildPlaceholder(8.r),
                     imageBuilder: (_, imagePro) => Container(
                       decoration: BoxDecoration(

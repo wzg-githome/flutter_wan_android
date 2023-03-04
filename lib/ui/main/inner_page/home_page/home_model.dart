@@ -2,12 +2,13 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import 'entity/wx_article_entity.dart';
 
 class HomeModel extends BaseModel {
   ///获取缓存的bannerList
-  static List<BannerEntity?>? getCacheBannerList() {
+  static /*List<BannerEntity?>?*/RxList<BannerEntity?> getCacheBannerList() {
     return BaseModel.dataManager.getCacheBannerList();
   }
 

@@ -66,6 +66,8 @@ dependencies:
   r_upgrade: ^0.3.8+2
   #ui库
 #  getwidget: ^3.0.1
+  scrollable_positioned_list: ^0.2.3
+  waterfall_flow: ^3.0.2
   flutter_localizations:
     sdk: flutter
 

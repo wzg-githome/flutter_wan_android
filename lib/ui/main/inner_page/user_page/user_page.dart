@@ -32,7 +32,7 @@ class _UserPageState extends State<UserPage> {
           _builderItem("其他", "other", onTap: () => _toast()),
           _builderItem("介绍与声明", "read",
               onTap: () => Get.toNamed(Routers.synopsisPage)),
-          _builderItem("清除缓存", "10M", onTap: () => _toast()),
+          // _builderItem("清除缓存", "10M", onTap: () => _toast()),
           _builderItem("退出登录", "", onTap: () => _logout()),
         ],
       ),

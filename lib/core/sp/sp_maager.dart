@@ -1,6 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter_wan_android/core/sp_constant.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:sp_util/sp_util.dart';
 
 import 'abs_sp_manager.dart';
@@ -32,13 +33,17 @@ class SPManager extends AbsSPManager {
   }
 
   @override
-  List<BannerEntity?>? getCacheBannerList() {
+  /*List<BannerEntity?>?*/ RxList<BannerEntity?> getCacheBannerList() {
+    RxList<BannerEntity?> data = RxList();
     var string = SpUtil.getString(SPConstant.bannerList);
-    if (string == null)  return null;
+    if (string == null) return data;
     List<BannerEntity?>? _bannerList = JsonUtil.getObjectList(
         string, (v) => BannerEntity.fromJson(v as Map<String, dynamic>));
     LogUtil.e("getBannerList:\n${_bannerList?.toString()}", tag: _tag);
-    return _bannerList;
+    if (ObjectUtil.isNotEmpty(_bannerList)) {
+      data.addAll(_bannerList!);
+    }
+    return data;
   }
 
   @override

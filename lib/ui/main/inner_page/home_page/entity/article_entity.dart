@@ -57,7 +57,7 @@ class ArticleEntityDatas {
 	String? shareUser;
 	int? superChapterId;
 	String? superChapterName;
-	List<dynamic>? tags;
+	// List<dynamic>? tags;
 	String? title;
 	int? type;
 	int? userId;

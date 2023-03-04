@@ -51,4 +51,7 @@ class WanAndroidApi {
 
   ///指定搜索内容，搜索当前公众号的某页的此类数据
   static var searchWxFormK = "wxarticle/list/{id}/{page}/json";
+
+  ///获取导航栏数据
+  static var naviJson = "navi/json";
 }

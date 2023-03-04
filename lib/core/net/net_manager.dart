@@ -150,4 +150,9 @@ class NetManager extends AbsNetManager {
     await _dioUtils.get<T>(WanAndroidApi.searchWxFormK, onSuccess, onFiled,
         paramsMap: queryMap, appendUrlMap: appendUrlMap);
   }
+
+  @override
+  Future<void> naviJson<T>(onSuccess, onFiled) async {
+    await _dioUtils.getList<T>(WanAndroidApi.naviJson, onSuccess, onFiled);
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 ///sp接口层
 abstract class AbsSPManager {
@@ -12,5 +13,5 @@ abstract class AbsSPManager {
 
   Future<void> putBannerList(List<BannerEntity?>? bannerList);
 
-  List<BannerEntity?>? getCacheBannerList();
+  /*List<BannerEntity?>?*/RxList<BannerEntity?> getCacheBannerList();
 }

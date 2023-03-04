@@ -1,197 +1,181 @@
 import 'package:flutter_wan_android/generated/json/base/json_convert_content.dart';
-import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/article_entity.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/dh_page/nav_json_entity.dart';
 
-ArticleEntity $ArticleEntityFromJson(Map<String, dynamic> json) {
-	final ArticleEntity articleEntity = ArticleEntity();
-	final int? curPage = jsonConvert.convert<int>(json['curPage']);
-	if (curPage != null) {
-		articleEntity.curPage = curPage;
+NavJsonEntity $NavJsonEntityFromJson(Map<String, dynamic> json) {
+	final NavJsonEntity navJsonEntity = NavJsonEntity();
+	final List<NavJsonEntityArticles>? articles = jsonConvert.convertListNotNull<NavJsonEntityArticles>(json['articles']);
+	if (articles != null) {
+		navJsonEntity.articles = articles;
 	}
-	final List<ArticleEntityDatas>? datas = jsonConvert.convertListNotNull<ArticleEntityDatas>(json['datas']);
-	if (datas != null) {
-		articleEntity.datas = datas;
+	final double? cid = jsonConvert.convert<double>(json['cid']);
+	if (cid != null) {
+		navJsonEntity.cid = cid;
 	}
-	final int? offset = jsonConvert.convert<int>(json['offset']);
-	if (offset != null) {
-		articleEntity.offset = offset;
+	final String? name = jsonConvert.convert<String>(json['name']);
+	if (name != null) {
+		navJsonEntity.name = name;
 	}
-	final bool? over = jsonConvert.convert<bool>(json['over']);
-	if (over != null) {
-		articleEntity.over = over;
-	}
-	final int? pageCount = jsonConvert.convert<int>(json['pageCount']);
-	if (pageCount != null) {
-		articleEntity.pageCount = pageCount;
-	}
-	final int? size = jsonConvert.convert<int>(json['size']);
-	if (size != null) {
-		articleEntity.size = size;
-	}
-	final int? total = jsonConvert.convert<int>(json['total']);
-	if (total != null) {
-		articleEntity.total = total;
-	}
-	return articleEntity;
+	return navJsonEntity;
 }
 
-Map<String, dynamic> $ArticleEntityToJson(ArticleEntity entity) {
+Map<String, dynamic> $NavJsonEntityToJson(NavJsonEntity entity) {
 	final Map<String, dynamic> data = <String, dynamic>{};
-	data['curPage'] = entity.curPage;
-	data['datas'] =  entity.datas?.map((v) => v.toJson()).toList();
-	data['offset'] = entity.offset;
-	data['over'] = entity.over;
-	data['pageCount'] = entity.pageCount;
-	data['size'] = entity.size;
-	data['total'] = entity.total;
+	data['articles'] =  entity.articles?.map((v) => v.toJson()).toList();
+	data['cid'] = entity.cid;
+	data['name'] = entity.name;
 	return data;
 }
 
-ArticleEntityDatas $ArticleEntityDatasFromJson(Map<String, dynamic> json) {
-	final ArticleEntityDatas articleEntityDatas = ArticleEntityDatas();
+NavJsonEntityArticles $NavJsonEntityArticlesFromJson(Map<String, dynamic> json) {
+	final NavJsonEntityArticles navJsonEntityArticles = NavJsonEntityArticles();
 	final bool? adminAdd = jsonConvert.convert<bool>(json['adminAdd']);
 	if (adminAdd != null) {
-		articleEntityDatas.adminAdd = adminAdd;
+		navJsonEntityArticles.adminAdd = adminAdd;
 	}
 	final String? apkLink = jsonConvert.convert<String>(json['apkLink']);
 	if (apkLink != null) {
-		articleEntityDatas.apkLink = apkLink;
+		navJsonEntityArticles.apkLink = apkLink;
 	}
-	final int? audit = jsonConvert.convert<int>(json['audit']);
+	final double? audit = jsonConvert.convert<double>(json['audit']);
 	if (audit != null) {
-		articleEntityDatas.audit = audit;
+		navJsonEntityArticles.audit = audit;
 	}
 	final String? author = jsonConvert.convert<String>(json['author']);
 	if (author != null) {
-		articleEntityDatas.author = author;
+		navJsonEntityArticles.author = author;
 	}
 	final bool? canEdit = jsonConvert.convert<bool>(json['canEdit']);
 	if (canEdit != null) {
-		articleEntityDatas.canEdit = canEdit;
+		navJsonEntityArticles.canEdit = canEdit;
 	}
-	final int? chapterId = jsonConvert.convert<int>(json['chapterId']);
+	final double? chapterId = jsonConvert.convert<double>(json['chapterId']);
 	if (chapterId != null) {
-		articleEntityDatas.chapterId = chapterId;
+		navJsonEntityArticles.chapterId = chapterId;
 	}
 	final String? chapterName = jsonConvert.convert<String>(json['chapterName']);
 	if (chapterName != null) {
-		articleEntityDatas.chapterName = chapterName;
+		navJsonEntityArticles.chapterName = chapterName;
 	}
 	final bool? collect = jsonConvert.convert<bool>(json['collect']);
 	if (collect != null) {
-		articleEntityDatas.collect = collect;
+		navJsonEntityArticles.collect = collect;
 	}
-	final int? courseId = jsonConvert.convert<int>(json['courseId']);
+	final double? courseId = jsonConvert.convert<double>(json['courseId']);
 	if (courseId != null) {
-		articleEntityDatas.courseId = courseId;
+		navJsonEntityArticles.courseId = courseId;
 	}
 	final String? desc = jsonConvert.convert<String>(json['desc']);
 	if (desc != null) {
-		articleEntityDatas.desc = desc;
+		navJsonEntityArticles.desc = desc;
 	}
 	final String? descMd = jsonConvert.convert<String>(json['descMd']);
 	if (descMd != null) {
-		articleEntityDatas.descMd = descMd;
+		navJsonEntityArticles.descMd = descMd;
 	}
 	final String? envelopePic = jsonConvert.convert<String>(json['envelopePic']);
 	if (envelopePic != null) {
-		articleEntityDatas.envelopePic = envelopePic;
+		navJsonEntityArticles.envelopePic = envelopePic;
 	}
 	final bool? fresh = jsonConvert.convert<bool>(json['fresh']);
 	if (fresh != null) {
-		articleEntityDatas.fresh = fresh;
+		navJsonEntityArticles.fresh = fresh;
 	}
 	final String? host = jsonConvert.convert<String>(json['host']);
 	if (host != null) {
-		articleEntityDatas.host = host;
+		navJsonEntityArticles.host = host;
 	}
-	final int? id = jsonConvert.convert<int>(json['id']);
+	final double? id = jsonConvert.convert<double>(json['id']);
 	if (id != null) {
-		articleEntityDatas.id = id;
+		navJsonEntityArticles.id = id;
 	}
 	final bool? isAdminAdd = jsonConvert.convert<bool>(json['isAdminAdd']);
 	if (isAdminAdd != null) {
-		articleEntityDatas.isAdminAdd = isAdminAdd;
+		navJsonEntityArticles.isAdminAdd = isAdminAdd;
 	}
 	final String? link = jsonConvert.convert<String>(json['link']);
 	if (link != null) {
-		articleEntityDatas.link = link;
+		navJsonEntityArticles.link = link;
 	}
 	final String? niceDate = jsonConvert.convert<String>(json['niceDate']);
 	if (niceDate != null) {
-		articleEntityDatas.niceDate = niceDate;
+		navJsonEntityArticles.niceDate = niceDate;
 	}
 	final String? niceShareDate = jsonConvert.convert<String>(json['niceShareDate']);
 	if (niceShareDate != null) {
-		articleEntityDatas.niceShareDate = niceShareDate;
+		navJsonEntityArticles.niceShareDate = niceShareDate;
 	}
 	final String? origin = jsonConvert.convert<String>(json['origin']);
 	if (origin != null) {
-		articleEntityDatas.origin = origin;
+		navJsonEntityArticles.origin = origin;
 	}
 	final String? prefix = jsonConvert.convert<String>(json['prefix']);
 	if (prefix != null) {
-		articleEntityDatas.prefix = prefix;
+		navJsonEntityArticles.prefix = prefix;
 	}
 	final String? projectLink = jsonConvert.convert<String>(json['projectLink']);
 	if (projectLink != null) {
-		articleEntityDatas.projectLink = projectLink;
+		navJsonEntityArticles.projectLink = projectLink;
 	}
-	final int? publishTime = jsonConvert.convert<int>(json['publishTime']);
+	final double? publishTime = jsonConvert.convert<double>(json['publishTime']);
 	if (publishTime != null) {
-		articleEntityDatas.publishTime = publishTime;
+		navJsonEntityArticles.publishTime = publishTime;
 	}
-	final int? realSuperChapterId = jsonConvert.convert<int>(json['realSuperChapterId']);
+	final double? realSuperChapterId = jsonConvert.convert<double>(json['realSuperChapterId']);
 	if (realSuperChapterId != null) {
-		articleEntityDatas.realSuperChapterId = realSuperChapterId;
+		navJsonEntityArticles.realSuperChapterId = realSuperChapterId;
 	}
-	final int? selfVisible = jsonConvert.convert<int>(json['selfVisible']);
+	final bool? route = jsonConvert.convert<bool>(json['route']);
+	if (route != null) {
+		navJsonEntityArticles.route = route;
+	}
+	final double? selfVisible = jsonConvert.convert<double>(json['selfVisible']);
 	if (selfVisible != null) {
-		articleEntityDatas.selfVisible = selfVisible;
+		navJsonEntityArticles.selfVisible = selfVisible;
 	}
-	final int? shareDate = jsonConvert.convert<int>(json['shareDate']);
+	final double? shareDate = jsonConvert.convert<double>(json['shareDate']);
 	if (shareDate != null) {
-		articleEntityDatas.shareDate = shareDate;
+		navJsonEntityArticles.shareDate = shareDate;
 	}
 	final String? shareUser = jsonConvert.convert<String>(json['shareUser']);
 	if (shareUser != null) {
-		articleEntityDatas.shareUser = shareUser;
+		navJsonEntityArticles.shareUser = shareUser;
 	}
-	final int? superChapterId = jsonConvert.convert<int>(json['superChapterId']);
+	final double? superChapterId = jsonConvert.convert<double>(json['superChapterId']);
 	if (superChapterId != null) {
-		articleEntityDatas.superChapterId = superChapterId;
+		navJsonEntityArticles.superChapterId = superChapterId;
 	}
 	final String? superChapterName = jsonConvert.convert<String>(json['superChapterName']);
 	if (superChapterName != null) {
-		articleEntityDatas.superChapterName = superChapterName;
+		navJsonEntityArticles.superChapterName = superChapterName;
 	}
 	// final List<dynamic>? tags = jsonConvert.convertListNotNull<dynamic>(json['tags']);
 	// if (tags != null) {
-	// 	articleEntityDatas.tags = tags;
+	// 	navJsonEntityArticles.tags = tags;
 	// }
 	final String? title = jsonConvert.convert<String>(json['title']);
 	if (title != null) {
-		articleEntityDatas.title = title;
+		navJsonEntityArticles.title = title;
 	}
-	final int? type = jsonConvert.convert<int>(json['type']);
+	final double? type = jsonConvert.convert<double>(json['type']);
 	if (type != null) {
-		articleEntityDatas.type = type;
+		navJsonEntityArticles.type = type;
 	}
-	final int? userId = jsonConvert.convert<int>(json['userId']);
+	final double? userId = jsonConvert.convert<double>(json['userId']);
 	if (userId != null) {
-		articleEntityDatas.userId = userId;
+		navJsonEntityArticles.userId = userId;
 	}
-	final int? visible = jsonConvert.convert<int>(json['visible']);
+	final double? visible = jsonConvert.convert<double>(json['visible']);
 	if (visible != null) {
-		articleEntityDatas.visible = visible;
+		navJsonEntityArticles.visible = visible;
 	}
-	final int? zan = jsonConvert.convert<int>(json['zan']);
+	final double? zan = jsonConvert.convert<double>(json['zan']);
 	if (zan != null) {
-		articleEntityDatas.zan = zan;
+		navJsonEntityArticles.zan = zan;
 	}
-	return articleEntityDatas;
+	return navJsonEntityArticles;
 }
 
-Map<String, dynamic> $ArticleEntityDatasToJson(ArticleEntityDatas entity) {
+Map<String, dynamic> $NavJsonEntityArticlesToJson(NavJsonEntityArticles entity) {
 	final Map<String, dynamic> data = <String, dynamic>{};
 	data['adminAdd'] = entity.adminAdd;
 	data['apkLink'] = entity.apkLink;
@@ -217,6 +201,7 @@ Map<String, dynamic> $ArticleEntityDatasToJson(ArticleEntityDatas entity) {
 	data['projectLink'] = entity.projectLink;
 	data['publishTime'] = entity.publishTime;
 	data['realSuperChapterId'] = entity.realSuperChapterId;
+	data['route'] = entity.route;
 	data['selfVisible'] = entity.selfVisible;
 	data['shareDate'] = entity.shareDate;
 	data['shareUser'] = entity.shareUser;

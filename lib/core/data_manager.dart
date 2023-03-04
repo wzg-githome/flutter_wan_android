@@ -2,6 +2,7 @@ import 'package:flutter_wan_android/core/net/abs_net_manager.dart';
 import 'package:flutter_wan_android/core/net/net_manager.dart';
 import 'package:flutter_wan_android/core/sp/sp_maager.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/entity/banner_entity.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import 'sp/abs_sp_manager.dart';
 
@@ -59,7 +60,7 @@ class DataManager extends AbsNetManager with AbsSPManager {
   }
 
   @override
-  List<BannerEntity?>? getCacheBannerList() {
+  /*List<BannerEntity?>?*/RxList<BannerEntity?> getCacheBannerList() {
     return _spManager.getCacheBannerList();
   }
 
@@ -140,5 +141,10 @@ class DataManager extends AbsNetManager with AbsSPManager {
   Future<void> searchWxFormK<T>(
       int? id, int page, String k, onSuccess, onFiled) async {
     await _netManager.searchWxFormK<T>(id, page, k, onSuccess, onFiled);
+  }
+
+  @override
+  Future<void> naviJson<T>(onSuccess, onFiled) async {
+    await _netManager.naviJson<T>(onSuccess, onFiled);
   }
 }

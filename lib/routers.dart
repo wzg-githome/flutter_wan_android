@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wan_android/ui/login/login_binding.dart';
 import 'package:flutter_wan_android/ui/login/login_page.dart';
 import 'package:flutter_wan_android/ui/main/author/author_page.dart';
+import 'package:flutter_wan_android/ui/main/inner_page/home_page/dh_page/dh_binding.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/dh_page/dh_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_binding.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/home_page/home_page.dart';
@@ -69,6 +70,7 @@ class Routers {
     GetPage(
       name: Routers.dHPage,
       page: () => const DHPage(),
+      binding: DHBinding()
     ),
     GetPage(
       name: Routers.synopsisPage,

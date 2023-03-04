@@ -12,7 +12,8 @@ import 'entity/wx_article_entity.dart';
 import 'home_model.dart';
 
 class HomeController extends GetxController {
-  Rx<List<BannerEntity?>?>? bannerList; //banner
+  // Rx<List<BannerEntity?>?>? bannerList; //banner
+  RxList<BannerEntity?> bannerList = RxList();
   RxList<ArticleEntityDatas?> mArticleEntityDatas =
       <ArticleEntityDatas>[].obs; //首页列表数据
   List<WxArticleEntity?>? wxArticleEntity; //公众号数据
@@ -37,11 +38,11 @@ class HomeController extends GetxController {
   }
 
   void _initData() {
-    bannerList = HomeModel.getCacheBannerList().obs;
+    bannerList.addAll(HomeModel.getCacheBannerList());
     HomeModel.getBannerList((data) {
-      if (data != null && (bannerList != null && data != bannerList!.value)) {
-        bannerList!.value = data;
-        HomeModel.saveBannerList(bannerList!.value);
+      if (data != null && (data != bannerList)) {
+        bannerList.value = data;
+        HomeModel.saveBannerList(bannerList);
       }
     });
 

@@ -38,4 +38,6 @@ abstract class AbsNetManager {
 
   Future<void> searchWxFormK<T>(
       int? id, int page, String k, onSuccess, onFiled);
+
+  Future<void> naviJson<T>(onSuccess, onFiled);
 }
