@@ -4,12 +4,14 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:flutter_wan_android/custom/ace_app_bar.dart';
+import 'package:flutter_wan_android/custom/message_dialog_view.dart';
 import 'package:flutter_wan_android/custom/status_widget.dart';
 import 'package:flutter_wan_android/network/entity/http_error.dart';
 import 'package:flutter_wan_android/ui/common/easy_refresh_custom.dart';
 import 'package:flutter_wan_android/ui/common/my_easy_refresh.dart';
 import 'package:flutter_wan_android/ui/common/web_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/lg_collect_page/lg_collect_model.dart';
+import 'package:flutter_wan_android/utils/commin_utils.dart';
 import 'package:get/get.dart';
 import 'package:html_unescape/html_unescape.dart';
 
@@ -33,9 +35,9 @@ class _LgCollectPageState extends State<LgCollectPage> {
 
   @override
   void initState() {
-    _statusType = StatusType.loading;
     _refreshController = EasyRefreshController();
     _lgCollectModel = LgCollectModel();
+    _statusType = StatusType.loading;
     _refreshAndLoadMoreData(true);
     super.initState();
   }
@@ -44,6 +46,23 @@ class _LgCollectPageState extends State<LgCollectPage> {
   void dispose() {
     _refreshController.dispose();
     super.dispose();
+  }
+
+
+  void _showDialog() async {
+    await SmartDialog.show(
+        tag: "logout_dialog",
+        widget: MessageDialogView(
+          smartDialogTag: "logout_dialog",
+          content: "检测到您未登录账号，请前往登录？",
+          onClick: (isOk) {
+            if (isOk) {
+              UserModel.logout();
+            } else {
+              Get.back();
+            }
+          },
+        ));
   }
 
   ///加载和刷新数据
@@ -82,13 +101,13 @@ class _LgCollectPageState extends State<LgCollectPage> {
         });
       }
     }, (HttpError err) async {
-      await SmartDialog.showToast("${err.errMsg}");
-
       ///待处理
       if (err.errMsg == null ? false : err.errMsg!.contains("请先登录")) {
-        UserModel.logout();
+        SmartDialog.showToast("检测到你未登录账号");
+        _showDialog();
         return;
       }
+       SmartDialog.showToast("${err.errMsg}");
       if (mounted) {
         setState(() {
           if (isRefresh) {
