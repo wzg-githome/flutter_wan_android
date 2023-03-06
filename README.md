@@ -4,6 +4,11 @@ A new Flutter project.
 
 ## Getting Started
 
+![img.png](img.png)
+
+# app下载链接（https://www.pgyer.com/nmn4）
+
+
 # update status
 
 # v1.2.0 
