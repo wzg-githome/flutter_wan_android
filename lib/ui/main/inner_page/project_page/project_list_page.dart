@@ -161,8 +161,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
 
   ///点击下载按钮
   void _onClickDownload(url) {
-    DownloadApkUtil.downloadAndInstallFile(ObjectUtil.isNotEmpty(url)
-        ? url
-        : "https://mco-image.walmartmobile.cn/image/apk/SAMS_STORE_OFS_V2.33.2_PRODUCT_10-25_07-53_82c73e2.apk");
+    if(ObjectUtil.isEmpty(url))return;
+    DownloadApkUtil.downloadAndInstallFile(url);
   }
 }
