@@ -44,3 +44,7 @@ A new Flutter project.
 
 # v2.1.0.1
 1.优化查看大图
+
+# v2.1.1.1 
+1.优化我的界面 
+2.优化项目最后一个item的bottom padding为0问题 

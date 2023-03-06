@@ -38,9 +38,9 @@ class KHEntity {
 
 @JsonSerializable()
 class KHEntityChildren {
-  List<dynamic>? articleList;
+  // List<dynamic>? articleList;
   String? author;
-  List<dynamic>? children;
+  // List<dynamic>? children;
   double? courseId;
   String? cover;
   String? desc;

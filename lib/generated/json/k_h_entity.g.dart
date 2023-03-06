@@ -93,18 +93,18 @@ Map<String, dynamic> $KHEntityToJson(KHEntity entity) {
 
 KHEntityChildren $KHEntityChildrenFromJson(Map<String, dynamic> json) {
 	final KHEntityChildren kHEntityChildren = KHEntityChildren();
-	final List<dynamic>? articleList = jsonConvert.convertListNotNull<dynamic>(json['articleList']);
-	if (articleList != null) {
-		kHEntityChildren.articleList = articleList;
-	}
+	// final List<dynamic>? articleList = jsonConvert.convertListNotNull<dynamic>(json['articleList']);
+	// if (articleList != null) {
+	// 	kHEntityChildren.articleList = articleList;
+	// }
 	final String? author = jsonConvert.convert<String>(json['author']);
 	if (author != null) {
 		kHEntityChildren.author = author;
 	}
-	final List<dynamic>? children = jsonConvert.convertListNotNull<dynamic>(json['children']);
-	if (children != null) {
-		kHEntityChildren.children = children;
-	}
+	// final List<dynamic>? children = jsonConvert.convertListNotNull<dynamic>(json['children']);
+	// if (children != null) {
+	// 	kHEntityChildren.children = children;
+	// }
 	final double? courseId = jsonConvert.convert<double>(json['courseId']);
 	if (courseId != null) {
 		kHEntityChildren.courseId = courseId;
@@ -158,9 +158,9 @@ KHEntityChildren $KHEntityChildrenFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> $KHEntityChildrenToJson(KHEntityChildren entity) {
 	final Map<String, dynamic> data = <String, dynamic>{};
-	data['articleList'] =  entity.articleList;
+	// data['articleList'] =  entity.articleList;
 	data['author'] = entity.author;
-	data['children'] =  entity.children;
+	// data['children'] =  entity.children;
 	data['courseId'] = entity.courseId;
 	data['cover'] = entity.cover;
 	data['desc'] = entity.desc;

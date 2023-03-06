@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -5,7 +6,6 @@ import 'package:flutter_wan_android/custom/common_class.dart';
 import 'package:flutter_wan_android/custom/message_dialog_view.dart';
 import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/common/big_image_page.dart';
-import 'package:flutter_wan_android/ui/main/inner_page/user_page/synopsis_page/synopsis_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_model.dart';
 import 'package:get/get.dart';
 
@@ -21,15 +21,21 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[300],
+      color: /* Colors.grey[300]*/ Colors.white,
+      // decoration: BoxDecoration(
+      //     gradient: LinearGradient(
+      //         begin: Alignment.topRight, //右上
+      //         end: Alignment.bottomLeft, //左下
+      //         stops: const [0.0, 1.0], //[渐变起始点, 渐变结束点]
+      //         //渐变颜色[始点颜色, 结束颜色]
+      //         colors: [Colors.white, Colors.grey])),
       padding: EdgeInsets.all(10.r),
       child: ListView(
         children: [
           _builderHeader(),
-          _builderItem("收藏", "❥(^_-)", onTap: () async {
-            await Get.toNamed(Routers.lgCollectPage);
-          }),
-          _builderItem("其他", "other", onTap: () => _toast()),
+          _builderItem("收藏", "❥(^_-)",
+              onTap: () => Get.toNamed(Routers.lgCollectPage)),
+          // _builderItem("其他", "other", onTap: () => _toast()),
           _builderItem("介绍与声明", "read",
               onTap: () => Get.toNamed(Routers.synopsisPage)),
           // _builderItem("清除缓存", "10M", onTap: () => _toast()),
@@ -58,8 +64,11 @@ class _UserPageState extends State<UserPage> {
   Widget _builderHeader() {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey[200], borderRadius: BorderRadius.circular(10.r)),
-      padding: EdgeInsets.all(10.r),
+        color: Colors.grey[200],
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      padding:
+          EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,7 +95,11 @@ class _UserPageState extends State<UserPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildHeaderItem("", UserModel.getLoginName(),
+                    _buildHeaderItem(
+                        "",
+                        ObjectUtil.isNotEmpty(UserModel.getLoginName())
+                            ? UserModel.getLoginName()
+                            : "未知",
                         EdgeInsets.only(top: 10.h)),
                     _buildHeaderItem("", "未知", EdgeInsets.only(top: 10.h)),
                     _buildHeaderItem("", "未知", EdgeInsets.only(top: 10.h))
@@ -95,17 +108,20 @@ class _UserPageState extends State<UserPage> {
               )
             ],
           ),
-          Text.rich(TextSpan(children: [
-            TextSpan(
-                text: "个性签名: ",
-                style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
-            TextSpan(
-                text: "玩android的flutter版本",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 14.sp,
-                ))
-          ])),
+          Container(
+            margin: EdgeInsets.only(top: 15.h),
+            child: Text.rich(TextSpan(children: [
+              TextSpan(
+                  text: "个性签名: ",
+                  style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
+              TextSpan(
+                  text: "玩android的flutter版本",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 14.sp,
+                  ))
+            ])),
+          ),
         ],
       ),
     );
@@ -118,8 +134,9 @@ class _UserPageState extends State<UserPage> {
       splashColor: Colors.red,
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(10.r),
-        margin: EdgeInsets.only(top: 10.h),
+        padding:
+            EdgeInsets.only(left: 10.w, right: 10.w, top: 15.h, bottom: 15.h),
+        margin: EdgeInsets.only(top: 15.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
           color: Colors.grey[200],

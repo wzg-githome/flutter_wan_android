@@ -62,7 +62,12 @@ class _ProjectPageState extends State<ProjectPage> {
         Get.toNamed(Routers.projectListPage, arguments: _projectTreeEntity);
       },
       child: Container(
-        margin: EdgeInsets.only(top: 10.h),
+        margin: EdgeInsets.only(
+            top: 10.h,
+            bottom: ObjectUtil.isNotEmpty(_projectTreeList) &&
+                    (index == _projectTreeList!.length - 1)
+                ? 10.h
+                : 0),
         padding: EdgeInsets.all(8.r),
         height: 50.h,
         decoration: BoxDecoration(
