@@ -8,6 +8,7 @@ import 'package:flutter_wan_android/routers.dart';
 import 'package:flutter_wan_android/ui/common/big_image_page.dart';
 import 'package:flutter_wan_android/ui/main/inner_page/user_page/user_model.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 ///用户
 class UserPage extends StatefulWidget {
@@ -18,6 +19,14 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
+   String? _version;
+
+  @override
+  void initState() {
+    _builderVersion();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,24 +48,33 @@ class _UserPageState extends State<UserPage> {
           _builderItem("介绍与声明", "read",
               onTap: () => Get.toNamed(Routers.synopsisPage)),
           // _builderItem("清除缓存", "10M", onTap: () => _toast()),
-          _builderItem("退出登录", "", onTap: () => _logout()),
+          _builderItem("版本", _version, onTap: () => _showDialog(false)),
+          _builderItem("退出登录", "", onTap: () => _showDialog(true)),
+
         ],
       ),
     );
+  }
+
+  Future<void> _builderVersion() async {
+    var packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _version = packageInfo.version;
+    });
   }
 
   void _toast() {
     SmartDialog.showToast("暂未开放!!!");
   }
 
-  void _logout() async {
+  void _showDialog(bool isLogout) async {
     await SmartDialog.show(
         tag: "logout_dialog",
         widget: MessageDialogView(
           smartDialogTag: "logout_dialog",
-          content: "确认退出吗？",
+          content: isLogout ? "确认退出吗？" : "当前app版本：$_version",
           onClick: (isOk) {
-            if (isOk) UserModel.logout();
+            if (isOk && isLogout) UserModel.logout();
           },
         ));
   }
@@ -117,7 +135,7 @@ class _UserPageState extends State<UserPage> {
               TextSpan(
                   text: "玩android的flutter版本",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: Colors.deepOrange,
                     fontSize: 14.sp,
                   ))
             ])),
@@ -150,7 +168,7 @@ class _UserPageState extends State<UserPage> {
             ),
             Text(
               "$rightText",
-              style: TextStyle(color: Colors.black, fontSize: 14.sp),
+              style: TextStyle(color: Colors.blue, fontSize: 14.sp),
             ),
           ],
         ),

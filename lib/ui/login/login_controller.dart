@@ -4,6 +4,7 @@ import 'package:flutter_wan_android/network/other/cookie_utils.dart';
 import 'package:flutter_wan_android/ui/common/base_model.dart';
 import 'package:flutter_wan_android/utils/ace_log.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../routers.dart';
 import 'login_model.dart';
@@ -16,10 +17,13 @@ class LoginController extends GetxController {
   int _clickNumber = 0; //用户操作次数
   final int _clickNumberMax = 5; //最大操作次数
 
+  RxString appVersion = RxString("");
+
   @override
   void onInit() {
     nameCon = TextEditingController();
     pwdCon = TextEditingController();
+    _builderVersion();
     super.onInit();
   }
 
@@ -28,6 +32,11 @@ class LoginController extends GetxController {
     nameCon.dispose();
     pwdCon.dispose();
     super.dispose();
+  }
+
+  _builderVersion() async {
+    var packageInfo = await PackageInfo.fromPlatform();
+    appVersion.value = packageInfo.version;
   }
 
   ///多次点击

@@ -15,7 +15,7 @@ class LoginPage extends GetView<LoginController> {
       appBar: AppBar(title: Text("loginTitle".tr)),
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-        child: ListView(
+        child: Column(
           children: [
             TextField(
               controller: controller.nameCon,
@@ -67,6 +67,7 @@ class LoginPage extends GetView<LoginController> {
             GestureDetector(
               onTap: () => controller.notLogin(),
               child: Container(
+                alignment: Alignment.centerLeft,
                 margin: EdgeInsets.only(top: 20.h),
                 padding: EdgeInsets.symmetric(vertical: 10.h),
                 child: Text(
@@ -74,7 +75,18 @@ class LoginPage extends GetView<LoginController> {
                   style: TextStyle(color: Colors.blue, fontSize: 12.sp),
                 ),
               ),
-            )
+            ),
+            Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Obx(() => Text(
+                      "version: ${controller.appVersion}\nauthor: aceWen",
+                      style: TextStyle(color: Colors.grey[500], fontSize: 18.sp),
+                    ))
+                  ],
+                ))
           ],
         ),
       ),

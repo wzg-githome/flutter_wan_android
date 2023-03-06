@@ -11,6 +11,7 @@ import 'config_center.dart';
 import 'l10n/messages.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
