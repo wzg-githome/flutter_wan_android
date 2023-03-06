@@ -4,14 +4,14 @@
 
 ### 关于作者
 
-Email &nbsp;&nbsp;: 863764940@qq.com
+Email &nbsp;&nbsp;: 718603390@qq.com
 
-## Getting Started
+## app下载二维码
 
 ![img.png](img.png)
 
-# app下载链接（https://www.pgyer.com/nmn4）
-
+# app下载链接（复制不要直接点击进去）
+app下载链接: https://www.pgyer.com/nmn4
 
 ### App结构简介
 
