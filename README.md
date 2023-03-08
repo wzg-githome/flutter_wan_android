@@ -164,3 +164,6 @@ class LoginModel extends BaseModel {
 
 # v2.1.1.5
 1.升级app版本号
+
+# v2.1.1.6 
+1.添加加载进度条 
