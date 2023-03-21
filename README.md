@@ -2,7 +2,7 @@
 
 这是一个基于flutter写的玩android项目，所有数据都是来源于开源api。
 
-### 关于作者
+### 关于作者  
 
 Email &nbsp;&nbsp;: 718603390@qq.com
 
