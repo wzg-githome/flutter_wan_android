@@ -28,9 +28,9 @@ app下载链接: https://www.pgyer.com/nmn4
 
 ### app部分界面展示
 
-![app-display-img/草花.jpg](app-display-img/草花.jpg)
-![app-display-img/玩android首页.jpg](app-display-img/玩android首页.jpg)
-![app-display-img/公众号.jpg](app-display-img/公众号.jpg)
+|![app-display-img/草花.jpg](app-display-img/草花.jpg)|![app-display-img/玩android首页.jpg](app-display-img/玩android首页.jpg)|![app-display-img/公众号.jpg](app-display-img/公众号.jpg)|
+|:---:|:---:|:---:|
+
 
 
 ### App目录结构
