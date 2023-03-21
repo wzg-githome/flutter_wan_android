@@ -8,7 +8,7 @@ Email &nbsp;&nbsp;: 718603390@qq.com
 
 ## app下载二维码
 
-![img.png](img.png)
+![app-display-img/img.png](app-display-img/img.png)
 
 # app下载链接（复制不要直接点击进去）
 app下载链接: https://www.pgyer.com/nmn4
@@ -26,6 +26,11 @@ app下载链接: https://www.pgyer.com/nmn4
 
 5.所有数据都是来源于开源api[开源api](http://www.wanandroid.com/blog/show/2)
 
+### app部分界面展示
+
+![app-display-img/草花.jpg](app-display-img/草花.jpg)
+![app-display-img/玩android首页.jpg](app-display-img/玩android首页.jpg)
+![app-display-img/公众号.jpg](app-display-img/公众号.jpg)
 
 
 ### App目录结构
